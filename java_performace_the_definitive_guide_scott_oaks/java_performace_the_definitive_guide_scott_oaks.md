@@ -1,4 +1,4 @@
-## Introduction
+## 1 Introduction
 * this material applies to Java 7 update 40 and Java 8 initial release
 * enable JVM flag: `-XX:+FlagName`
 * disable JVM flag: `-XX:-FlagName`
@@ -15,4 +15,10 @@
     * use profiler and focus on operations taking the most time
     * consider more likely bugs first: performance bug in new code > configuration of machine > bug in JVM or operating system
     * optimize what is used the most by users
+## 2 An approach to performance testing
+* testing should occure on real product in the way the product will be used
+* categories of code used to do performance testing:
+  * microbenchmarks - a test designed to measure a small unit of performance, e.g. single method invocation
+  * nanobenchmarks - measured whole application with it's resources (LDAP, database etc.)
+  * mesobenchmarks - somewhere between; they do some real work but not testing the whole application; it's measuring isolated performance at modulular or operational level; reasonable compromise (but not substitution) for testing the full application
 
