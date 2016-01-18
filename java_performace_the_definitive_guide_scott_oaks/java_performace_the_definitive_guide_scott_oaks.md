@@ -15,6 +15,7 @@
     * use profiler and focus on operations taking the most time
     * consider more likely bugs first: performance bug in new code > configuration of machine > bug in JVM or operating system
     * optimize what is used the most by users
+
 ## 2 An approach to performance testing
 * testing should occure on real product in the way the product will be used
 * categories of code used to do performance testing:
