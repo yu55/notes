@@ -19,7 +19,15 @@
 ## 2 An approach to performance testing
 * testing should occure on real product in the way the product will be used
 * categories of code used to do performance testing:
-  * microbenchmarks - a test designed to measure a small unit of performance, e.g. single method invocation
-  * nanobenchmarks - measured whole application with it's resources (LDAP, database etc.)
-  * mesobenchmarks - somewhere between; they do some real work but not testing the whole application; it's measuring isolated performance at modulular or operational level; reasonable compromise (but not substitution) for testing the full application
+  * microbenchmarks - a test designed to measure a small unit of performance, e.g. single method invocation;
+    * not easy to implement properly - compiler aggresive optimizations can change code so much that we're not measuring the right code (or no code at all);
+    * also microbenchmark code can change production code multithreading behaviour and produce false statistics;
+    * input values should be precalculated because otherwise benchmark will measure data preparation and produce false statistics;
+    * it's result depends on input values range; random range isn't always the case; on the other hand common case input values may give false overall performance info;
+    * measuring nanoseconds periods - is it worth to optimize rarely used nanoseconds code? Limited times when microbenchmarks are useful.
+  * nanobenchmarks - measured whole application in conjunction with external resources (LDAP, database etc.) it uses
+    * complex systems behave differently when all parts work together in contrary to mocking these parts;
+    * many aspects of the JVM are tuned by default to assume that all machine resources are available, but performance behaviour may be different when other applications also run on this machine; example: when app uses 40% of CPU at average it means that most of the time it uses 30% and when GC is on the CPU usage goes up to 100%. When there are other apps running on the same machine our app won't have CPU time capacity like when it was single and will perform measurably different;
+    * testing an entire application is the only way to know how code will actually run.
+  * mesobenchmarks - somewhere between; they do some real work but not testing the whole application; it's measuring isolated performance at modular or operational level; reasonable compromise (but not substitution) for testing the full application
 
