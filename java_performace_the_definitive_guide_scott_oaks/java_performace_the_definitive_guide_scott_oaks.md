@@ -46,3 +46,15 @@
     * in client-server testing the client has to be fast enough to really test the server; amount of client work depends on number of threads and how much they're doing; throughput measurement client uses less threads than response time measurement
     * it's common that these tests report throughput and average response time; 500 OPS x 0.5 s performs better than 400 OPS x 0.3 s
     * typically measured after warm-up
+  * response time tests - amount of time that elapses between the sending of a request from a client and the receipt of the response
+    * difference between throughput measurements and response time tests is that client waits some time before sending next request (after previously receiving a response); this pause is "think time" - it mimics users activity better; throughput becomes more or less fixed;
+    * can be reported as an average or 90th percentile
+    * example load generator: Faban
+* THIRD PRINCIPLE: understand how tests results vary over time
+  * good benchmarks never process the same set of data - some random behaviur is needed to mimic the real world: how to compare tests results? Is the difference due to a regression or random variation of test? Comparing averages may not give the real view of what's going on; the best can be done is to provide probability, e.g. with high probability these averages are the same
+  * testing like this is called regression testing
+    * baseline - original code under testing
+    * specimen - new code under testing
+  * probability is calculated as p-value from Student's t-test, e.g.: "there is a 57% probability that the specimen differs from baseline, and the best estimate of that difference is 25%"
+  * statistical significance (alpha-value) - statistical significance; typically 0.1 which means that result is statistically significant if baseline and specimen will be the same 10% of the time; other values: 0.5 (95%) or 0.01 (99%)
+  * test is considered statistically significant if p-value is is smaller than 1 - alpha-value
