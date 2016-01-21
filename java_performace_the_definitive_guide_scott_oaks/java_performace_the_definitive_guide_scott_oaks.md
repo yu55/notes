@@ -51,10 +51,13 @@
     * can be reported as an average or 90th percentile
     * example load generator: Faban
 * THIRD PRINCIPLE: understand how tests results vary over time
-  * good benchmarks never process the same set of data - some random behaviur is needed to mimic the real world: how to compare tests results? Is the difference due to a regression or random variation of test? Comparing averages may not give the real view of what's going on; the best can be done is to provide probability, e.g. with high probability these averages are the same
+  * good benchmarks never process the same set of data - some random behaviour is needed to mimic the real world: how to compare tests results? Is the difference due to a regression or random variation of test? Comparing averages may not give the real view of what's going on; the best can be done is to provide probability, e.g. with high probability these averages are the same
   * testing like this is called regression testing
     * baseline - original code under testing
     * specimen - new code under testing
-  * probability is calculated as p-value from Student's t-test, e.g.: "there is a 57% probability that the specimen differs from baseline, and the best estimate of that difference is 25%"
-  * statistical significance (alpha-value) - statistical significance; typically 0.1 which means that result is statistically significant if baseline and specimen will be the same 10% of the time; other values: 0.5 (95%) or 0.01 (99%)
-  * test is considered statistically significant if p-value is is smaller than 1 - alpha-value
+  * probability is calculated as p-value from Student's t-test, e.g. for p-value=43%: "there is a 57% probability that the specimen differs from baseline, and the best estimate of that difference is 25%"
+  * alpha-value - statistical significance; typically 0.1, means that result is statistically significant if baseline and specimen will be the same 10% of the time; other common values: 0.5 (95%) or 0.01 (99%)
+  * test is considered statistically significant if p-value is is smaller than 1 - alpha-value; if not the test is inconclusive;
+  * proper way to search for regressions in code is to determine a level of statistical significance and then use t-test to determine if specimen and baseline are different within that degree of statistical significance;
+  * statistical significance doesn't mean statistical importance; which test is more important: 0,01% difference with p-value 99% or 10% difference with p-value 80%? Second one is probably more important.
+  * usually statistically inconclusive is when there is not enough data
