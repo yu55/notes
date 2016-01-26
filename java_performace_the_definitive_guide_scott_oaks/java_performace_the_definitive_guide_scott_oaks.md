@@ -64,5 +64,22 @@
 * FOURTH PRINCIPLE: performance testing should be part of development cycle
   * ideally test when code is checked into repository
   * testing should be 100% automated
-  * everything should be measure: application, operating system, database
+  * everything should be measured: application, operating system, database
   * run on the target system
+
+* Toolbox
+  * Operating system
+    * CPU Usage
+      * CPU usage value is an average over some time: 1 second, 5 seconds, 30 seconds
+      * goal is to keep CPU usage as high as possible for as short as possible; e.g. optimize program task from 50% CPU for 10 minutes to 100% CPU for 5 minutes
+      * command: vmstat 1
+      * when application isn't using 100% CPU this may be the cause:
+        * blocked on synchronization
+        * waiting for external resource, e.g. database response
+        * nothing to do
+        * for multi-threaded multi-CPU CPUs can be idle when there can be no thread in e.g. fixed sized pool to execute job (all threads hanging on external resources)
+      * however sometimes you don't want for app to use whole CPU
+      * CPU run queue: how many threads can be run (vmstat - first number)
+        * queue length should less or equal to CPUs on UNIX systems
+
+ 
