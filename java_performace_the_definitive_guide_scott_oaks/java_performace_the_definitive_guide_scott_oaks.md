@@ -61,3 +61,8 @@
   * proper way to search for regressions in code is to determine a level of statistical significance and then use t-test to determine if specimen and baseline are different within that degree of statistical significance;
   * statistical significance doesn't mean statistical importance; which test is more important: 0,01% difference with p-value 99% or 10% difference with p-value 80%? Second one is probably more important.
   * usually statistically inconclusive is when there is not enough data
+* FOURTH PRINCIPLE: performance testing should be part of development cycle
+  * ideally test when code is checked into repository
+  * testing should be 100% automated
+  * everything should be measure: application, operating system, database
+  * run on the target system
