@@ -87,5 +87,8 @@
         * writing too much data (too much throughput)
       * if app is not using too much disk then swapping is still a big threat for performance
          * keeping unused memory on disk is quite OK for GUI apps, but not so good for server apps
-     * command: iostat -xm 5
-
+      * command: iostat -xm 5
+    * Network Usage
+      * similar to disk: problems due to sending data too ineficiently or too much data
+      * typically eth interface is considered saturated when sustained utilization is over 40%
+      * commands: netstat, nicstat - these tools show utilisation of particular network interface only, not the whole network
