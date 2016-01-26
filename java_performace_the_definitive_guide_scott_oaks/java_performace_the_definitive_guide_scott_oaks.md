@@ -71,7 +71,7 @@
   * Operating system
     * CPU Usage
       * CPU usage value is an average over some time: 1 second, 5 seconds, 30 seconds
-      * goal is to keep CPU usage as high as possible for as short as possible; e.g. optimize program task from 50% CPU for 10 minutes to 100% CPU for 5 minutes
+      * the goal is to keep CPU usage as high as possible for as short as possible; e.g. optimize program task from 50% CPU for 10 minutes to 100% CPU for 5 minutes
       * command: vmstat 1
       * when application isn't using 100% CPU this may be the cause:
         * blocked on synchronization
@@ -81,5 +81,11 @@
       * however sometimes you don't want for app to use whole CPU
       * CPU run queue: how many threads can be run (vmstat - first number)
         * queue length should less or equal to CPUs on UNIX systems
+    * Disk Usage
+      * if app is doing lots of IO than it will probably be a bottleneck because of:
+        * writing data inefficiently (too little throughput)
+        * writing too much data (too much throughput)
+      * if app is not using too much disk then swapping is still a big threat for performance
+         * keeping unused memory on disk is quite OK for GUI apps, but not so good for server apps
+     * command: iostat -xm 5
 
- 
