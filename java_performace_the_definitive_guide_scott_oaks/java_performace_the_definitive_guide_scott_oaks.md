@@ -92,3 +92,20 @@
       * similar to disk: problems due to sending data too ineficiently or too much data
       * typically eth interface is considered saturated when sustained utilization is over 40%
       * commands: netstat, nicstat - these tools show utilisation of particular network interface only, not the whole network
+    * Java Monitoring Tools
+      * tools available in JDK
+        * jcmd - prints basic info for Java process
+        * jconsole - basic JVM activities visualized on GUI
+        * jhat - heap memory dumps reader
+        * jmap - heap dumps
+        * jinfo - view/modify system properties
+        * jstack - dump the stack
+        * jstat - info about GC and class-loading
+        * jvisualvm - JVM monitoring tool with GUI
+      * tuning flags
+        * there are 600+ tuning flags for JVM
+        * list all: java other_options -XX:+PrintFlagsFinal -version (values with colon are not default; changed by command line, indirectly by other options or by JVM calculated it ergonomically
+        * list all: jinfo -flags process_id
+        * turn off: jinfo -flag -PrintGCDetails process_id
+        * show one: jinfo -flag PrintGCDetails
+        * it works for flags marked as manageable
