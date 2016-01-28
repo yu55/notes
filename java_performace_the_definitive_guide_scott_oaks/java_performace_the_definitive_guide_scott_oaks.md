@@ -109,3 +109,18 @@
         * turn off: jinfo -flag -PrintGCDetails process_id
         * show one: jinfo -flag PrintGCDetails
         * it works for flags marked as manageable
+      * thread info
+        * show threads stacks: jstack process_id
+        * show threads stacks: jcmd process_id Thread.print
+      * class info
+        * jconsole (number of classes)
+        * jstat (number of classes, info about class compilation)
+      * GC analisys
+        * jconsole (heap)
+        * jcmd (allows GC operations)
+        * jmap (heap info, create heap dump)
+        * jstat (different views on what GC is doing)
+      * heap dump postprocessing
+        * jvisualvm
+        * jhat
+        * Eclipse Memory Analyzer Tool (3rd party tool)
