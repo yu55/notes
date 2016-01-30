@@ -49,7 +49,7 @@
   * response time tests - amount of time that elapses between the sending of a request from a client and the receipt of the response
     * difference between throughput measurements and response time tests is that client waits some time before sending next request (after previously receiving a response); this pause is "think time" - it mimics users activity better; throughput becomes more or less fixed;
     * can be reported as an average or 90th percentile
-    * example load generator: Faban
+    * example load generator: Faban (fhb)
 * THIRD PRINCIPLE: understand how tests results vary over time
   * good benchmarks never process the same set of data - some random behaviour is needed to mimic the real world: how to compare tests results? Is the difference due to a regression or random variation of test? Comparing averages may not give the real view of what's going on; the best can be done is to provide probability, e.g. with high probability these averages are the same
   * testing like this is called regression testing
@@ -67,7 +67,7 @@
   * everything should be measured: application, operating system, database
   * run on the target system
 
-* Toolbox
+* 3 Toolbox
   * Operating system
     * CPU Usage
       * CPU usage value is an average over some time: 1 second, 5 seconds, 30 seconds
@@ -141,3 +141,27 @@
           * visibility into JVM code and applicatino code
           * if native profiler shows hard CPU usage on GC it means that GC tuning has to be done
           * if native profiler shows significant time usage in compilation threads this is usually not affecting performance
+
+4 Working with JIT compiler
+  * Hot spot - section of application code that is frequently executed
+  * JIT - "just in time", compilation occurs as the program is executed
+  * C1 - client compiler; compiles sooner but produces less effective code than C2; option -client; ignored on 64-bit JVMs
+  * C2 - server compiler; option -server or option -d64
+  * tiered compilation - code is first compiled with C1 and as it becomes hot C2 starts compiling hot spots; -XX:+TieredCompilation; on Java 8 turned on by default
+  * batch jobs
+    * for jobs running at fixed amount of time use compiler that produces fastest code
+    * tiered compiler is a reasonable default
+  * long-running applications
+    * choose C2 preferably with tiered compilation
+  * 32-bit JVM:
+    * limited to 4GB total process size
+    * faster (5%-20%) and less footprint than 64-bit
+  * code cache
+    * memory for compiled code
+    * if its filled JIT will not compile more code to native assemblies
+    * it can be filled for client or tiered compilators; log warning appears:
+`Java HotSpot(TM) 64-Bit Server VM warning: CodeCache is full.
+Compiler has been disabled.
+Java HotSpot(TM) 64-Bit Server VM warning: Try increasing the
+code cache size using -XX:ReservedCodeCacheSize=`
+    * this cache can be monitored by jconsole (Memory Pool Code Cache chart) and altered via `-XX:ReservedCodeCacheSize=N`
