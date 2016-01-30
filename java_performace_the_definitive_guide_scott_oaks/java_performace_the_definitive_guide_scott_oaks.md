@@ -124,3 +124,20 @@
         * jvisualvm
         * jhat
         * Eclipse Memory Analyzer Tool (3rd party tool)
+      * profiling tools
+        * it makes sense to use many tools (particulalry for sampling profilers)
+        * sampling profiling
+          * least amount of overhead
+          * many types of sampling errors
+          * some methods may not be seen by profilers (sample can be taken only when thread is in safepoint)
+        * instrumented profiling
+          * more intrusive - add custom code on bytecode level
+          * yelds more informations than sampling profilers
+          * alter performance characteristics - thats why they should be used to profile small sections of code
+        * blocking methods
+          * threads that are blocked must be examined why they are blocked
+          * some profilers hide waiting methods
+        * native profilers
+          * visibility into JVM code and applicatino code
+          * if native profiler shows hard CPU usage on GC it means that GC tuning has to be done
+          * if native profiler shows significant time usage in compilation threads this is usually not affecting performance
