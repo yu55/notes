@@ -171,3 +171,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * OSR trigger = (CompileThreshold * ((OnStackReplacePercentage - InterpreterProfilePercentage)/100))
     * changing thresholds can soon up compilation (too low may cause code to be not optimized enough though)
     * lookwarm methods - methods that never gets compiled because counters decrease over time
+  * inspecting compilation process
+    * flag: -XX:+PrintCompilation
+      * legend: % - OSR, s - synchronized method, ! - method has an exception handler, b - blocking mode, n - wrapper for a native method, COMPILE SKIPPED: reason {code cache filled, concurrent classloading}
+    * jstat -compiler pid_number
