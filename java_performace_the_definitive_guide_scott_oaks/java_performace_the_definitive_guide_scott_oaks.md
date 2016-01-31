@@ -165,3 +165,9 @@ Compiler has been disabled.
 Java HotSpot(TM) 64-Bit Server VM warning: Try increasing the
 code cache size using -XX:ReservedCodeCacheSize=`
     * this cache can be monitored by jconsole (Memory Pool Code Cache chart) and altered via `-XX:ReservedCodeCacheSize=N`
+  * compilation thresholds
+    * standard compilation occurs when counter of method execution plus counter of branched backed loops is enough (branch back - loop ended execution by itself or because of `continue` statement etc.)
+    * OSR - on-stack replacement: for very long or never engind loops if counter is enough given loop is eligible for compilation and replaced "in fly" with compiled version
+    * OSR trigger = (CompileThreshold * ((OnStackReplacePercentage - InterpreterProfilePercentage)/100))
+    * changing thresholds can soon up compilation (too low may cause code to be not optimized enough though)
+    * lookwarm methods - methods that never gets compiled because counters decrease over time
