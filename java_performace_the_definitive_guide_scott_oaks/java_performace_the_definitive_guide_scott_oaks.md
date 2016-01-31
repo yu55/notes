@@ -174,4 +174,25 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * inspecting compilation process
     * flag: -XX:+PrintCompilation
       * legend: % - OSR, s - synchronized method, ! - method has an exception handler, b - blocking mode, n - wrapper for a native method, COMPILE SKIPPED: reason {code cache filled, concurrent classloading}
+      * compilation ids may occure out of order because compilation takes place in threads and queue elements have priority
     * jstat -compiler pid_number
+  * advanced - little reason to change
+    * compilation threads
+      * compilation occurs asynchronously for methods that are placed on the compilation queue
+      * queue is not ordered: hot methods are compiled before other methods
+    * inlining
+      * most beneficial optimization
+      * decision to make method inlined depends on how hot it is and how big it is
+    * escapea analysis
+      * most sophisticated optimization
+      * can often introduce "bugs" in improperly synchronized code
+  * deoptimization
+    * undo previous optimizations because of they are no longer valid
+    * usually after deoptimization code warms up quickly
+    * under tiered compilation code is deoptimized when it was compiled by C1 and now has been compiled by C2
+  * tiered compilation levels
+    * 0: interpreted code
+    * 1: simple C1
+    * 2: limited C1
+    * 3: full C1
+    * 4: C2 compiled code
