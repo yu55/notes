@@ -67,7 +67,7 @@
   * everything should be measured: application, operating system, database
   * run on the target system
 
-* 3 Toolbox
+## 3 Toolbox
   * Operating system
     * CPU Usage
       * CPU usage value is an average over some time: 1 second, 5 seconds, 30 seconds
@@ -142,7 +142,7 @@
           * if native profiler shows hard CPU usage on GC it means that GC tuning has to be done
           * if native profiler shows significant time usage in compilation threads this is usually not affecting performance
 
-4 Working with JIT compiler
+## 4 Working with JIT compiler
   * Hot spot - section of application code that is frequently executed
   * JIT - "just in time", compilation occurs as the program is executed
   * C1 - client compiler; compiles sooner but produces less effective code than C2; option -client; ignored on 64-bit JVMs
