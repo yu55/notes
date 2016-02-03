@@ -27,7 +27,7 @@ class ExampleRestControllerTest {
     MockMvc mockMvc
 
     @Before
-    void setup() throws Exception {
+    void setup() {
         this.mockMvc = webAppContextSetup(webApplicationContext).build()
     }
 
