@@ -1,13 +1,13 @@
-package org.yu55.controller
+package org.yu55.ued.controller
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-public class ExampleRestController {
+class ExampleRestController {
 
-    @RequestMapping(value = "/get")
-    public String get() {
+    @RequestMapping(value = '/get')
+    String get() {
         throw new ExampleRestControllerException()
     }
 }

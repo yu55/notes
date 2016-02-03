@@ -1,12 +1,12 @@
-package org.yu55
+package org.yu55.ued
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-public class UndeclaredExceptionsDemoApplication {
+class UndeclaredExceptionsDemoApplication {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(UndeclaredExceptionsDemoApplication.class, args)
     }
 }
