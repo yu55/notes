@@ -11,7 +11,7 @@ class RestControllerAspect {
 
     @AfterReturning('execution(* org.yu55.ued.controller.ExampleRestController.get())')
     public void logServiceAccess(JoinPoint joinPoint) {
+        // empty implementation for clarity reasons
     }
-
 
 }
