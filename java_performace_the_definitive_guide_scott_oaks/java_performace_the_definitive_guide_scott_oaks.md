@@ -196,3 +196,38 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * 2: limited C1
     * 3: full C1
     * 4: C2 compiled code
+
+## 5 An Introduction to Garbage Collection
+  * besides rewriting code, tuning GC has most impact on the performance
+  * There are four main garbage collectors on JVM:
+    * serial collector (single-CPU machines)
+    * throughput (parallel) collector
+    * CMS - concurrent collector (low-pause, but not pauseless! More CPU intesive)
+    * G1 collector (low-pause, but not pauseless! More CPU intesive)
+  * GC means that developer doesn't need to manage memory by himself, but sometimes GC tuning is needed (and this is a tradeoff)
+  * GC performance depends on these factors:
+    * finding unused objects,
+    * making their memory available
+    * compacting the heap (to be able to allocate bigger objects than biggest just free'd)
+  * `stop-the-world` pauses - moments when all application threads are stopped (when GC is moving objects around application threads cannot access these objects)
+  * Generational Garbage Collectors
+    * heap is splitted into areas called `generations`
+      * old (tenured)
+      * young, which is further splitted into:
+        * eden and survivor
+    * all GCs use old and young generations
+    * generations where created because there are many short living objects in applications
+    * minor GC: when young is fills up, the GC will stop app threads and empty it (some objects will be discarded, some moved elsewhere)
+    * having you generation gives performance benefit: GC must process only part of heap which is faster compared to complete heap processing (even minor GC occures more requently though)
+    * minor GC moves objects from eden to survivor space (or old generation) which automatically compacts eden - another performance benefit
+    * full GC for simpler algorithms: when old generation is getting full all app threads are stopped, unused objects are discarded and heap is compacted; most of the times this is a long process;
+    * full GC for CMS/G1: finding unused objects computationally and don't stop app threads; old generation compacting also uses different approach
+    * G1/CMS can also have long pauses - tuning is needed to avoid this
+    * ALL GCs cause `stop-the-world` when cleaning young generation (which is usually quick)
+    * GC selection for JavaEE application:
+      * individual requests will be impacted by GC pauses - if minimizing this effect is needed the concurrent collector is the better choice
+      * if average reponse time is more important, the throughput GC is more appropriate
+      * avoiding long pauses costs more CPU usage
+    * GC selection for batch applications:
+      * if enough CPU is available using paralell GC will make the job finish faster
+      * if CPU is limited extra CPU will make the job finish later  
