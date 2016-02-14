@@ -230,4 +230,39 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * avoiding long pauses costs more CPU usage
     * GC selection for batch applications:
       * if enough CPU is available using paralell GC will make the job finish faster
-      * if CPU is limited extra CPU will make the job finish later  
+      * if CPU is limited extra CPU will make the job finish later
+  * GC algorithms
+    * The serial garbage collector
+      * simplest one; runs on 32-bit JVMs and single-CPU machines
+      * single thread to process heap
+      * minor and major GC stops all application threads
+      * full GC will compact old generation
+      * -XX:+UseSerialGC
+    * The throughput collector
+      * default for 64-bit JVMs and multi-CPU machines
+      * multiple threads to process heap (-XX:+UserParallelOldGC before jdk7u4)
+      * much faster minor GC than serial
+      * minor and major GC stops all application threads
+      * full GC will compact old generation
+      * -XX:+UseParallelGC -XX:+UseParallelOldGC
+    * The CMS collector
+      * minor GC uses multiple threads and stops all application threads
+      * different algorithm for young generation collecting (-XX:+UseParNewGC)
+      * full GC may pause application threads only for a very short period of time (background threads scan heap periodically and discard unused objects)
+      * trade off: increased CPU usage (because of background GC threads)
+      * if not enough CPU or too much fragmentation CMS reverts to the behaviur of serial collector
+      * -XX:+UseConcMarkSweepGC -XX:+UseParNewGC
+    * The G1 collector
+      * design to process large (>4Gb) heaps with minimal pauses
+      * young generation is collected (via multiple threads) by stopping all application threads
+      * old generation is processed by many threads and almost doesn't cause application pauses
+      * old generation is divided into regions so compacting is done via coping objects between these regions
+      * heap much less likely to be fragmentet
+      * trade off: increased CPU usage
+      * -XX:+UseG1GC
+  * Forcing GC via `System.gc()`
+    * always triggers a full GC
+    * most of the time useless as it's shifting GC
+    * forcing GC may make sense for small benchmarks before measuring code performance (code must be able to warm-up properly)
+    * sometimes before heap dump
+    * RMI does its distributed GC every one hour
