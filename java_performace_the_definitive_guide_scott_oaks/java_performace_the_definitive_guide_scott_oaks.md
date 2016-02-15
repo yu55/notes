@@ -306,3 +306,8 @@ code cache size using -XX:ReservedCodeCacheSize=`
         * 8 CPU, 1 GB heap 8 threads is too much; 4-6 is OK
         * 128 CPU machine: 83 GC is also too much
         * when more than one JVM runs on a machine limiting threads is a good idea; 16 CPU and 4 JVMs: 4 threads per JVM is OK to prevent app and or GC threads fighting for resources
+  * Adaptive sizing
+    * adaptive sizing controls how the JVM alters the ratio of young generation to old generation within the heap
+    * adaptive sizing should generally be kept enabled, since adjusting those generation sizes is how GC algorithms attempt to meet their pause time goals
+    * for finely tuned heaps, adaptive sizing can be disabled for a small performance boost (-XX:-UseAdaptiveSizePolicy to false); adaptive sizing is also effectively turned off if the minimum and maximum heap sizes are set to the same value, and the initial and maximum sizes of the new generation are set to the same value
+    * -XX:+PrintAdaptiveSizePolicy to see resizing in GC.log
