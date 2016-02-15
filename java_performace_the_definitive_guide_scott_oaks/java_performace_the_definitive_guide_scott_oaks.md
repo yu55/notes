@@ -283,3 +283,14 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * Initial Young Gen Size = Initial Heap Size / (1 + NewRatio)
       * when a heap size is fixed (by setting -Xms equal to -Xmx), it is usually preferable to use -Xmn to specify a fixed size for the young generation as well
       * if an application needs a dynamically sized heap and requires a larger (or smaller) young generation, then focus on setting the NewRatio value
+  * Sizing permgen and metaspace
+    * permgen = permanent generation; in Java 7; (-XX:PermSize=N, -XX:MaxPermSize=N)
+    * metaspace - in Java 8; (-XX:MetaspaceSize=N; -XX:MaxMetaspaceSize=N)
+    * not exactly the same, but for end-user they hold class-related data; does not hold the actual instances of classes
+    * no maximum size by default
+    * resizing these regions needs full GC (when there are a lot of full GCs during the startup of a program (as it is loading classes), it is often because permgen or metaspace is being resized, so increasing the initial size is a good idea to improve startup in that case)
+    * Java 7 applications that define a lot of classes should increase the maximum size as well (application servers typically specify a maximum permgen size of 128 MB, 192 MB, or more)
+    * data stored in permgen is not permanent
+    * when application server deploy/redeploy old classloaders are unreferenced and full GC may occure because old classes has to be GC and permgen resized
+    * jmap -permstat (Java 7) / jmap -clstats (Java 8)
+    * For typical applications that do not load classes after startup, the initial size of this region can be based on its usage after all classes have been loaded. That will slightly speed up startup.
