@@ -294,3 +294,15 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * when application server deploy/redeploy old classloaders are unreferenced and full GC may occure because old classes has to be GC and permgen resized
     * jmap -permstat (Java 7) / jmap -clstats (Java 8)
     * For typical applications that do not load classes after startup, the initial size of this region can be based on its usage after all classes have been loaded. That will slightly speed up startup.
+  * Controlling parallelism
+    * -XX:ParallelGCThreads=N number of threads used for following operations:
+      * collection of the young generation when using -XX:+UseParallelGC
+      * collection of the old generation when using -XX:+UseParallelOldGC
+      * collection of the young generation when using -XX:+UseParNewGC
+      * collection of the young generation when using -XX:+UseG1GC
+      * stop-the-world phases of CMS (though not full GCs)
+      * stop-the-world phases of G1 (though not full GCs)
+      * ParallelGCThreads = 8 + ((N - 8) * 5 / 8) and this is sometimes too much:
+        * 8 CPU, 1 GB heap 8 threads is too much; 4-6 is OK
+        * 128 CPU machine: 83 GC is also too much
+        * when more than one JVM runs on a machine limiting threads is a good idea; 16 CPU and 4 JVMs: 4 threads per JVM is OK to prevent app and or GC threads fighting for resources
