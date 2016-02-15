@@ -311,3 +311,15 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * adaptive sizing should generally be kept enabled, since adjusting those generation sizes is how GC algorithms attempt to meet their pause time goals
     * for finely tuned heaps, adaptive sizing can be disabled for a small performance boost (-XX:-UseAdaptiveSizePolicy to false); adaptive sizing is also effectively turned off if the minimum and maximum heap sizes are set to the same value, and the initial and maximum sizes of the new generation are set to the same value
     * -XX:+PrintAdaptiveSizePolicy to see resizing in GC.log
+  * GC tools
+    * basic (not recommended log): -verbose:gc or -XX:+PrintGC
+    * detailed log: -XX:+PrintGCDetails and -XX:+PrintGCTimeStamps or -XX:+PrintGCDateStamps
+    * log to file: -Xloggc:filename ; rotation: -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=N -XX:GCLogFileSize=N
+    * GC Historgram - tool to analyze GC.log file
+    * jstat -options shows full list of options
+    * jstat -gcutil process_id 1000 will print each second: show how much percent are generations filled and how long and how many GCs were there
+    * GC logs are the key piece of data required to diagnose GC issues; they should be collected routinely (even on production servers).
+  * Summary
+    * For many applications, though, the only tuning required is to select the appropriate GC algorithm and, if needed, to increase the heap size of the application.
+    * Adaptive sizing will then allow the JVM to autotune its behavior to provide good performance using the given heap.
+    * More complex applications will require additional tuning, particularly for specific GC algorithms.
