@@ -262,7 +262,24 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * -XX:+UseG1GC
   * Forcing GC via `System.gc()`
     * always triggers a full GC
-    * most of the time useless as it's shifting GC
+    * most of the time useless as it's only shifting GC in time
     * forcing GC may make sense for small benchmarks before measuring code performance (code must be able to warm-up properly)
     * sometimes before heap dump
     * RMI does its distributed GC every one hour
+  * Basic GC tuning
+    * Sizing the heap
+      * choosing a heap size is a matter of balance: too small makes too often GC, too big is not necessary either (GC pauses increase)
+      * never specify heap bigger than physical memory (if bigger swapping occures e.x. while GC processing)
+      * initial heap size: -XmsN
+      * maximum heap size: -XmxN
+      * there is no hard-and-fast rule how to size heap
+      * a good rule of thumb is to size the heap so that is 30% occupied after a full GC
+    * Sizing the generations
+      * choosing size for young and old generations is a matter of balance: larger young generation will be collected less often, and fewer objects will be promoted into old generation; but smaller old generation will fill up faster causing more requent full GCs;
+      * -XX:NewRatio=N - set the ratio of the young generation to the old generation (default 2)
+      * -XX:NewSize=N - set the initial size of the young generation
+      * -XX:MaxNewSize=N - set the maximum size of the young generation
+      * -XmnN - shorthand for setting both NewSize and MaxNewSize to the same value
+      * Initial Young Gen Size = Initial Heap Size / (1 + NewRatio)
+      * when a heap size is fixed (by setting -Xms equal to -Xmx), it is usually preferable to use -Xmn to specify a fixed size for the young generation as well
+      * if an application needs a dynamically sized heap and requires a larger (or smaller) young generation, then focus on setting the NewRatio value
