@@ -331,4 +331,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * For file-based I/O using character (string) data, always wrap the underlying stream with a BufferedReader or BufferedWriter.
     * The streams returned from a socket (via the getInputStream() or getOutputStream() methods) operate in the same manner, and performing I/O a byte at a time over a socket is quite slow.
     * ByteArrayInputStream and ByteArrayOutputStream doesn't need buffering as they are buffers themselves.
-    * example: ObjectOutputStream(ByteArrayOutputStream()) is slower than ObjectOutputStream(BufferedOutputStream(GZIPOutputStream(ByteArrayOutputStream())))
+    * example: ObjectOutputStream(ByteArrayOutputStream()) is slower than ObjectOutputStream(BufferedOutputStream(GZIPOutputStream(ByteArrayOutputStream()))).
+    * I/O must be properly buffered also for internal operations like compression and string encoding.
+  * Classloading
+    * Java 7 introduced parallel-capable constructors.
+    * In complex applications (particularly application servers) with multiple classloaders, making those classloaders parallel-capable can solve issues where they are bottlenecked on the system or bootclass classloader.
+    * Applications that do a lot of classloading through a single classloader in a single thread may benefit from disabling the parallelcapable feature of Java 7.
