@@ -324,3 +324,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Adaptive sizing will then allow the JVM to autotune its behavior to provide good performance using the given heap.
     * More complex applications will require additional tuning, particularly for specific GC algorithms.
 ## 6 Garbage Collection Algorithms - TBD
+
+## 12 JAVA SE API Tips
+  * Buffered I/O
+    * For file-based I/O using binary data, always use a BufferedInputStream or BufferedOutputStream to wrap the underlying file stream.
+    * For file-based I/O using character (string) data, always wrap the underlying stream with a BufferedReader or BufferedWriter.
+    * The streams returned from a socket (via the getInputStream() or getOutputStream() methods) operate in the same manner, and performing I/O a byte at a time over a socket is quite slow.
+    * ByteArrayInputStream and ByteArrayOutputStream doesn't need buffering as they are buffers themselves.
+    * example: ObjectOutputStream(ByteArrayOutputStream()) is slower than ObjectOutputStream(BufferedOutputStream(GZIPOutputStream(ByteArrayOutputStream())))
