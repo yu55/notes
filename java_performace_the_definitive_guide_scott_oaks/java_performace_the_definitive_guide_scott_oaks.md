@@ -323,3 +323,4 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * For many applications, though, the only tuning required is to select the appropriate GC algorithm and, if needed, to increase the heap size of the application.
     * Adaptive sizing will then allow the JVM to autotune its behavior to provide good performance using the given heap.
     * More complex applications will require additional tuning, particularly for specific GC algorithms.
+## 6 Garbage Collection Algorithms - TBD
