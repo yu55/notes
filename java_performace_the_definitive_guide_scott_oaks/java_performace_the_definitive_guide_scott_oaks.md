@@ -341,3 +341,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Java’s default Random class is expensive to initialize, but once initialized, it can be reused.
     * In multithreaded code, the ThreadLocalRandom class is preferred.
     * The SecureRandom class will show arbitrary, completely random performance. Performance tests on code using that class must be carefully planned.
+  * JNI
+    * JNI is not a solution to performance problems. Java code will almost always run faster than calling into native code.
+    * When JNI is used, limit the number of calls from Java to C; crossing the JNI boundary is expensive.
+    * JNI code that uses arrays or strings must pin those objects; limit the length of time they are pinned so that the garbage collector is not impacted.
