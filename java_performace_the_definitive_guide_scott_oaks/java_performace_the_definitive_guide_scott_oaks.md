@@ -349,3 +349,8 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Exceptions are not necessarily expensive to process, though they should be used only when appropriate.
     * The deeper the stack, the more expensive to process exceptions.
     * The JVM will optimize away the stack penalty for frequently created system exceptions.
+  * Strings
+    * one-line string concatenation has good performance (translated by javac into StringBuilder)
+    * for multiple concatenations use StringBuilder
+    * Strings are immutable so it's better to reuse String objects
+    * String encoding (Charset.encode()/decode()) should be done on larger bufferes
