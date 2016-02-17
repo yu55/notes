@@ -337,3 +337,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Java 7 introduced parallel-capable constructors.
     * In complex applications (particularly application servers) with multiple classloaders, making those classloaders parallel-capable can solve issues where they are bottlenecked on the system or bootclass classloader.
     * Applications that do a lot of classloading through a single classloader in a single thread may benefit from disabling the parallelcapable feature of Java 7.
+  * Random Numbers
+    * Java’s default Random class is expensive to initialize, but once initialized, it can be reused.
+    * In multithreaded code, the ThreadLocalRandom class is preferred.
+    * The SecureRandom class will show arbitrary, completely random performance. Performance tests on code using that class must be carefully planned.
