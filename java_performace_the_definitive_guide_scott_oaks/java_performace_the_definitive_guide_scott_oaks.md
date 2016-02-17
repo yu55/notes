@@ -345,3 +345,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * JNI is not a solution to performance problems. Java code will almost always run faster than calling into native code.
     * When JNI is used, limit the number of calls from Java to C; crossing the JNI boundary is expensive.
     * JNI code that uses arrays or strings must pin those objects; limit the length of time they are pinned so that the garbage collector is not impacted.
+  * Exceptions
+    * Exceptions are not necessarily expensive to process, though they should be used only when appropriate.
+    * The deeper the stack, the more expensive to process exceptions.
+    * The JVM will optimize away the stack penalty for frequently created system exceptions.
