@@ -354,3 +354,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * for multiple concatenations use StringBuilder
     * Strings are immutable so it's better to reuse String objects
     * String encoding (Charset.encode()/decode()) should be done on larger bufferes
+  * Logging
+    * GC logging should always ON - overhead is very small but logged info may be precious
+    * log info numerically - minimize any data conversion; logs can always be postprocessed to convert data
+    * keep balance between data and logging level
+    * code should contain lots of logging to enable users to figure out what it does, but none of that should be enabled by default
+    * don't forget to test for the logging level before calling the logger if the arguments to the logger require method calls or object allocation
+
