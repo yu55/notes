@@ -360,4 +360,6 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * keep balance between data and logging level
     * code should contain lots of logging to enable users to figure out what it does, but none of that should be enabled by default
     * don't forget to test for the logging level before calling the logger if the arguments to the logger require method calls or object allocation
-
+  * Java Collections API
+    * Carefully consider how collections will be accessed and choose the right type of synchronization for them. However, the penalty for uncontended access to a memory-protected collection (particularly one using CAS-based protections) is minimal; sometimes it is better to be safe than sorry.
+    * Sizing of collections can have a large impact on performance: either slowing down the garbage collector if the collection is too large, or causing lots of copying and resizing if it is too small.
