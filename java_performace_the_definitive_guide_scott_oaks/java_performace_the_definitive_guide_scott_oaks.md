@@ -374,3 +374,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * Lambda and Anonymous Classloading
     * The choice between using a lambda or an anonymous class should be dictated by ease of programming, since there is no difference between their performance.
     * Lambdas are not implemented as classes (they're implemented as static methods invoked by special JDK helper classes), so one exception to that rule is in environments where classloading behavior is important; lambdas will be slightly faster in that case.
+  * Stream and filter performance
+    * Filters offer a very significant performance advantage by allowing processing to end in the middle of iterating through the data.
+    * Even when the entire data set is processed, a single filter will slightly outperform an iterator.
+    * Multiple filters have some overhead; make sure to write good filters.
