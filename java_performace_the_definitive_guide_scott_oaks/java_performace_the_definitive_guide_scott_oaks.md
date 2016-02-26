@@ -371,3 +371,6 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * AutoBoxCacheMax set from default 128 to 20000
       * BiasedLockingStartupDelay is reduced from 2000 to 500
       * OptimizeStringConcat for more optimized StringBuilder creation (default on 7u4+)
+  * Lambda and Anonymous Classloading
+    * The choice between using a lambda or an anonymous class should be dictated by ease of programming, since there is no difference between their performance.
+    * Lambdas are not implemented as classes (they're implemented as static methods invoked by special JDK helper classes), so one exception to that rule is in environments where classloading behavior is important; lambdas will be slightly faster in that case.
