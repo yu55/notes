@@ -363,3 +363,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * Java Collections API
     * Carefully consider how collections will be accessed and choose the right type of synchronization for them. However, the penalty for uncontended access to a memory-protected collection (particularly one using CAS-based protections) is minimal; sometimes it is better to be safe than sorry.
     * Sizing of collections can have a large impact on performance: either slowing down the garbage collector if the collection is too large, or causing lots of copying and resizing if it is too small.
+  * AggressiveOpts
+    * The AggressiveOpts flag enables certain optimizations in base classes (BigDecimal, BigInteger, MutableBigDecimal, DecimalFormat, DigitalList, NumberFormat, HashMap, LinkedHashMap, TreeMap). For the most part, these classes are faster than their replacements, but they may have unexpected side effects.
+    * These replacement classes have been removed in Java 8.
+    * other minor tunings of the JVM:
+      * AutoFill, DoEscapeAnalysis (better loop optimizations; default on 7u4+)
+      * AutoBoxCacheMax set from default 128 to 20000
+      * BiasedLockingStartupDelay is reduced from 2000 to 500
+      * OptimizeStringConcat for more optimized StringBuilder creation (default on 7u4+)
