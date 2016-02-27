@@ -325,6 +325,22 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * More complex applications will require additional tuning, particularly for specific GC algorithms.
 ## 6 Garbage Collection Algorithms - TBD
 
+## 9 Threading and Synchronization Performance
+  * Thread pools and thread executors
+    * core pool size = minimum size
+    * if load is increased into the bottleneck then performance will degrade significantly
+    * self-tuning thread pools is difficult-thread pools have no full understanding of all aspects of environment, e.g. adding more threads to pool when work is pending is often bad thing to do
+    * idle time should be planned in minutes to handle spike in load
+    * good minimum size for pool is equal to expected average parallel threads
+    * sizing a thread pool executor
+      * SynchronousQueue - new tasks spawn new threads until max size, then tasks are rejected; good for managing small number of tasks
+      * Unbound queues - tasks are never rejected (queue size is unlimited); executor will use at most the tasks specified by core (minimum)
+      * Bounded queues - use complicated algorithm to determine when to start new thread;
+    * when attempting to maximize performance specify that ThreadPoolExecutor has the same number of core and max threads and utilize a LinkedBlockingQueue to hold the pending tasks (if an unbounded task list is appropriate), or an ArrayBlockingQueue (if a bounded task list is appropriate). 
+    * Thread pools are one case where object pooling is a good thing: threads are expensive to initialize, and a thread pool allows the number of threads on a system to be easily throttled.
+    * Thread pools must be carefully tuned. Blindly adding new threads into a pool can, in some circumstances, have a detrimental effect on performance (when tasks are not only CPU-bounded).
+    * Using simpler options for a ThreadPoolExecutor will usually provide the best (and most predictable) performance.
+
 ## 12 JAVA SE API Tips
   * Buffered I/O
     * For file-based I/O using binary data, always use a BufferedInputStream or BufferedOutputStream to wrap the underlying file stream.
