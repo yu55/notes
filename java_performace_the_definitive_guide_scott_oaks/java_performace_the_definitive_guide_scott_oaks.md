@@ -394,3 +394,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Filters offer a very significant performance advantage by allowing processing to end in the middle of iterating through the data.
     * Even when the entire data set is processed, a single filter will slightly outperform an iterator.
     * Multiple filters have some overhead; make sure to write good filters.
+  * The ForkJoinPool
+    * The ForkJoinPool class should be used for recursive, divide-andconquer algorithms.
+    * Make the effort to determine the best point at which the recursion of tasks in the algorithm should cease. Creating too many tasks can hurt performance, but too few tasks will also hurt performance if the tasks do not take the same amount of time.
+    * Features in Java 8 that use automatic parallelization will use a common instance of the ForkJoinPool class. You may need to adjust the default size of that common instance.
