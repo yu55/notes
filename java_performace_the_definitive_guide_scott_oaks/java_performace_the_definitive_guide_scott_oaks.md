@@ -340,6 +340,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Thread pools are one case where object pooling is a good thing: threads are expensive to initialize, and a thread pool allows the number of threads on a system to be easily throttled.
     * Thread pools must be carefully tuned. Blindly adding new threads into a pool can, in some circumstances, have a detrimental effect on performance (when tasks are not only CPU-bounded).
     * Using simpler options for a ThreadPoolExecutor will usually provide the best (and most predictable) performance.
+  * Costs of synchronization
+    * Thread synchronization has two performance costs: it limits the scalability of an application, and there is a cost in obtaining locks.
+    * The memory semantics of synchronization, CAS-based utilities, and the volatile keyword can have a large performance impact, particularly on large machines with many registers.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
