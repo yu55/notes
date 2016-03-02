@@ -343,6 +343,15 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * Costs of synchronization
     * Thread synchronization has two performance costs: it limits the scalability of an application, and there is a cost in obtaining locks.
     * The memory semantics of synchronization, CAS-based utilities, and the volatile keyword can have a large performance impact, particularly on large machines with many registers.
+  * Avoiding synchronization
+    * CAS-based utilities compared to traditional synchronization:
+      * If access to a resource is uncontended, then CAS-based protection will be slightly faster than traditional synchronization (though no protection at all will be slightly faster still).
+      * If access to a resource is lightly or moderately contended, CAS-based protection will be faster (often much faster) than traditional synchronization.
+      * As access to the resource becomes heavily contended, traditional synchronization will at some point become the more efficient choice. In practice, this occurs only on very large machines running a large number of threads
+      * CAS-based protection is not subject to contention when values are read and not written.
+    * Avoiding contention for synchronized objects is a useful way to mitigate their performance impact.
+    * Thread-local variables are never subject to contention; they are ideal for holding synchronized objects that don’t actually need to be shared between threads.
+    * CAS-based utilities are a way to avoid traditional synchronization for objects that do need to be shared.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
