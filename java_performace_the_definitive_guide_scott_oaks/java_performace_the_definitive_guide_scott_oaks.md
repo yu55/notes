@@ -358,6 +358,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * very difficult to detect; when a loop executes to long do a code inspection to search for patterns where false sharing can occur;
     * best way to avoid is to move data to local variables and store them later; sometimes padding can help to move variables to different cache lines; external tools (like Intel VTune) may help
     * Java 8 introduced @Contended annotation which prevents JVM automatic padding (by default this works only for inner JDK classes; to make it work for the rest of classes: enable -XX:-RestrictContented flag); to disable automatic padding at all: -XX:-EnableContended
+  * Tuning Thread Stack Sizes
+    * Thread stack sizes can be reduced on machines where memory is scarce.
+    * Thread stack sizes can be reduced on 32-bit JVMs to allow the heap to consume slightly more memory within the 4 GB process size limit.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
