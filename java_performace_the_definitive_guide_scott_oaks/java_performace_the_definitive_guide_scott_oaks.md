@@ -361,6 +361,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * Tuning Thread Stack Sizes
     * Thread stack sizes can be reduced on machines where memory is scarce.
     * Thread stack sizes can be reduced on 32-bit JVMs to allow the heap to consume slightly more memory within the 4 GB process size limit.
+  * Biased locking
+    * locks can be granted fairly (round-robin) or biased (towards last thread that used it)
+    * biased may benefit because of higher probability that data still sits in cache
+    * apps with thread pool may benefit from turning biased locking off: -XX:-UseBiasedLocking
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
