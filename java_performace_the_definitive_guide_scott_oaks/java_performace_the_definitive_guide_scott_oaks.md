@@ -365,6 +365,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * locks can be granted fairly (round-robin) or biased (towards last thread that used it)
     * biased may benefit because of higher probability that data still sits in cache
     * apps with thread pool may benefit from turning biased locking off: -XX:-UseBiasedLocking
+  * Lock spinning
+    * handling synchronized lock that is contended:
+      * thread which waits for lock enters into busy lock (polls lock periodically); good for short locks
+      * thread can be placed in a queue and wait for notification; good for long locks
+      * -XX:+UseSpinning is NOT in use anymore
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
