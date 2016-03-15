@@ -370,6 +370,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * thread which waits for lock enters into busy lock (polls lock periodically); good for short locks
       * thread can be placed in a queue and wait for notification; good for long locks
       * -XX:+UseSpinning is NOT in use anymore
+  * Thread priorities
+    * each thread has developer defined priority, which is a hint for operating system how important particular thread is
+    * these hints are not treated very seriously by OS - developer can't depend on the priority of thread to affect it's performance
+    * if some tasks are more important than other there has to be some logic in code that will handle this (e.g. by assigning tasks to differenet thread pools)
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
