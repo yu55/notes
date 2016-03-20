@@ -379,6 +379,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * For performance analysis, the important facet of thread visibility is when threads are blocked on a resource or on I/O.
     * Java Flight Recorder provides an easy way to examine the events that caused a thread to block.
     * jstack provides some level of visibility into the resources threads are blocked on.
+  * Summary
+    * there are relatively few flags to tweak (and those have limits on some OS'es)
+    * good thread performance is about following best-practice guidelines for managing the number of threads and for limiting the effects of synchronization
+    * With the help of appropriate profiling and lock analysis tools, applications can be examined and modified so that threading and locking issues do not negatively affect performance
+
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
