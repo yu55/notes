@@ -374,6 +374,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * each thread has developer defined priority, which is a hint for operating system how important particular thread is
     * these hints are not treated very seriously by OS - developer can't depend on the priority of thread to affect it's performance
     * if some tasks are more important than other there has to be some logic in code that will handle this (e.g. by assigning tasks to differenet thread pools)
+  * Monitoring threads and locks
+    * Basic visibility into the threads of a system provides an overview of the number of threads running.
+    * For performance analysis, the important facet of thread visibility is when threads are blocked on a resource or on I/O.
+    * Java Flight Recorder provides an easy way to examine the events that caused a thread to block.
+    * jstack provides some level of visibility into the resources threads are blocked on.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
