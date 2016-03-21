@@ -384,6 +384,14 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * good thread performance is about following best-practice guidelines for managing the number of threads and for limiting the effects of synchronization
     * With the help of appropriate profiling and lock analysis tools, applications can be examined and modified so that threading and locking issues do not negatively affect performance
 
+## 10 Java Enterprise Edition Performance
+  * Basic Web Container Performance
+    * produce less output
+    * produce less whitespace
+    * combine CSS and JavaScript resources (single file downloads faster than many small ones)
+    * compress the output (it takes more CPU but over WAN content is delivered much faster)
+    * don't use dynamic JSP compilation
+
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
