@@ -391,7 +391,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * combine CSS and JavaScript resources (single file downloads faster than many small ones)
     * compress the output (it takes more CPU but over WAN content is delivered much faster)
     * don't use dynamic JSP compilation
-
+  * HTTP Session State
+    * Session state can have a major impact on the performance of an application server.
+    * To reduce the effect of session state on the garbage collector, keep as little data in the session state as possible, and expire the session as soon as possible.
+    * Look into app server-specific tunings to move stale session data out of the heap.
+    * When using high availability, make sure to configure the application server to replicate only attributes that have changed.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
