@@ -402,6 +402,17 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * Tuning EJB Caches
     * EJB caches are used only for stateful session beans while they are associated with an HTTP session.
     * EJB caches should be tuned large enough to prevent passivation (serialiazing the bean and saving on disk).
+  * Local and remote instances
+    * Remote interfaces are slower than remote ones, even within the same server
+  * XML and JSON Processing
+    * Like HTML data, programmatic data will greatly benefit from reducing whitespace and being compressed
+    * parser vs marshaller:
+      * parser provides pure data and it's up to application logic what to do next; examples of parsers: token parsers, pull parsers
+      * marshallers use parsers to process data but they provide data representation that more complex programs can use in their logic; examples: document models, object representations
+    * If a program needs to make one simple pass through the data, then simply using the fastest parser will suffice. Directly using a parser is also appropriate if the data is to be saved in a simple, application-defined structure.
+    * Using a document model is more appropriate when the format of the data is important. If the format of the data must be preserved, then a document format is very easy: the data can be read into the document format, altered in some way, and then the document format can simply be written to a new data stream.
+    * For ultimate flexibility, an object model provides Java-language level representation of the data. The data can be manipulated in the familiar terms of objects and their attributes. The added complexity in the marshalling is (mostly) transparent to the developer and may make that part of the application a little slower, but the productivity improvement in working with the code can offset that issue.
+    * There are many ways for Java EE applications to process programmatic data. As these techniques provide more functionality to developers, the cost of the data processing itself will increase. Don’t let that dissuade you from choosing the right paradigm for handling the data in your application.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
