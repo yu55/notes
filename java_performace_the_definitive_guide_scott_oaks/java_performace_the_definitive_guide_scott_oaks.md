@@ -399,6 +399,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * Tuning EJB Pools
     * EJB pools are a classic example of object pooling: they are effectively pooled because they can be expensive to initialize, and because there are relatively few of them.
     * EJB pools generally have a steady and maximum size. Both values should be tuned for a particular environment, but the steady size is more important to minimize long-term effects on the garbage collector.
+  * Tuning EJB Caches
+    * EJB caches are used only for stateful session beans while they are associated with an HTTP session.
+    * EJB caches should be tuned large enough to prevent passivation (serialiazing the bean and saving on disk).
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
