@@ -396,6 +396,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * To reduce the effect of session state on the garbage collector, keep as little data in the session state as possible, and expire the session as soon as possible.
     * Look into app server-specific tunings to move stale session data out of the heap.
     * When using high availability, make sure to configure the application server to replicate only attributes that have changed.
+  * Tuning EJB Pools
+    * EJB pools are a classic example of object pooling: they are effectively pooled because they can be expensive to initialize, and because there are relatively few of them.
+    * EJB pools generally have a steady and maximum size. Both values should be tuned for a particular environment, but the steady size is more important to minimize long-term effects on the garbage collector.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
