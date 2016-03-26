@@ -418,6 +418,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * Push parsers tend to be faster than pull parsers.
       * The algorithm used to find the factory for a parser can be quite time-consuming; if possible, bypass the services implementation and specify a factory directly via a system property.
       * At any point in time, the winner of the fastest parser implementation race may be different. Seek out alternate parsers when appropriate.
+    * XML Validation
+      * When schema validation is functionally important, make sure to use it; just be aware that it will add a significant performance penalty to parsing the data.
+      * Always reuse schemas to minimize the effect of validation.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
