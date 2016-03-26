@@ -413,6 +413,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Using a document model is more appropriate when the format of the data is important. If the format of the data must be preserved, then a document format is very easy: the data can be read into the document format, altered in some way, and then the document format can simply be written to a new data stream.
     * For ultimate flexibility, an object model provides Java-language level representation of the data. The data can be manipulated in the familiar terms of objects and their attributes. The added complexity in the marshalling is (mostly) transparent to the developer and may make that part of the application a little slower, but the productivity improvement in working with the code can offset that issue.
     * There are many ways for Java EE applications to process programmatic data. As these techniques provide more functionality to developers, the cost of the data processing itself will increase. Don’t let that dissuade you from choosing the right paradigm for handling the data in your application.
+    * Choosing a Parser
+      * Choosing the right parser can have a big impact on the performance of an application.
+      * Push parsers tend to be faster than pull parsers.
+      * The algorithm used to find the factory for a parser can be quite time-consuming; if possible, bypass the services implementation and specify a factory directly via a system property.
+      * At any point in time, the winner of the fastest parser implementation race may be different. Seek out alternate parsers when appropriate.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
