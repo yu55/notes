@@ -424,6 +424,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Document models
       * DOM and JsonObject models of data are more powerful to work with than simple parsers, but the time to construct the model can be significant.
       * Filtering data out of the model will take even more time than constructing the default model, but that can still be worthwhile for long-lived or very large documents.
+    * Java Object Models
+      * For XML documents, producing Java objects via JAXB yields the simplest programming model for accessing and using the data.
+      * Creating the JAXB objects will be more expensive than creating a DOM object model.
+      * Writing out XML data from JAXB objects will be faster than writing out a DOM object.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
