@@ -428,6 +428,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * For XML documents, producing Java objects via JAXB yields the simplest programming model for accessing and using the data.
       * Creating the JAXB objects will be more expensive than creating a DOM object model.
       * Writing out XML data from JAXB objects will be faster than writing out a DOM object.
+    * Object serialization
+      * Serialization of data, particularly within Java EE, can be a big performance bottleneck.
+      * Marking instance variables transient will make serialization faster and reduce the amount of data to be transmitted. Both of those are usually big performance wins, unless re-creating the data on the receiver takes a very long time.
+      * Other optimizations via the writeObject() and readObject() methods can significantly speed up serialization. Approach them with caution, since it is easy to make a mistake and introduce a subtle bug.
+      * Compressing serialized data is often beneficial, even if the data will not travel across a slow network.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
