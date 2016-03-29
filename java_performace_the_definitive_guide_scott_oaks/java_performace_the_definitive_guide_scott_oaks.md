@@ -436,6 +436,19 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Sizing data transfers
       * sometimes it may be worth to return/transmit lots of unnecessary data for client because still it will be more efficient than returning responses for subsequent requests for particular data
 
+## 11 Database Performance Best Practises
+  * JDBC
+    * where work is performed:
+      * thin driver: it relies on database server to do more processing; fairly small footprint
+      * thick driver: offloads work form database but requires more processing power and memory on Java side
+    * JDBC types:
+      * type 1: bridge between ODBC and JDBC; avoid due to generally bad performance
+      * type 2: use native code; tend to be 'thick'
+      * type 3: pure Java but designed for specific architecture (sometimes, though usually not, an application server)
+      * type 4: pure Java; tend to be 'thin'
+    * Spend time evaluating the best JDBC driver for the application
+    * The best driver will often vary depending on the specific deployment. The same application may be better with one JDBC driver in one deployment and a different JDBC driver in a different deployment.
+
 ## 12 JAVA SE API Tips
   * Buffered I/O
     * For file-based I/O using binary data, always use a BufferedInputStream or BufferedOutputStream to wrap the underlying file stream.
