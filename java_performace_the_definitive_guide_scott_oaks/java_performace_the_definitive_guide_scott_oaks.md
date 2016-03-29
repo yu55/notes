@@ -433,6 +433,8 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * Marking instance variables transient will make serialization faster and reduce the amount of data to be transmitted. Both of those are usually big performance wins, unless re-creating the data on the receiver takes a very long time.
       * Other optimizations via the writeObject() and readObject() methods can significantly speed up serialization. Approach them with caution, since it is easy to make a mistake and introduce a subtle bug.
       * Compressing serialized data is often beneficial, even if the data will not travel across a slow network.
+    * Sizing data transfers
+      * sometimes it may be worth to return/transmit lots of unnecessary data for client because still it will be more efficient than returning responses for subsequent requests for particular data
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
