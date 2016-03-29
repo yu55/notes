@@ -421,6 +421,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * XML Validation
       * When schema validation is functionally important, make sure to use it; just be aware that it will add a significant performance penalty to parsing the data.
       * Always reuse schemas to minimize the effect of validation.
+    * Document models
+      * DOM and JsonObject models of data are more powerful to work with than simple parsers, but the time to construct the model can be significant.
+      * Filtering data out of the model will take even more time than constructing the default model, but that can still be worthwhile for long-lived or very large documents.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
