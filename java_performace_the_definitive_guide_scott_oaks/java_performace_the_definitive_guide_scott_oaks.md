@@ -462,6 +462,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Result Set processing
       * applications processing lots of data should consider changing fetch size
       * There is a trade-off between loading too much data in the application (putting pressure on the garbage collector) and making frequent database calls to retrieve a set of data.
+  * JPA
+    * Transaction handling
+      * Explicitly managing transaction boundaries with user-managed transactions can often improve the performance of an application.
+      * The default Java EE programming model—a servlet or web service accessing JPA entities via EJBs—supports that model easily.
+      * As an alternative, consider splitting JPA logic into separate methods depending on the transactional needs of the application.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
