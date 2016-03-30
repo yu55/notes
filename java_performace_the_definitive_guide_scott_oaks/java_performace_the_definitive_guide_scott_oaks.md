@@ -452,6 +452,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * reusing prepared statements will bring performance boost
       * Prepared statements must be pooled on a per-connection basis. Most JDBC drivers and Java EE frameworks can do this automatically.
       * Prepared statements can consume a significant amount of heap. The size of the statement pool must be carefully tuned to prevent GC issues from pooling too many very large objects.
+    * JDBC connection pools
+      * Connections are expensive objects to initialize; they are routinely pooled in Java—either in the JDBC driver itself, or within Java EE and JPA frameworks.
+      * As with other object pools, it is important to tune the connection pool so it doesn’t adversely affect the garbage collector. In this case, it is also necessary to tune the connection pool so it doesn’t adversely affect the performance of the database itself.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
