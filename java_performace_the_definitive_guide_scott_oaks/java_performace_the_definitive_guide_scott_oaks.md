@@ -455,6 +455,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * JDBC connection pools
       * Connections are expensive objects to initialize; they are routinely pooled in Java—either in the JDBC driver itself, or within Java EE and JPA frameworks.
       * As with other object pools, it is important to tune the connection pool so it doesn’t adversely affect the garbage collector. In this case, it is also necessary to tune the connection pool so it doesn’t adversely affect the performance of the database itself.
+    * Transactions
+      * Transactions affect the speed of applications in two ways: transactions are expensive to commit, and the locking associated with transactions can prevent database scaling.
+      * Those two effects are antagonistic: waiting too long to commit a transaction increases the amount of time that locks associated with the transaction are held. Especially for transactions using stricter semantics, the balance should be toward committing more frequently rather than holding the locks longer.
+      * For fine-grained control of transactions in JDBC, use a default TRANSACTION_READ_UNCOMMITTED level and explicitly lock data as needed.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
