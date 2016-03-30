@@ -481,6 +481,13 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * The JPA L2 cache will automatically cache entities for an application.
       * The L2 cache does not cache entities retrieved via queries. This means that in the long run it can be beneficial to avoid queries altogether.
       * Unless query caching is supported by the JPA implementation in use, using a JOIN query turns out to frequently have a negative performance effect, since it bypasses the L2 cache
+  * Summary
+    * Batch reads and writes as much as possible by configuring the JDBC or JPA configuration appropriately.
+    * Optimize the SQL the application issues. For JDBC applications, this is a question of basic, standard SQL commands. For JPA applications, be sure to consider the involvement of the L2 cache.
+    * Minimize locking where possible. Use optimistic locking when data is unlikely to be contended, and pessimistic locking when data is contended.
+    * Make sure to use a prepared statement pool.
+    * Make sure to use an appropriately sized connection pool.
+    * Set an appropriate transaction scope: it should be as large as possible without negatively affecting the scalability of the application because of the locks held during the transaction.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
