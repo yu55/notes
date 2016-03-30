@@ -477,6 +477,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * When a relationship exists between JPA entities, the data for the related items can be loaded eagerly or lazily. The choice depends on the needs of the application.
       * When eagerly loading relationships, named queries can be used to issue a single SQL statement using a JOIN statement. Be aware that this affects the JPA cache; it is not always the best idea (as the next section discusses).
       * Reading data via named queries will often be faster than a regular query, since it is easier for the JPA implementation to use a PreparedStatement for named queries.
+    * JPA caching
+      * The JPA L2 cache will automatically cache entities for an application.
+      * The L2 cache does not cache entities retrieved via queries. This means that in the long run it can be beneficial to avoid queries altogether.
+      * Unless query caching is supported by the JPA implementation in use, using a JOIN query turns out to frequently have a negative performance effect, since it bypasses the L2 cache
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
