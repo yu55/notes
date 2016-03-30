@@ -471,6 +471,12 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * JPA applications, like JDBC applications, can benefit from limiting the number of write calls to the database (with the potential trade-off of holding transaction locks).
       * Statement caching can be achieved either at the JPA layer or the JDBC layer. Caching at the JDBC layer should be explored first.
       * Batching JPA updates can be done declaratively (in the persistence.xml file), or programmatically (by calling the flush() method).
+    * Optimizing JPA reads
+      * JPA can perform several optimizations to limit (or increase) the amount of data read in a single operation.
+      * Large fields (e.g., BLOBs) that are not frequently used should be loaded lazily in a JPA entity.
+      * When a relationship exists between JPA entities, the data for the related items can be loaded eagerly or lazily. The choice depends on the needs of the application.
+      * When eagerly loading relationships, named queries can be used to issue a single SQL statement using a JOIN statement. Be aware that this affects the JPA cache; it is not always the best idea (as the next section discusses).
+      * Reading data via named queries will often be faster than a regular query, since it is easier for the JPA implementation to use a PreparedStatement for named queries.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
