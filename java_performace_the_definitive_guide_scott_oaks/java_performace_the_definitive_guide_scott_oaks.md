@@ -448,6 +448,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * type 4: pure Java; tend to be 'thin'
     * Spend time evaluating the best JDBC driver for the application
     * The best driver will often vary depending on the specific deployment. The same application may be better with one JDBC driver in one deployment and a different JDBC driver in a different deployment.
+    * Prepared statements and statement pooling
+      * reusing prepared statements will bring performance boost
+      * Prepared statements must be pooled on a per-connection basis. Most JDBC drivers and Java EE frameworks can do this automatically.
+      * Prepared statements can consume a significant amount of heap. The size of the statement pool must be carefully tuned to prevent GC issues from pooling too many very large objects.
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
