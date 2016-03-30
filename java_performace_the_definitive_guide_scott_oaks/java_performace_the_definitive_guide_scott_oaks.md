@@ -467,6 +467,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * Explicitly managing transaction boundaries with user-managed transactions can often improve the performance of an application.
       * The default Java EE programming model—a servlet or web service accessing JPA entities via EJBs—supports that model easily.
       * As an alternative, consider splitting JPA logic into separate methods depending on the transactional needs of the application.
+    * Optimizing JPA writes
+      * JPA applications, like JDBC applications, can benefit from limiting the number of write calls to the database (with the potential trade-off of holding transaction locks).
+      * Statement caching can be achieved either at the JPA layer or the JDBC layer. Caching at the JDBC layer should be explored first.
+      * Batching JPA updates can be done declaratively (in the persistence.xml file), or programmatically (by calling the flush() method).
 
 ## 12 JAVA SE API Tips
   * Buffered I/O
