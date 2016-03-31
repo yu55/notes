@@ -360,10 +360,15 @@ code cache size using -XX:ReservedCodeCacheSize=`
         * the amount of memory reclaimed by a full GC is less than the value specified by the -XX:GCHeapFreeLimit=N flag. The default value for this is 2, meaning that if less than 2% of the heap is freed during the full GC, this condition is met.
         * the above two conditions have held true for five consecutive full GC cycles (that value is not tunable)
         * the value of the -XX:+UseGCOverheadLimit flag is true (which it is by default)
-  * Reducing objects sizes
-    * reducing object sizes can often improve the efficiency of GC
-    * the size of an object is not always immediately apparent: objects are padded to fit on 8-byte boundaries, and object reference sizes are different between 32- and 64-bit JVMs
-    * even null instance variables consume space within object classes
+  * Using less memory
+    * Reducing objects sizes
+      * reducing object sizes can often improve the efficiency of GC
+      * the size of an object is not always immediately apparent: objects are padded to fit on 8-byte boundaries, and object reference sizes are different between 32- and 64-bit JVMs
+      * even null instance variables consume space within object classes
+    * Lazy initialization
+      * use lazy initialization only when the common code paths will leave variables uninitialized
+      * lazy initialization of thread-safe code is unusual but can often piggyback on existing synchronization
+      * use double-checked locking for lazy initialization of code using thread-safe objects
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
