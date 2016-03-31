@@ -325,6 +325,22 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * More complex applications will require additional tuning, particularly for specific GC algorithms.
 ## 6 Garbage Collection Algorithms - TBD
 
+## 7 Heap Memory Best Practises
+  * Knowing which objects are consuming memory is the first step in knowing which objects to optimize in your code.
+  * Histograms are a quick and easy way to identify memory issues caused by creating too many objects of a certain type.
+  * most of the time memory dumps contain only live objects (sometimes tools accomplish this by doing full GC)
+  * tools measuring heap usually need some processing power and memory to work and generally aren't usefull doing measurement of a program execution
+  * heap histograms are a way to look at the number of objects within an application without doing a full heap dump: jcmd 8998 GC.class_histogram (jcmd doesn't invoke full GC); still slow though and should be used during performance measurement steady state
+  * heap histogram: jmap -histo process_id
+  * heap histogram (with full GC): jmap -histo:live process_id
+  * heap dump: jcmd process_id GC.heap_dump /path/to/heap_dump.hprof
+  * heap dump: jmap -dump:live,file=/path/to/heap_dump.hprof process_id (live forces full GC, -all dumps read objects too)
+  * retained memory of an object is the amount of memory that would be freed if the object itself were eligible to be collected; root object + referenced objects (but not referenced by other root objects)
+  * shallow size of an object: size of the object itself (without objects that it has references to)
+  * deep size: size of root object and all referenced objects
+  * GC roots of a particular object: system objects that hold some static, global reference that refers (directly or indirectly) to the object in question; typically these come from the static variables of a class loaded on the system or bootstrap classpath. This includes the Thread class and all active threads; threads retain objects either through their threadlocal variables or through references via their target Runnable object (or, in the case of a subclass of the Thread class, any other references the subclass has)
+  * in some cases, knowing the GC roots of a target object is helpful, but if the object has multiple references, it will have many GC roots; this doesn't really help; instead, it can be more fruitful to play detective and find the lowest point in the object graph where the target object is shared. This is done by examining the objects and their incoming references, and tracing those incoming references until the duplicate path is identified.
+
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
     * core pool size = minimum size
