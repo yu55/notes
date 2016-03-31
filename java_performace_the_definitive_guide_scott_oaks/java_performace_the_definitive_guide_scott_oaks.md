@@ -373,6 +373,9 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * canonical version of the object is a singular representation of immutable object (e.g. Boolean.TRUE)
       * to canonicalize an object, create a map that stores the canonical version of the object. In order to prevent a memory leak, make sure that the objects in the map are weakly referenced.
       * eliminating duplicate copies of immutable objects via canonicalization can greatly decrease the amount of heap an application uses
+    * String interning
+      * applications that reuse the same strings a lot will benefit by interning those strings
+      * applications that intern many strings may need to adjust the size of the string intern table (unless they are running on a 64-bit server JVM starting in Java 7u40)
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
