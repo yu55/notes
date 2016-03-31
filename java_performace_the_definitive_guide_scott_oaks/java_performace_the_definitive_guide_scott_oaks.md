@@ -369,6 +369,10 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * use lazy initialization only when the common code paths will leave variables uninitialized
       * lazy initialization of thread-safe code is unusual but can often piggyback on existing synchronization
       * use double-checked locking for lazy initialization of code using thread-safe objects
+    * Immutable and cannonical objects
+      * canonical version of the object is a singular representation of immutable object (e.g. Boolean.TRUE)
+      * to canonicalize an object, create a map that stores the canonical version of the object. In order to prevent a memory leak, make sure that the objects in the map are weakly referenced.
+      * eliminating duplicate copies of immutable objects via canonicalization can greatly decrease the amount of heap an application uses
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
