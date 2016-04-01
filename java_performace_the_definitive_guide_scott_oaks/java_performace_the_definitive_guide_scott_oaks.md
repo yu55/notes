@@ -376,6 +376,26 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * String interning
       * applications that reuse the same strings a lot will benefit by interning those strings
       * applications that intern many strings may need to adjust the size of the string intern table (unless they are running on a 64-bit server JVM starting in Java 7u40)
+  * Object Lifecycle Management
+    * Object Reuse
+      * it's not the best idea from GC point of view; long living objects are more expensive to process by GC than short living ones
+      * the reason for reusing objects is that many objects are quite expensive to initialize, and reusing them is more efficient than the trade-off in increased GC time
+      * in Java, object allocation is quite fast and inexpensive (and arguments against object reuse tend to focus on that part of the equation). Object initialization performance depends on the object. You should only consider reusing objects with a very high initialization cost, and only then if the cost of initializing those objects is one of the dominant operations in program
+      * examples of reusing objects:
+        * Thread pools
+          * holding lots of objects reduces (sometimes quite drastically) the efficiency of GC
+          * pools of objects are inevitably synchronized, and if the objects are frequently removed and replaced, the pool can have a lot of contention. The result is that access to the pool can become slower than initializing a new object
+          * performance impact of pools can be beneficial: pools allow access to scarce resources to be throttled (too many threads run simultaneously, the CPUs will be overwhelmed and performance will degrade)
+        * JDBC pools
+        * EJB pools
+        * Large arrays
+        * Native NIO buffers
+        * Security classes
+        * String encoder and decoder objects
+        * StringBuilder helpers
+        * Random number generators
+        * Names obtained from DNS lookups
+        * ZIP encoders and encoders 
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
