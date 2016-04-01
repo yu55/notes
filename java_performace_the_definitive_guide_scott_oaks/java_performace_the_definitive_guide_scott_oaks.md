@@ -385,17 +385,32 @@ code cache size using -XX:ReservedCodeCacheSize=`
         * Thread pools
           * holding lots of objects reduces (sometimes quite drastically) the efficiency of GC
           * pools of objects are inevitably synchronized, and if the objects are frequently removed and replaced, the pool can have a lot of contention. The result is that access to the pool can become slower than initializing a new object
-          * performance impact of pools can be beneficial: pools allow access to scarce resources to be throttled (too many threads run simultaneously, the CPUs will be overwhelmed and performance will degrade)
+          * performance impact of pools can be beneficial: pools allow access to scarce resources to be throttled (too many threads run simultaneously, the CPUs will be overwhelmed and performance will degrade); this principle applies to remote system access as well, and is frequently seen with JDBC connections; if more JDBC connections are made to a database than it can handle, performance of the database will degrade
+        * thread-local variables
+          * much easier and less expensive to manage than objects in a pool
+          * there cannot be any more saved objects than threads, and much of the time it ends up being the same number; no throttling here;
+          * no synchronization since they can only be used within a single thread; the thread-local get() method is relatively fast
         * JDBC pools
+          * database connections are expensive to initialize
         * EJB pools
+          * can be expensive to initialize
         * Large arrays
+          * default initialization for all individual elements
         * Native NIO buffers
+          * allocating a direct java.nio.Buffer (that is, a buffer returned from calling the allocateDirect() method) is an expensive operation regardless of the size of the buffer. It is better to create one large buffer and manage the buffers from that by slicing off portions as required, and return them to be reused by future operations
         * Security classes
+          * instances of MessageDigest, Signature, and other security algorithms are expensive to initialize. The Apache-based XML code uses thread-local variables to save these instances
         * String encoder and decoder objects
+          * various classes in the JDK create and reuse these objects. For the most part, these are also soft references
         * StringBuilder helpers
+          * the BigDecimal class reuses a StringBuilder object when calculating intermediate results
         * Random number generators
+          * instances of either the Random and—especially—SecureRandom classes are expensive to seed
         * Names obtained from DNS lookups
-        * ZIP encoders and encoders 
+          * network lookups are expensive
+        * ZIP encoders and encoders
+          * these are not particularly expensive to initialize. They are, however, quite expensive to free, because they rely on object finalization to ensure that the native memory they use is also freed
+      * large object pools of generic classes will most certainly lead to more performance issues than they solve. Leave these techniques to classes that are expensive to initialize, and when the number of the reused objects will be small
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
