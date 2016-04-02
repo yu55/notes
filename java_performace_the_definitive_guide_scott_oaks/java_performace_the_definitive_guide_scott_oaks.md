@@ -412,17 +412,20 @@ code cache size using -XX:ReservedCodeCacheSize=`
           * these are not particularly expensive to initialize. They are, however, quite expensive to free, because they rely on object finalization to ensure that the native memory they use is also freed
       * large object pools of generic classes will most certainly lead to more performance issues than they solve. Leave these techniques to classes that are expensive to initialize, and when the number of the reused objects will be small
   * Weak, Soft, and Other References
+    * a reference (or object reference) is any kind of reference: strong, weak, soft, and so on. An ordinary instance variable that refers to an object is a strong reference
     * indefinite (soft, weak, phantom, and final) references alter the ordinary lifecycle of Java objects, allowing them to be reused in ways that may be more GC-friendly than pools or thread-local variables
+    * referent Indefinite references work by embedding another reference (almost always a strong reference) within an instance of the indefinite reference class. The encapsulated object is called the referent
     * Weak references should be used when an application is interested in an object only if that object is strongly referenced elsewhere in the application
+      * 
     * Soft references hold onto objects for (possibly) long periods of time, providing a simple GC-friendly LRU cache
       * the referent must not be strongly referenced elsewhere. If the soft reference is the only remaining reference to its referent, the referent is freed during the next GC cycle only if the soft reference has not recently been accessed
-      ```
-      long ms = SoftRefLRUPolicyMSPerMB * AmountOfFreeMemoryInMB;
-      if (now - last_access_to_reference > ms)
-      free the reference
-      ```
-      where `-XX:SoftRefLRUPolicyMSPerMB=N` (default 1000 ms), second value is the amount of free memory in the heap (once the GC cycle has completed)
-      * to reclaim soft references more frequently, decrease the value of the SoftRefLRUPolicyMSPerMB flag
+        ```
+        long ms = SoftRefLRUPolicyMSPerMB * AmountOfFreeMemoryInMB;
+        if (now - last_access_to_reference > ms)
+        free the reference
+        ```
+        where `-XX:SoftRefLRUPolicyMSPerMB=N` (default 1000 ms), second value is the amount of free memory in the heap (once the GC cycle has completed)
+      * to reclaim soft references more frequently, decrease the value of the `SoftRefLRUPolicyMSPerMB` flag
       * a long-running application can consider raising that value if two conditions are met:
         * there is a lot of free heap available
         * the soft references are infrequently accessed
