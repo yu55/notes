@@ -419,7 +419,8 @@ code cache size using -XX:ReservedCodeCacheSize=`
       ```
 long ms = SoftRefLRUPolicyMSPerMB * AmountOfFreeMemoryInMB;
 if (now - last_access_to_reference > ms)
-free the reference``` where `-XX:SoftRefLRUPolicyMSPerMB=N` (default 1000 ms), second value is the amount of free memory in the heap (once the GC cycle has completed)
+free the reference
+``` where `-XX:SoftRefLRUPolicyMSPerMB=N` (default 1000 ms), second value is the amount of free memory in the heap (once the GC cycle has completed)
       * to reclaim soft references more frequently, decrease the value of the SoftRefLRUPolicyMSPerMB flag
       * a long-running application can consider raising that value if two conditions are met:
         * there is a lot of free heap available
