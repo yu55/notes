@@ -416,9 +416,15 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Weak references should be used when an application is interested in an object only if that object is strongly referenced elsewhere in the application
     * Soft references hold onto objects for (possibly) long periods of time, providing a simple GC-friendly LRU cache
       * the referent must not be strongly referenced elsewhere. If the soft reference is the only remaining reference to its referent, the referent is freed during the next GC cycle only if the soft reference has not recently been accessed
-      '''long ms = SoftRefLRUPolicyMSPerMB * AmountOfFreeMemoryInMB;
+      ```
+long ms = SoftRefLRUPolicyMSPerMB * AmountOfFreeMemoryInMB;
 if (now - last_access_to_reference > ms)
-free the reference''' where `-XX:SoftRefLRUPolicyMSPerMB=N` (default 1000 ms), second value is the amount of free memory in the heap (once the GC cycle has completed)
+free the reference``` where `-XX:SoftRefLRUPolicyMSPerMB=N` (default 1000 ms), second value is the amount of free memory in the heap (once the GC cycle has completed)
+      * to reclaim soft references more frequently, decrease the value of the SoftRefLRUPolicyMSPerMB flag
+      * a long-running application can consider raising that value if two conditions are met:
+        * there is a lot of free heap available
+        * the soft references are infrequently accessed
+      * soft references work well when the number of objects is not too large. Otherwise, consider a more traditional object pool with a bounded size, implemented as an LRU cache
     * Indefinite references consume their own memory and hold onto memory of other objects for long periods of time; they should be used sparingly
 
 ## 9 Threading and Synchronization Performance
