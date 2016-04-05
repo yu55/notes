@@ -441,6 +441,16 @@ code cache size using -XX:ReservedCodeCacheSize=`
         * indefinite references can have a negative effect on the garbage collector
         * class itself must periodically perform an operation to clear all the unreferenced data in the collection (i.e., that class is responsible for processing the reference queue of the indefinite references it stores).
     * Indefinite references consume their own memory and hold onto memory of other objects for long periods of time; they should be used sparingly
+    * Finalizers and final references
+      * every java class has `finalize()` method - you should almost never use this method as it's bad for functional reasons and performance reasons as well
+      * When an object that has a finalize() method is allocated, the JVM allocates two objects: the object itself, and a Finalizer reference that uses the object as its referent.
+      * Unfortunately, finalizers are unavoidable in certain circumstances. The JDK, for example, uses a finalizer in its classes that manipulate ZIP files, because opening a ZIP file uses some native code that allocates native memory. The finalizer can ensure that the `close()` method has been called, even if the developer forgets that.
+  * Summary
+    * fast Java programs depend crucially on memory management
+    * tuning GC is important, but to obtain maximum performance, memory must be utilized effectively within applications
+    * normal time/space tradeoff of programming can swing to a time/space-and-time trade-off: using too much space in the heap can make things slower by requiring more GC
+    * judicious use of object pools, thread-local variables, indefinite references can vastly improve the performance of an application, but overuse of them can just as easily degrade performance
+    * in limited quantities—when the number of objects in question is small and bounded—the use of these memory techniques can be quite effective
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
