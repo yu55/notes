@@ -470,6 +470,13 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * to see: `% jcmd process_id VM.native_memory summary`
     * provides details about the native memory usage of the JVM. From an operating system perspective, that includes the JVM heap (which to the OS is just a section of native memory)
     * summary mode of NMT is sufficient for most analysis, and allows you to determine how much memory the JVM has committed (and what that memory is used for)
+  * JVM Tunings for the Operating System
+    * Large Pages
+      * it's important to maximize the hit rate on TLB entries
+      * Since each entry represents a page of memory, it is often advantageous to increase the page size used by an application.
+      * `-XX:+UseLargePages`
+      * Using large pages will usually measurably speed up applications.
+      * Large page support must be explicitly enabled in most operating systems.
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
