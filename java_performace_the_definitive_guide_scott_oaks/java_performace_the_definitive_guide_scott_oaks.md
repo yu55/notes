@@ -477,6 +477,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * `-XX:+UseLargePages`
       * Using large pages will usually measurably speed up applications.
       * Large page support must be explicitly enabled in most operating systems.
+    * Compressed oops
+      * "oop" stands for ordinary object pointer: oops are the handles the JVM uses as object references. When oops are only 32 bits long, they can reference only 4 GB of memory (232), which is why a 32-bit JVM is limited to a 4 GB heap size; when oops are 64 bits long, they can reference terabytes of memory.
+      * JVM can use 35-bit oops (32 bits shifted left by 3 bits introducing three zeros); JVM can reference 32GB with these pointers
+      * Compressed oops are enabled by default whenever they are most useful.
+      * A 31 GB heap using compressed oops will often outperform slightly larger heaps that are too big to use compressed oops.
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
