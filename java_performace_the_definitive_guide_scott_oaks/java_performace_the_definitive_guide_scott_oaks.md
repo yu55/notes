@@ -465,6 +465,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * important from a performance perspective, since they allow native code and Java code to share data without copying it
     * `allocateDirect()` call which creates the buffer is expensive - reuse created buffers, each thread individually (thread-local variable) or use object pool
     * allocate one big buffer and use `slice()` to allocate a portion of this buffer (unwieldy when buffers aren't the same size and fragmentation can occure)
+  * Native Memory Tracking
+    * to enable: `-XX:NativeMemoryTracking=off|summary|detail`
+    * to see: `% jcmd process_id VM.native_memory summary`
+    * provides details about the native memory usage of the JVM. From an operating system perspective, that includes the JVM heap (which to the OS is just a section of native memory)
+    * summary mode of NMT is sufficient for most analysis, and allows you to determine how much memory the JVM has committed (and what that memory is used for)
 
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
