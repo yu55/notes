@@ -452,6 +452,20 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * judicious use of object pools, thread-local variables, indefinite references can vastly improve the performance of an application, but overuse of them can just as easily degrade performance
     * in limited quantities—when the number of objects in question is small and bounded—the use of these memory techniques can be quite effective
 
+## 8 Native Memory Best Practices
+  * The total of native (nonheap) and heap memory used by the JVM yields the total footprint of an application
+  * The total footprint of the JVM has a significant effect on its performance, particularly if physical memory on the machine is constrained. Footprint is another aspect of performance tests that should be commonly monitored
+  * to monitor footprint on UNIX-based systems: top, ps; on Windows: perfmon, VMMap
+  * to minimize footprint used by JVM limit the amount of memory used by the following:
+    * heap
+    * thread stacks
+    * code cache
+    * direct byte buffers (`-XX:MaxDirectMemorySize=N`)
+  * native NIO buffers
+    * important from a performance perspective, since they allow native code and Java code to share data without copying it
+    * `allocateDirect()` call which creates the buffer is expensive - reuse created buffers, each thread individually (thread-local variable) or use object pool
+    * allocate one big buffer and use `slice()` to allocate a portion of this buffer (unwieldy when buffers aren't the same size and fragmentation can occure)
+
 ## 9 Threading and Synchronization Performance
   * Thread pools and thread executors
     * core pool size = minimum size
