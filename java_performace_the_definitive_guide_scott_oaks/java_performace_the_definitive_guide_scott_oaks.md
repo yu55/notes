@@ -475,7 +475,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * it's important to maximize the hit rate on TLB entries
       * Since each entry represents a page of memory, it is often advantageous to increase the page size used by an application.
       * `-XX:+UseLargePages`
-      * Using large pages will usually measurably speed up applications.
+      * Using large pages will usually measurably speed up applications. Long-running JVMs will almost always benefit by using large pages, particularly if they have large heaps.
       * Large page support must be explicitly enabled in most operating systems.
     * Compressed oops
       * "oop" stands for ordinary object pointer: oops are the handles the JVM uses as object references. When oops are only 32 bits long, they can reference only 4 GB of memory (232), which is why a 32-bit JVM is limited to a 4 GB heap size; when oops are 64 bits long, they can reference terabytes of memory.
