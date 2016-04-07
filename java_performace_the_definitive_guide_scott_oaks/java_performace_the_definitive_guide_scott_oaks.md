@@ -328,12 +328,13 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * The key information needed to tune an individual collector is the data from the GC log when that collector is enabled.
   * Understanding the Throughput Collector
     * the throughput collector has two operations: minor collections and full GCs
-    * minor GC log output:
+    * example minor GC log output:
     ```
     17.806: [GC [PSYoungGen: 227983K->14463K(264128K)]
                 280122K->66610K(613696K), 0.0169320 secs]
                 [Times: user=0.05 sys=0.00, real=0.02 secs]
     ```
+    and it contains following information:
       * this GC occurred 17.806 seconds after the program began
       * objects in the young generation now occupy 14463 KB (14 MB, in the survivor space)
       * before the GC, they occupied 227983 KB (227 MB)
@@ -342,13 +343,15 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * size of the entire heap at this point in time was 613 MB
       * the operation took less than 0.02 seconds
       * the program was charged for more CPU time than real time because the young collection was done by multiple threads (in this configuration, four threads)
-    * full GC log output:
+
+    * example full GC log output:
     ```
     64.546: [Full GC [PSYoungGen: 15808K->0K(339456K)]
              [ParOldGen: 457753K->392528K(554432K)] 473561K->392528K(893888K)
              [PSPermGen: 56728K->56728K(115392K)], 1.3367080 secs]
              [Times: user=4.44 sys=0.01, real=1.34 secs]
     ```
+    and it contains following information:
       * the young generation now occupies 0 bytes (and its size is 339 MB)
       * data in the old generation decreased from 457 MB to 392 MB
       * entire heap usage has decreased from 473 MB to 392 MB
