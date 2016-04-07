@@ -323,7 +323,38 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * For many applications, though, the only tuning required is to select the appropriate GC algorithm and, if needed, to increase the heap size of the application.
     * Adaptive sizing will then allow the JVM to autotune its behavior to provide good performance using the given heap.
     * More complex applications will require additional tuning, particularly for specific GC algorithms.
-## 6 Garbage Collection Algorithms - TBD
+
+## 6 Garbage Collection Algorithms
+  * The key information needed to tune an individual collector is the data from the GC log when that collector is enabled.
+  * Understanding the Throughput Collector
+    * the throughput collector has two operations: minor collections and full GCs
+    * minor GC log output:
+    ```
+    17.806: [GC [PSYoungGen: 227983K->14463K(264128K)]
+                280122K->66610K(613696K), 0.0169320 secs]
+                [Times: user=0.05 sys=0.00, real=0.02 secs]
+    ```
+      * this GC occurred 17.806 seconds after the program began
+      * objects in the young generation now occupy 14463 KB (14 MB, in the survivor space)
+      * before the GC, they occupied 227983 KB (227 MB)
+      * total size of the young generation at this point is 264 MB
+      * the overall occupancy of the heap (both young and old generations) decreased from 280 MB to 66 MB
+      * size of the entire heap at this point in time was 613 MB
+      * the operation took less than 0.02 seconds
+      * the program was charged for more CPU time than real time because the young collection was done by multiple threads (in this configuration, four threads)
+    * full GC log output:
+    ```
+    64.546: [Full GC [PSYoungGen: 15808K->0K(339456K)]
+             [ParOldGen: 457753K->392528K(554432K)] 473561K->392528K(893888K)
+             [PSPermGen: 56728K->56728K(115392K)], 1.3367080 secs]
+             [Times: user=4.44 sys=0.01, real=1.34 secs]
+    ```
+      * the young generation now occupies 0 bytes (and its size is 339 MB)
+      * data in the old generation decreased from 457 MB to 392 MB
+      * entire heap usage has decreased from 473 MB to 392 MB
+      * The size of permgen is unchanged; it is not collected during most full GCs. (If permgen runs out of room, the JVM will run a full GC to collect pergmen, and you will see the size of permgen change—which is the only way to detect if permgen has been collected. Also, this example is from Java 7; the Java 8 output will include similar information on the metaspace.)
+      * it has taken 1.3 seconds of real time, and 4.4 seconds of CPU time (again for four parallel threads)
+    * timings taken from the GC log are a quick way to determine the overall impact of GC on an application using the throughput collector
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
