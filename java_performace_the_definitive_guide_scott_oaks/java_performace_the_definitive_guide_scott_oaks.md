@@ -218,7 +218,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * all GCs use old and young generations
     * generations where created because there are many short living objects in applications
     * minor GC: when young is fills up, the GC will stop app threads and empty it (some objects will be discarded, some moved elsewhere)
-    * having you generation gives performance benefit: GC must process only part of heap which is faster compared to complete heap processing (even minor GC occures more requently though)
+    * having young generation gives performance benefit: GC must process only part of heap which is faster compared to complete heap processing (even minor GC occures more requently though)
     * minor GC moves objects from eden to survivor space (or old generation) which automatically compacts eden - another performance benefit
     * full GC for simpler algorithms: when old generation is getting full all app threads are stopped, unused objects are discarded and heap is compacted; most of the times this is a long process;
     * full GC for CMS/G1: finding unused objects computationally and don't stop app threads; old generation compacting also uses different approach
