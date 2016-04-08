@@ -374,15 +374,13 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * but I am much more used to seeing applications that spend 3% to 6% of their time in GC and behave quite well; sometimes when memory is severely constrained applications end up spending 10% to 15% of their time in GC
       * Dynamic heap tuning is a good first step for heap sizing. For a wide set of applications, that will be all that is needed, and the dynamic settings will minimize the JVM's memory use.
       * It is possible to statically size the heap to get the maximum possible performance. The sizes the JVM determines for a reasonable set of performance goals are a good first start for that tuning.
-      * effects of dynamic tuning of an app that needs small heap and does little GC in table below:
+      * effects of dynamic tuning of an app that needs small heap and does little GC in first table and more GC in second table below:
 
 | GC settings           | End heap size | Percent time in GC | OPS |
 |-----------------------|---------------|--------------------|-----|
 | Default               |        649 MB |               0.9% | 9.2 |
 | MaxGCPauseMillis=50ms |        560 MB |               1.0% | 9.2 |
 | Xms=Xmx=2048m         |          2 GB |              0.04% | 9.2 |
-
-      * effects of dynamic tuning of an app that needs small heap and does more GC in table below:
 
 | GC settings              | End heap size | Percent time in GC | OPS |
 |--------------------------|---------------|--------------------|-----|
