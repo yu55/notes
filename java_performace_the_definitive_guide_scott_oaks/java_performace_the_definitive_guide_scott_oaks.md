@@ -328,6 +328,8 @@ code cache size using -XX:ReservedCodeCacheSize=`
   * The key information needed to tune an individual collector is the data from the GC log when that collector is enabled.
   * Understanding the Throughput Collector
     * the throughput collector has two operations: minor collections and full GCs
+    * generations: young (Eden, Survivor 1, Survivor 2), Old Generation
+    * A young collection occurs when eden has filled up. The young collection moves all objects out of eden: some are moved to one of the survivor spaces (e.g. S0) and some are moved to the old generation, which now contains more objects. Many objects, of course, are discarded because they are no longer referenced.
     * example minor GC log output:
     ```
     17.806: [GC [PSYoungGen: 227983K->14463K(264128K)]
