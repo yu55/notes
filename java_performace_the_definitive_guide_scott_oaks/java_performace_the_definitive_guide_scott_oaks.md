@@ -357,6 +357,23 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * The size of permgen is unchanged; it is not collected during most full GCs. (If permgen runs out of room, the JVM will run a full GC to collect pergmen, and you will see the size of permgen change—which is the only way to detect if permgen has been collected. Also, this example is from Java 7; the Java 8 output will include similar information on the metaspace.)
       * it has taken 1.3 seconds of real time, and 4.4 seconds of CPU time (again for four parallel threads)
     * timings taken from the GC log are a quick way to determine the overall impact of GC on an application using the throughput collector
+    * adaptive and static heap size tuning
+      * Tuning the throughput collector is all about pause times and striking a balance between the overall heap size and the sizes of the old and young generations.
+      * to achieve highest throughput the heap has to have optimum size - not to small, not to big
+      * Adaptive sizing in the throughput collector will resize the heap (and the generations) in order to meet its pause time goals. Those goals are set with these flags: `-XX:MaxGCPauseMillis=N` and `-XX:GCTimeRatio=N`. The JVM uses these two flags to set the size of the heap within the boundaries established by the initial (-Xms) and maximum (-Xmx) heap sizes.
+      * `MaxGCPauseMillis`
+        * not set by default
+        * specifies the maximum pause time that the application is willing to tolerate
+        * this goal applies to both minor and full GCs
+        * if a very small value is used, the application will end up with a very small old generation: for example, one that can be cleaned in 50 ms. That will cause the JVM to perform very, very frequent full GCs, and performance will be dismal; set the value to something that can actually be achieved
+      * `GCTimeRatio`
+        * default value is 99
+        * specifies the amount of time you are willing for the application to spend in GC (compared to the amount of time its application-level threads should run)
+        * equation: `ThroughputGoal = 1 - [1 / (1 + GCTimeRatio)]` or `GCTimeRatio = Throughput / (1 - Throughput)` (e.x. for a throughput goal of 95% (0.95), this equation yields a GCTimeRatio of 19)
+      * if `MaxGCPauseMillis` if it is set, the sizes of the young and old generation are adjusted until the pause time goal is met. Once that happens, the overall size of the heap is increased until the time ratio goal is met. Once both goals are met, the JVM will attempt to reduce the size of the heap so that it ends up with the smallest possible heap that meets these two goals.
+      * but I am much more used to seeing applications that spend 3% to 6% of their time in GC and behave quite well; sometimes when memory is severely constrained applications end up spending 10% to 15% of their time in GC
+      * Dynamic heap tuning is a good first step for heap sizing. For a wide set of applications, that will be all that is needed, and the dynamic settings will minimize the JVM’s memory use.
+      * It is possible to statically size the heap to get the maximum possible performance. The sizes the JVM determines for a reasonable set of performance goals are a good first start for that tuning.
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
