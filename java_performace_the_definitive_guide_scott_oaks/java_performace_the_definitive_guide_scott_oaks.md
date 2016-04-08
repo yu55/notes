@@ -375,19 +375,21 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * Dynamic heap tuning is a good first step for heap sizing. For a wide set of applications, that will be all that is needed, and the dynamic settings will minimize the JVM's memory use.
       * It is possible to statically size the heap to get the maximum possible performance. The sizes the JVM determines for a reasonable set of performance goals are a good first start for that tuning.
       * effects of dynamic tuning of an app that needs small heap and does little GC in table below:
-      | GC settings           | End heap size | Percent time in GC | OPS |
-      |-----------------------|---------------|--------------------|-----|
-      | Default               |        649 MB |               0.9% | 9.2 |
-      | MaxGCPauseMillis=50ms |        560 MB |               1.0% | 9.2 |
-      | Xms=Xmx=2048m         |          2 GB |              0.04% | 9.2 |
-      * effects of dynamic tuning of an app that needs small heap and does more GC in table below:
-      | GC settings              | End heap size | Percent time in GC | OPS |
-      |--------------------------|---------------|--------------------|-----|
-      | Default                  |        1.7 GB |               9.3% | 8.4 |
-      | MaxGCPauseMillis=50ms    |        588 MB |              15.1% | 7.9 |
-      | Xms=Xmx=2048m            |          2 GB |               5.1% | 9.0 |
-      | Xmx=3560M; MaxGCRatio=19 |        2.1 GB |               8.8% | 9.0 |
 
+| GC settings           | End heap size | Percent time in GC | OPS |
+|-----------------------|---------------|--------------------|-----|
+| Default               |        649 MB |               0.9% | 9.2 |
+| MaxGCPauseMillis=50ms |        560 MB |               1.0% | 9.2 |
+| Xms=Xmx=2048m         |          2 GB |              0.04% | 9.2 |
+
+      * effects of dynamic tuning of an app that needs small heap and does more GC in table below:
+
+| GC settings              | End heap size | Percent time in GC | OPS |
+|--------------------------|---------------|--------------------|-----|
+| Default                  |        1.7 GB |               9.3% | 8.4 |
+| MaxGCPauseMillis=50ms    |        588 MB |              15.1% | 7.9 |
+| Xms=Xmx=2048m            |          2 GB |               5.1% | 9.0 |
+| Xmx=3560M; MaxGCRatio=19 |        2.1 GB |               8.8% | 9.0 |
 
 
 ## 7 Heap Memory Best Practises
