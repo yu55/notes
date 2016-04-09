@@ -391,7 +391,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
 | Xms=Xmx=2048m            |          2 GB |               5.1% | 9.0 |
 | Xmx=3560M; MaxGCRatio=19 |        2.1 GB |               8.8% | 9.0 |
 
-  * Understanding the CMS collctor
+  * Understanding the CMS collector
     * CMS has three basic operations:
       * CMS collects the young generation (stopping all application threads).
       * CMS runs a concurrent cycle to clean data out of the old generation.
@@ -405,7 +405,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * above log contains following information:
       * size of the young generation is presently 629 MB
       * after collection, 69 MB of it remains (in a survivor space)
-      * the size of the entire heap is 2,027 MB—772 MB of which is occupied after the collection
+      * the size of the entire heap is 2,027 MB - 772 MB of which is occupied after the collection
       * entire process took 0.12 seconds, though the parallel GC threads racked up 0.42 seconds in CPU usage
     * Concurrent cycle
       * concurrent cycle starts based on the occupancy of the heap - when it is sufficiently full, the JVM starts background threads that cycle through the heap and remove objects
@@ -421,6 +421,108 @@ code cache size using -XX:ReservedCodeCacheSize=`
         * this phase is responsible for finding all the GC root objects in the heap
         * The first set of numbers shows that objects currently occupy 702 MB of 1,398 MB of the old generation, while the second set shows that the occupancy of the entire 2,027 MB heap is 772 MB.
         * application threads were stopped for a period of 0.08 seconds
+      * the next phase is mark phase, which does not stop application threads:
+      ```
+      90.059: [CMS-concurrent-mark-start]
+      90.887: [CMS-concurrent-mark: 0.823/0.828 secs]
+                  [Times: user=1.11 sys=0.00, real=0.83 secs]
+      ```
+      * above log contains following information:
+        * mark phase took 0.83 seconds (and 1.11 seconds of CPU time)
+        * there is no heap data shown because it didn't do anything to heap occupancy
+        * duration: 0.83 seconds
+      * Next comes a preclean phase, which also runs concurrently with the application threads
+      ```
+      90.887: [CMS-concurrent-preclean-start]
+      90.892: [CMS-concurrent-preclean: 0.005/0.005 secs]
+                     [Times: user=0.01 sys=0.00, real=0.01 secs]
+      ```
+      * The next phase is a remark phase, but it involves several operations:
+      ```
+      90.892: [CMS-concurrent-abortable-preclean-start]
+      92.392: [GC 92.393: [ParNew: 629120K->69888K(629120K), 0.1289040 secs]
+              1331374K->803967K(2027264K), 0.1290200 secs]
+              [Times: user=0.44 sys=0.01, real=0.12 secs]
+      94.473: [CMS-concurrent-abortable-preclean: 3.451/3.581 secs]
+              [Times: user=5.03 sys=0.03, real=3.58 secs]
+
+      94.474: [GC[YG occupancy: 466937 K (629120 K)]
+      94.474: [Rescan (parallel) , 0.1850000 secs]
+      94.659: [weak refs processing, 0.0000370 secs]
+      94.659: [scrub string table, 0.0011530 secs]
+              [1 CMS-remark: 734079K(1398144K)]
+              1201017K(2027264K), 0.1863430 secs]
+              [Times: user=0.60 sys=0.01, real=0.18 secs]
+      ```
+      * above log contains following information:
+        * The abortable preclean phase is used because the remark phase (which, strictly speaking, is the final entry in this output) is not concurrent—it will stop all the application threads. CMS wants to avoid the situation where a young generation collection occurs and is immediately followed by a remark phase, in which case the application threads would be stopped for two back-to-back pause operations. The goal here is to minimize pause lengths by preventing back-to-back pauses. Hence the abortable preclean phase waits until the young generation is about 50% full.
+        * the abortable preclean phase starts at 90.8 seconds and waits about 1.5 seconds for the regular young collection to occur (at 92.392 seconds into the log)
+        * CMS uses past behavior to calculate when the next young collection is likely to occur—in this case, CMS calculated it would occur in about 4.2 seconds. So after 2.1 seconds (at 94.4 seconds), CMS ends the preclean phase (which it calls “aborting” the phase, even though that is the only way the phase is stopped)
+        * finally, CMS executes the remark phase, which pauses the application threads for 0.18 seconds (the application threads were not paused during the abortable preclean phase)
+      * Next comes another concurrent phase—the sweep phase
+      ```
+      94.661: [CMS-concurrent-sweep-start]
+      95.223: [GC 95.223: [ParNew: 629120K->69888K(629120K), 0.1322530 secs]
+                      999428K->472094K(2027264K), 0.1323690 secs]
+                      [Times: user=0.43 sys=0.00, real=0.13 secs]
+      95.474: [CMS-concurrent-sweep: 0.680/0.813 secs]
+                      [Times: user=1.45 sys=0.00, real=0.82 secs]
+      ```
+      * above log contains following information:
+        * took 0.82 seconds
+        * ran concurrently with the application threads
+        * it also happened to be interrupted by a young collection; this young collection had nothing to do with the sweep phase, but it is left in here as an example that the young collections can occur simultaneously with the old collection phases; there may have been an arbitrary number of young collections during the sweep phase
+      * next comes the concurrent reset phase:
+      ```
+      95.474: [CMS-concurrent-reset-start]
+      95.479: [CMS-concurrent-reset: 0.005/0.005 secs]
+              [Times: user=0.00 sys=0.00, real=0.00 secs]
+      ```
+      * that is the last of the concurrent phases; the CMS cycle is now complete, and the unreferenced objects found in the old generation are now free
+        * there is no info about how many objects were freed; we have to look into next young collection
+      * sometimes problematic log entries may occur
+        * first possible problem: concurrent mode failure
+        ```
+        267.006: [GC 267.006: [ParNew: 629120K->629120K(629120K), 0.0000200 secs]
+        267.006: [CMS267.350: [CMS-concurrent-mark: 2.683/2.804 secs]
+                 [Times: user=4.81 sys=0.02, real=2.80 secs]
+                 (concurrent mode failure):
+                 1378132K->1366755K(1398144K), 5.6213320 secs]
+                 2007252K->1366755K(2027264K),
+                 [CMS Perm : 57231K->57222K(95548K)], 5.6215150 secs]
+                 [Times: user=5.63 sys=0.00, real=5.62 secs]
+        ```
+        * above log contains following information:
+          * when a young collection occurs and there isn’t enough room in the old generation to hold all the objects that are expected to be promoted, CMS executes what is essentially a full GC
+          * all application threads are stopped, and the old generation is cleaned of any dead objects, reducing its occupancy to 1,366 MB—an operation which kept the application threads paused for a full 5.6 seconds
+          * that operation is single-threaded, which is one reason why it takes so long
+        * second possible problem: promotion failed
+        ```
+        6043.903: [GC 6043.903:
+                  [ParNew (promotion failed): 614254K->629120K(629120K), 0.1619839 secs]
+        6044.217: [CMS: 1342523K->1336533K(2027264K), 30.7884210 secs]
+                  2004251K->1336533K(1398144K),
+                  [CMS Perm : 57231K->57231K(95548K)], 28.1361340 secs]
+                  [Times: user=28.13 sys=0.38, real=28.13 secs]
+        ```
+        * above log contains following information:
+          * there is enough room in the old generation to hold the promoted objects, but the free space is fragmented and so the promotion fails
+          * in the middle of the young collection (when all threads were already stopped), CMS collected and compacted the entire old generation
+          * with the heap compacted, fragmentation issues have been solved (at least for a while), but it took 28-second pause time
+        * finally, the CMS log may show a full GC without any of the usual concurrent GC messages:
+        ```
+        279.803: [Full GC 279.803:
+                 [CMS: 88569K->68870K(1398144K), 0.6714090 secs]
+                 558070K->68870K(2027264K),
+                 [CMS Perm : 81919K->77654K(81920K)],
+                 0.6716570 secs]
+        ```
+        * above log contains following information:
+          * occurs when permgen has filled up and needs to be collected
+          * in Java 8, this can also occur if the metaspace needs to be resized
+          * by default, CMS does not collect permgen (or the metaspace), so if it fills up, a full GC is needed to discard any unreferenced classes (this behaviour may be tuned)
+    * CMS has several GC operations, but the expected operations are minor GCs and concurrent cycles.
+    * Concurrent mode failures and promotion failures in CMS are quite expensive; CMS should be tuned to avoid these as much as possible.
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
