@@ -391,6 +391,36 @@ code cache size using -XX:ReservedCodeCacheSize=`
 | Xms=Xmx=2048m            |          2 GB |               5.1% | 9.0 |
 | Xmx=3560M; MaxGCRatio=19 |        2.1 GB |               8.8% | 9.0 |
 
+  * Understanding the CMS collctor
+    * CMS has three basic operations:
+      * CMS collects the young generation (stopping all application threads).
+      * CMS runs a concurrent cycle to clean data out of the old generation.
+      * If necessary, CMS performs a full GC.
+    * young collection logs output:
+    ```
+    89.853: [GC 89.853: [ParNew: 629120K->69888K(629120K), 0.1218970 secs]
+            1303940K->772142K(2027264K), 0.1220090 secs]
+            [Times: user=0.42 sys=0.02, real=0.12 secs]
+    ```
+    * above log contains following information:
+      * size of the young generation is presently 629 MB
+      * after collection, 69 MB of it remains (in a survivor space)
+      * the size of the entire heap is 2,027 MB—772 MB of which is occupied after the collection
+      * entire process took 0.12 seconds, though the parallel GC threads racked up 0.42 seconds in CPU usage
+    * Concurrent cycle
+      * concurrent cycle starts based on the occupancy of the heap - when it is sufficiently full, the JVM starts background threads that cycle through the heap and remove objects
+      * at the end of cycle old generations has "holes" and it's not compacted: there are areas where objects are allocated, and free areas
+      * concurrent cycle has a number of phases; majority of the concurrent cycle uses background threads, some phases introduce short pauses where all application threads are stopped
+      * the concurrent cycle starts with an initial mark phase, which stops all the application threads:
+      ```
+      89.976: [GC [1 CMS-initial-mark: 702254K(1398144K)]
+              772530K(2027264K), 0.0830120 secs]
+              [Times: user=0.08 sys=0.00, real=0.08 secs]
+      ```
+      * above log contains following information:
+        * this phase is responsible for finding all the GC root objects in the heap
+        * The first set of numbers shows that objects currently occupy 702 MB of 1,398 MB of the old generation, while the second set shows that the occupancy of the entire 2,027 MB heap is 772 MB.
+        * application threads were stopped for a period of 0.08 seconds
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
