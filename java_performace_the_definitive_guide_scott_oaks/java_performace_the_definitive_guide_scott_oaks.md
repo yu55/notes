@@ -455,11 +455,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
               [Times: user=0.60 sys=0.01, real=0.18 secs]
       ```
       * above log contains following information:
-        * The abortable preclean phase is used because the remark phase (which, strictly speaking, is the final entry in this output) is not concurrent—it will stop all the application threads. CMS wants to avoid the situation where a young generation collection occurs and is immediately followed by a remark phase, in which case the application threads would be stopped for two back-to-back pause operations. The goal here is to minimize pause lengths by preventing back-to-back pauses. Hence the abortable preclean phase waits until the young generation is about 50% full.
+        * The abortable preclean phase is used because the remark phase (which, strictly speaking, is the final entry in this output) is not concurrent-it will stop all the application threads. CMS wants to avoid the situation where a young generation collection occurs and is immediately followed by a remark phase, in which case the application threads would be stopped for two back-to-back pause operations. The goal here is to minimize pause lengths by preventing back-to-back pauses. Hence the abortable preclean phase waits until the young generation is about 50% full.
         * the abortable preclean phase starts at 90.8 seconds and waits about 1.5 seconds for the regular young collection to occur (at 92.392 seconds into the log)
-        * CMS uses past behavior to calculate when the next young collection is likely to occur—in this case, CMS calculated it would occur in about 4.2 seconds. So after 2.1 seconds (at 94.4 seconds), CMS ends the preclean phase (which it calls “aborting” the phase, even though that is the only way the phase is stopped)
+        * CMS uses past behavior to calculate when the next young collection is likely to occur-in this case, CMS calculated it would occur in about 4.2 seconds. So after 2.1 seconds (at 94.4 seconds), CMS ends the preclean phase (which it calls "aborting" the phase, even though that is the only way the phase is stopped)
         * finally, CMS executes the remark phase, which pauses the application threads for 0.18 seconds (the application threads were not paused during the abortable preclean phase)
-      * Next comes another concurrent phase—the sweep phase
+      * Next comes another concurrent phase-the sweep phase
       ```
       94.661: [CMS-concurrent-sweep-start]
       95.223: [GC 95.223: [ParNew: 629120K->69888K(629120K), 0.1322530 secs]
@@ -493,8 +493,8 @@ code cache size using -XX:ReservedCodeCacheSize=`
                  [Times: user=5.63 sys=0.00, real=5.62 secs]
         ```
         * above log contains following information:
-          * when a young collection occurs and there isn’t enough room in the old generation to hold all the objects that are expected to be promoted, CMS executes what is essentially a full GC
-          * all application threads are stopped, and the old generation is cleaned of any dead objects, reducing its occupancy to 1,366 MB—an operation which kept the application threads paused for a full 5.6 seconds
+          * when a young collection occurs and there isn't enough room in the old generation to hold all the objects that are expected to be promoted, CMS executes what is essentially a full GC
+          * all application threads are stopped, and the old generation is cleaned of any dead objects, reducing its occupancy to 1,366 MB-an operation which kept the application threads paused for a full 5.6 seconds
           * that operation is single-threaded, which is one reason why it takes so long
         * second possible problem: promotion failed
         ```
