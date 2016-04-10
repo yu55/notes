@@ -548,6 +548,14 @@ to the old generation, or by adding more heap space altogether).
           * the key to tuning this flag is whether there are available CPU cycles:
             * If the number of `ConcGCThreads` is set too high, they will take CPU cycles away from the application threads; in effect, small pauses will be introduced into the program as the application threads wait for their chance to run on the CPU.
             * on a system with lots of CPUs, the default value of `ConcGCThreads` may be too high. If concurrent mode failures are not occurring, the number of those threads can often be reduced in order to save CPU cycles
+    * tuning CMS for permgen
+      * full GC occurred when permgen needed to be collected (and the same thing can happen if the metaspace needs to be resized)
+      * By default, the CMS threads in Java 7 do not process permgen, so if permgen fills up, CMS executes a full GC to collect it
+      * Alternately, the `-XX:+CMSPermGenSweepingEnabled` flag can be enabled (it is false by default), so that permgen is collected just like the old generation: by a set of background thread(s) concurrently sweeping permgen. Note that the trigger to perform this sweeping is independent of the old generation. CMS permgen collection occurs when the occupancy ratio of permgen hits the value specified by `-XX:CMSInitiatingPermOccupancyFraction=N`, which defaults to 80%.
+      * to actually free the unreferenced classes, the flag -XX:+CMSClassUnloadingEnabled must be set (in Java 8 it is set by default)
+    * Incremental CMS
+      * for single-CPU machine when low-pause collector is needed (or multiple CPUs but very busy)
+      * present but deprecated in Java 8
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
