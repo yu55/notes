@@ -525,9 +525,29 @@ code cache size using -XX:ReservedCodeCacheSize=`
     * Concurrent mode failures and promotion failures in CMS are quite expensive; CMS should be tuned to avoid these as much as possible.
     * Tuning to Solve Concurrent Mode Failures
       * Avoiding concurrent mode failures is the key to achieving the best possible performance with CMS.
-      * The simplest way to avoid those failures (when possible) is to increase the size of the heap.
+      * The simplest way to avoid those failures (when possible) is to increase the size of the heap (make the old generation larger, either by shifting the proportion of the new generation
+to the old generation, or by adding more heap space altogether).
       * Otherwise, the next step is to start the concurrent background threads sooner by adjusting the `CMSInitiatingOccupancyFraction`.
+        * default value for `-XX:CMSInitiatingOccupancyFraction=N` is `70` (70%)
+        * a good value for `-XX:CMSInitiatingOccupancyFraction` may be found in the GC log by figuring out when the failed CMS cycle started in the first place
+          * find the concurrent mode failure in the log, and then look back to when the most recent CMS cycle started
+          * the CMSinitial-mark line will show how full the old generation was when the CMS cycle started (in example below, it looks that about 50% (702 MB out of 1,398 MB) wasn't enough and `CMSInitiatingOccupancyFraction` must be set lower than 50):
+          ```
+          89.976: [GC [1 CMS-initial-mark: 702254K(1398144K)]
+                  772530K(2027264K), 0.0830120 secs]
+                  [Times: user=0.08 sys=0.00, real=0.08 secs]
+          ```
+          * `CMSInitiatingOccupancyFraction` set to 0 or other small number is discouraged because of trade-offs:
+            * CMS background thread(s) will run continually, and they consume a fair amount of CPU—each background CMS thread will consume 100% of a CPU. This may be a problem when not enough CPU in environment.
+            * certain phases of the CMS cycle stop all the application threads: continually running the background GC pauses will likely lead to excessive overall pauses, which will in the end ultimately reduce the performance of the application
+            * Unless those trade-offs are acceptable, take care not to set the `CMSInitiatingOccupancyFraction` higher than the amount of live data in the heap, plus at least 10% to 20%.
+        * flag `-XX:+UseCMSInitiatingOccupancyOnly` must be used too because CMS will determine when to start the background thread based only on the percentage of the old generation that is filled
       * Tuning the number of background threads can also help.
+        * Each CMS background thread will consume 100% of a CPU on a machine.
+        * if there are extra CPU cycles available, the number of those background threads can be increased by setting the `-XX:ConcGCThreads=N` flag (equation: `ConcGCThreads = (3 + ParallelGCThreads) / 4`; it's base on integer arithmetic)
+          * the key to tuning this flag is whether there are available CPU cycles:
+            * If the number of `ConcGCThreads` is set too high, they will take CPU cycles away from the application threads; in effect, small pauses will be introduced into the program as the application threads wait for their chance to run on the CPU.
+            * on a system with lots of CPUs, the default value of `ConcGCThreads` may be too high. If concurrent mode failures are not occurring, the number of those threads can often be reduced in order to save CPU cycles
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
