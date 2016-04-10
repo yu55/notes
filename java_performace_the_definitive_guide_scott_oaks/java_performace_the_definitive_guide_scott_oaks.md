@@ -523,6 +523,11 @@ code cache size using -XX:ReservedCodeCacheSize=`
           * by default, CMS does not collect permgen (or the metaspace), so if it fills up, a full GC is needed to discard any unreferenced classes (this behaviour may be tuned)
     * CMS has several GC operations, but the expected operations are minor GCs and concurrent cycles.
     * Concurrent mode failures and promotion failures in CMS are quite expensive; CMS should be tuned to avoid these as much as possible.
+    * Tuning to Solve Concurrent Mode Failures
+      * Avoiding concurrent mode failures is the key to achieving the best possible performance with CMS.
+      * The simplest way to avoid those failures (when possible) is to increase the size of the heap.
+      * Otherwise, the next step is to start the concurrent background threads sooner by adjusting the `CMSInitiatingOccupancyFraction`.
+      * Tuning the number of background threads can also help.
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
