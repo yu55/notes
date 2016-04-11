@@ -556,6 +556,45 @@ to the old generation, or by adding more heap space altogether).
     * Incremental CMS
       * for single-CPU machine when low-pause collector is needed (or multiple CPUs but very busy)
       * present but deprecated in Java 8
+  * Understanding the G1 collector
+    * G1 has a number of cycles (and phases within the concurrent cycle). A well-tuned JVM running G1 should only experience young, mixed, and concurrent GC cycles.
+    * Small pauses occur for some of the G1 concurrent phases.
+    * G1 should be tuned if necessary to avoid full GC cycles.
+    * discrete regions within the heap (around 2048 by default) - each region can belong to either the old or new generation, and the generational regions need not be contiguous
+    * collection of a region still requires that application threads be stopped, but G1 can focus on the regions that are mostly garbage and only spend a little bit of time emptying those regions. This approach—clearing out only the mostly garbage regions-is what gives G1 its name: Garbage First
+    * That doesn’t apply to the regions in the young generation: during a young GC, the entire young generation is either freed or promoted (to a survivor space or to the old generation).
+    * G1 has four main operations:
+      * a young collection
+      * a background, concurrent cycle
+      * a mixed collection
+      * if necessary, a full GC
+    * a young collection
+      * this is how it looks in logs
+      ```
+      23.430: [GC pause (young), 0.23094400 secs]
+      ...
+         [Eden: 1286M(1286M)->0B(1212M)
+            Survivors: 78M->152M Heap: 1454M(4096M)->242M(4096M)]
+         [Times: user=0.85 sys=0.05, real=0.23 secs]
+      ```
+      * above log means that:
+        * collection of the young generation took 0.23 seconds of real time, during which the GC threads consumed 0.85 seconds of CPU time
+        * 1,286 MB of objects were moved out of eden (which was resized to 1,212 MB)
+        * 74 MB of that was moved to the survivor space (it increased in size from 78 M to 152 MB) and the rest were freed. We know they were freed by observing that the total heap occupancy decreased by 1,212 MB
+        * some objects from the survivor space might have been moved to the old generation, and if the survivor space were full, some objects from eden would have been promoted directly to the old generation—in those cases, the size of the old generation would increase
+    * a concurrent cycle
+      * has several phases, some of which stop all application threads and some of which do not:
+        * first phase is an initial-mark phase (stops all application threads)
+        ```
+        50.541: [GC pause (young) (initial-mark), 0.27767100 secs]
+           [Eden: 1220M(1220M)->0B(1220M)
+              Survivors: 144M->144M Heap: 3242M(4096M)->2093M(4096M)]
+           [Times: user=1.02 sys=0.04, real=0.28 secs]
+        ```
+        * above log means that:
+          * application threads were stopped (for 0.28 seconds)
+          * the young generation was emptied (71 MB of data was moved from the young generation to the old generation)
+          * initial-mark output announces that the background concurrent cycle has begun
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
