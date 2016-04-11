@@ -356,7 +356,7 @@ code cache size using -XX:ReservedCodeCacheSize=`
       * the young generation now occupies 0 bytes (and its size is 339 MB)
       * data in the old generation decreased from 457 MB to 392 MB
       * entire heap usage has decreased from 473 MB to 392 MB
-      * The size of permgen is unchanged; it is not collected during most full GCs. (If permgen runs out of room, the JVM will run a full GC to collect pergmen, and you will see the size of permgen change—which is the only way to detect if permgen has been collected. Also, this example is from Java 7; the Java 8 output will include similar information on the metaspace.)
+      * The size of permgen is unchanged; it is not collected during most full GCs. (If permgen runs out of room, the JVM will run a full GC to collect pergmen, and you will see the size of permgen change-which is the only way to detect if permgen has been collected. Also, this example is from Java 7; the Java 8 output will include similar information on the metaspace.)
       * it has taken 1.3 seconds of real time, and 4.4 seconds of CPU time (again for four parallel threads)
     * timings taken from the GC log are a quick way to determine the overall impact of GC on an application using the throughput collector
     * adaptive and static heap size tuning
@@ -538,7 +538,7 @@ to the old generation, or by adding more heap space altogether).
                   [Times: user=0.08 sys=0.00, real=0.08 secs]
           ```
           * `CMSInitiatingOccupancyFraction` set to 0 or other small number is discouraged because of trade-offs:
-            * CMS background thread(s) will run continually, and they consume a fair amount of CPU—each background CMS thread will consume 100% of a CPU. This may be a problem when not enough CPU in environment.
+            * CMS background thread(s) will run continually, and they consume a fair amount of CPU-each background CMS thread will consume 100% of a CPU. This may be a problem when not enough CPU in environment.
             * certain phases of the CMS cycle stop all the application threads: continually running the background GC pauses will likely lead to excessive overall pauses, which will in the end ultimately reduce the performance of the application
             * Unless those trade-offs are acceptable, take care not to set the `CMSInitiatingOccupancyFraction` higher than the amount of live data in the heap, plus at least 10% to 20%.
         * flag `-XX:+UseCMSInitiatingOccupancyOnly` must be used too because CMS will determine when to start the background thread based only on the percentage of the old generation that is filled
