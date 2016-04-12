@@ -640,7 +640,49 @@ to the old generation, or by adding more heap space altogether).
         ```
         * mixed GC cycles will continue until (almost) all of the marked regions have been collected, at which point G1 will resume regular young GC cycles
         * eventually, G1 will start another concurrent cycle to determine which regions should be freed next
-
+      * when full GC occurs it means that more tuning is needed; full GC occurs because:
+        * Concurrent mode failure
+          * G1 starts a marking cycle, but the old generation fills up before the cycle is completed
+          ```
+          51.408: [GC concurrent-mark-start]
+          65.473: [Full GC 4095M->1395M(4096M), 6.1963770 secs]
+                  [Times: user=7.87 sys=0.00, real=6.20 secs]
+          71.669: [GC concurrent-mark-abort]
+          ```
+          * heap size should be increased, or the G1 background processing must begin sooner, or the cycle must be tuned to run more quickly (e.g., by using additional background threads)
+        * Promotion failure
+          * G1 has completed a marking cycle and has started performing mixed GCs to clean up the old regions, but the old generation runs out of space before enough memory can be reclaimed from the old generation
+          ```
+          2226.224: [GC pause (mixed)
+          2226.440: [SoftReference, 0 refs, 0.0000060 secs]
+          2226.441: [WeakReference, 0 refs, 0.0000020 secs]
+          2226.441: [FinalReference, 0 refs, 0.0000010 secs]
+          2226.441: [PhantomReference, 0 refs, 0.0000010 secs]
+          2226.441: [JNI Weak Reference, 0.0000030 secs]
+             (to-space exhausted), 0.2390040 secs]
+          ....
+             [Eden: 0.0B(400.0M)->0.0B(400.0M)
+                Survivors: 0.0B->0.0B Heap: 2006.4M(2048.0M)->2006.4M(2048.0M)]
+             [Times: user=1.70 sys=0.04, real=0.26 secs]
+          2226.510: [Full GC (Allocation Failure)
+          2227.519: [SoftReference, 4329 refs, 0.0005520 secs]
+          2227.520: [WeakReference, 12646 refs, 0.0010510 secs]
+          2227.521: [FinalReference, 7538 refs, 0.0005660 secs]
+          2227.521: [PhantomReference, 168 refs, 0.0000120 secs]
+          2227.521: [JNI Weak Reference, 0.0000020 secs]
+             2006M->907M(2048M), 4.1615450 secs]
+                    [Times: user=6.76 sys=0.01, real=4.16 secs]
+          ```
+          * mixed collections need to happen more quickly; each young collection needs to process more regions in the old generation
+        * Evacuation failure
+          * when performing a young collection, there isn’t enough room in the survivor spaces and the old generation to hold all the surviving objects
+          ```
+          60.238: [GC pause (young) (to-space overflow), 0.41546900 secs]
+          ```
+          * This is an indication that the heap is largely full or fragmented. G1 will attempt to compensate for this, but you can expect this to end badly: G1 will resort to performing a full GC. The easy way to overcome this is to increase the heap size, though some possible solutions are given in "Advanced Tunings"
+        * Humongous allocation failure
+          * Applications that allocate very large objects can trigger another kind of full GC in G1
+          * There are no tools to diagnose that situation specifically from the standard GC log, though if a full GC occurs for no apparent reason, it is likely due to an issue with humongous allocations
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
