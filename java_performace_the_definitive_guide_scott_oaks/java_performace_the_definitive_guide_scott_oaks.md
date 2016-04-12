@@ -561,8 +561,8 @@ to the old generation, or by adding more heap space altogether).
     * Small pauses occur for some of the G1 concurrent phases.
     * G1 should be tuned if necessary to avoid full GC cycles.
     * discrete regions within the heap (around 2048 by default) - each region can belong to either the old or new generation, and the generational regions need not be contiguous
-    * collection of a region still requires that application threads be stopped, but G1 can focus on the regions that are mostly garbage and only spend a little bit of time emptying those regions. This approach—clearing out only the mostly garbage regions-is what gives G1 its name: Garbage First
-    * That doesn’t apply to the regions in the young generation: during a young GC, the entire young generation is either freed or promoted (to a survivor space or to the old generation).
+    * collection of a region still requires that application threads be stopped, but G1 can focus on the regions that are mostly garbage and only spend a little bit of time emptying those regions. This approach-clearing out only the mostly garbage regions-is what gives G1 its name: Garbage First
+    * That doesn't apply to the regions in the young generation: during a young GC, the entire young generation is either freed or promoted (to a survivor space or to the old generation).
     * G1 has four main operations:
       * a young collection
       * a background, concurrent cycle
@@ -581,7 +581,7 @@ to the old generation, or by adding more heap space altogether).
         * collection of the young generation took 0.23 seconds of real time, during which the GC threads consumed 0.85 seconds of CPU time
         * 1,286 MB of objects were moved out of eden (which was resized to 1,212 MB)
         * 74 MB of that was moved to the survivor space (it increased in size from 78 M to 152 MB) and the rest were freed. We know they were freed by observing that the total heap occupancy decreased by 1,212 MB
-        * some objects from the survivor space might have been moved to the old generation, and if the survivor space were full, some objects from eden would have been promoted directly to the old generation—in those cases, the size of the old generation would increase
+        * some objects from the survivor space might have been moved to the old generation, and if the survivor space were full, some objects from eden would have been promoted directly to the old generation-in those cases, the size of the old generation would increase
     * a concurrent cycle
       * has several phases, some of which stop all application threads and some of which do not:
         * first phase is an initial-mark phase (stops all application threads)
@@ -675,7 +675,7 @@ to the old generation, or by adding more heap space altogether).
           ```
           * mixed collections need to happen more quickly; each young collection needs to process more regions in the old generation
         * Evacuation failure
-          * when performing a young collection, there isn’t enough room in the survivor spaces and the old generation to hold all the surviving objects
+          * when performing a young collection, there isn't enough room in the survivor spaces and the old generation to hold all the surviving objects
           ```
           60.238: [GC pause (young) (to-space overflow), 0.41546900 secs]
           ```
@@ -683,6 +683,7 @@ to the old generation, or by adding more heap space altogether).
         * Humongous allocation failure
           * Applications that allocate very large objects can trigger another kind of full GC in G1
           * There are no tools to diagnose that situation specifically from the standard GC log, though if a full GC occurs for no apparent reason, it is likely due to an issue with humongous allocations
+      * 
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
