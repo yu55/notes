@@ -683,7 +683,38 @@ to the old generation, or by adding more heap space altogether).
         * Humongous allocation failure
           * Applications that allocate very large objects can trigger another kind of full GC in G1
           * There are no tools to diagnose that situation specifically from the standard GC log, though if a full GC occurs for no apparent reason, it is likely due to an issue with humongous allocations
-      * 
+      * Tuning G1
+        * one of the goals of G1 is that it shouldn't have to be tuned that much
+        * G1 is primarily tuned via a single flag: the same `-XX:MaxGCPauseMillis=N`, which has default `200 ms`
+          * If pauses for any of the stop-the-world phases of G1 start to exceed that value, G1 will attempt to compensate—adjusting the young-to-old ratio, adjusting the heap size, starting the background processing sooner, changing the tenuring threshold, and (most significantly) processing more or fewer old generation regions during a mixed GC cycle
+          * trade-offs when this flag's value is reduced:
+            * more frequent young GC will be performed
+            * number of old generation regions that can be collected during a mixed GC will decrease to meet the pause time goal, which increases the chances of a concurrent mode failure
+        * Tuning the G1 background threads
+          * To have G1 win its race, try increasing the number of background marking threads (assuming there is sufficient CPU available on the machine) by tuning `ParallelGCThreads` flag
+          * `ConcGCThreads = (ParallelGCThreads + 2) / 4`
+        * Tuning G1 to run more (or less) frequently
+          * G1 can also win its race if it starts collecting earlier.
+          * `-XX:InitiatingHeapOccupancyPercent=N` with default value 45 (this setting is based on the usage of the entire heap, not just the old generation)
+          * `InitiatingHeapOccupancyPercent` is never changed by G1 when it tries to meet its pause time goals
+          * when value is set too high, the application will end up performing full GCs because the concurrent phases don’t have enough time to complete before the rest of the heap fills up
+          * when value is too small, the application will perform more background GC processing than it might otherwise
+            * the CPU cycles to perform that background processing must be available anyway, so the extra CPU use isn’t necessarily important
+            * but there will be more of the small pauses for those concurrent phases that stop the application threads - those pauses can add up quickly, so performing background sweeping too frequently for G1 should be avoided
+            * check the size of the heap after a concurrent cycle, and make sure that the `InitiatingHeapOccupancyPercent` value is set higher than that
+        * Tuning G1 mixed GC cycles
+          * After a concurrent cycle, G1 cannot begin a new concurrent cycle until all previously marked regions in the old generation have been collected.
+          * to make G1 start a marking cycle earlier is to process more regions in a mixed GC cycle (so that there will end up being fewer mixed GC cycles)
+          * amount of work a mixed GC does depends on:
+            * how many regions were found to be mostly garbage in the first place
+              * There is no way to directly affect that: a region is declared eligible for collection during a mixed GC if it is 35% garbage; maybe in future parameter `-XX:G1MixedGCLiveThresholdPercent=N` will change that
+            * maximum number of mixed GC cycles over which G1 will process those regions
+              * `-XX:G1MixedGCCountarget=N`, with default value 8
+              * reducing that value can help overcome promotion failures (at the expense of longer pause times during the mixed GC cycle)
+              * if mixed GC pause times are too long, that value can be increased so that less work is done during the mixed GC
+              * be sure that increasing that number does not delay the next G1 concurrent cycle too long, or a concurrent mode failure may result
+            * maximum desired length of a GC pause (i.e., the value specified by MaxGCPauseMillis)
+              * The number of mixed cycles specified by the `G1MixedGCCountTarget` flag is an upper bound; if time is available within the pause target, G1 will collect more than one-eighth (or whatever value has been specified) of the marked old generation regions. Increasing the value of the MaxGCPauseMillis flag allows more old generation regions to be collected during each mixed GC, which in turn can allow G1 to begin the concurrent cycle sooner
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
