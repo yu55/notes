@@ -595,6 +595,52 @@ to the old generation, or by adding more heap space altogether).
           * application threads were stopped (for 0.28 seconds)
           * the young generation was emptied (71 MB of data was moved from the young generation to the old generation)
           * initial-mark output announces that the background concurrent cycle has begun
+        * next phase: scanning the root region (doesn't stop app threads)
+        ```
+        50.819: [GC concurrent-root-region-scan-start]
+        51.408: [GC concurrent-root-region-scan-end, 0.5890230]
+        ```
+        * above log means that:
+          * it took 0.58 seconds
+          * this phase cannot be interrupted by a young collection, so having available CPU cycles for those background threads is crucial; if the young generation happens to fill up during the root region scanning, the young collection (which has stopped all the application threads) must wait for the root scanning to complete; this means a longer-than-usual pause to collect the young generation:
+          ```
+          350.994: [GC pause (young)
+          351.093: [GC concurrent-root-region-scan-end, 0.6100090]
+          351.093: [GC concurrent-mark-start],
+             0.37559600 secs]
+          ```
+        * next phase: concurrent marking (doesn't stop app threds)
+        ```
+        111.382: [GC concurrent-mark-start]
+        ....
+        120.905: [GC concurrent-mark-end, 9.5225160 sec]
+        ```
+        * concurrent marking can be interrupted, so young collections may occur during this phase
+        * next phases: remarking phase and a normal cleanup phase (app threads are stopped)
+        ```
+        120.910: [GC remark 120.959:
+           [GC ref-PRC, 0.0000890 secs], 0.0718990 secs]
+           [Times: user=0.23 sys=0.01, real=0.08 secs]
+        120.985: [GC cleanup 3510M->3434M(4096M), 0.0111040 secs]
+           [Times: user=0.04 sys=0.00, real=0.01 secs]
+        ```
+        * next: additional cleanup phase (doesn't stop threads)
+        ```
+        120.996: [GC concurrent-cleanup-start]
+        120.996: [GC concurrent-cleanup-end, 0.0004520]
+        ```
+      * mixed GC operations
+        * perform the normal young collection, but they also collect some number of the marked regions from the background scan
+        ```
+        79.826: [GC pause (mixed), 0.26161600 secs]
+        ....
+                [Eden: 1222M(1222M)->0B(1220M)
+                   Survivors: 142M->144M Heap: 3200M(4096M)->1964M(4096M)]
+                [Times: user=1.01 sys=0.00, real=0.26 secs]
+        ```
+        * mixed GC cycles will continue until (almost) all of the marked regions have been collected, at which point G1 will resume regular young GC cycles
+        * eventually, G1 will start another concurrent cycle to determine which regions should be freed next
+
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
