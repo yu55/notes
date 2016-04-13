@@ -686,7 +686,7 @@ to the old generation, or by adding more heap space altogether).
       * Tuning G1
         * one of the goals of G1 is that it shouldn't have to be tuned that much
         * G1 is primarily tuned via a single flag: the same `-XX:MaxGCPauseMillis=N`, which has default `200 ms`
-          * If pauses for any of the stop-the-world phases of G1 start to exceed that value, G1 will attempt to compensate—adjusting the young-to-old ratio, adjusting the heap size, starting the background processing sooner, changing the tenuring threshold, and (most significantly) processing more or fewer old generation regions during a mixed GC cycle
+          * If pauses for any of the stop-the-world phases of G1 start to exceed that value, G1 will attempt to compensate-adjusting the young-to-old ratio, adjusting the heap size, starting the background processing sooner, changing the tenuring threshold, and (most significantly) processing more or fewer old generation regions during a mixed GC cycle
           * trade-offs when this flag's value is reduced:
             * more frequent young GC will be performed
             * number of old generation regions that can be collected during a mixed GC will decrease to meet the pause time goal, which increases the chances of a concurrent mode failure
@@ -697,9 +697,9 @@ to the old generation, or by adding more heap space altogether).
           * G1 can also win its race if it starts collecting earlier.
           * `-XX:InitiatingHeapOccupancyPercent=N` with default value 45 (this setting is based on the usage of the entire heap, not just the old generation)
           * `InitiatingHeapOccupancyPercent` is never changed by G1 when it tries to meet its pause time goals
-          * when value is set too high, the application will end up performing full GCs because the concurrent phases don’t have enough time to complete before the rest of the heap fills up
+          * when value is set too high, the application will end up performing full GCs because the concurrent phases don't have enough time to complete before the rest of the heap fills up
           * when value is too small, the application will perform more background GC processing than it might otherwise
-            * the CPU cycles to perform that background processing must be available anyway, so the extra CPU use isn’t necessarily important
+            * the CPU cycles to perform that background processing must be available anyway, so the extra CPU use isn't necessarily important
             * but there will be more of the small pauses for those concurrent phases that stop the application threads - those pauses can add up quickly, so performing background sweeping too frequently for G1 should be avoided
             * check the size of the heap after a concurrent cycle, and make sure that the `InitiatingHeapOccupancyPercent` value is set higher than that
         * Tuning G1 mixed GC cycles
