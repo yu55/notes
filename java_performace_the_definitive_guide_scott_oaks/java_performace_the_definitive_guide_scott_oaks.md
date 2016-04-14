@@ -728,6 +728,24 @@ to the old generation, or by adding more heap space altogether).
         * ping-ponging between survivor spaces starts at `-XX:InitialTenuringThreshold=N` (default 7 for throughput and G1, 6 for CMS) and constantly adapts between 1 and `-XX:MaxTenuringThreshold=N` (default 15 for throughput and G1, 6 for CMS)
         * objects will always be promoted to the old generation rather than stored in a survivor space: `-XX:+AlwaysTenure` (by default false)
         * behave as if the initial and max tenuring thresholds are infinity, and prevent the JVM from adjusting that threshold down; (as long as there is room in the survivor space, no object will ever be promoted to the old generation): `-XX:+NeverTenure` (by default false)
+        * observing tenuring statistics: `-XX:+PrintTenuringDistribution` (default false)
+          * The most important thing to look for is whether the survivor spaces are so small that during a minor GC, objects are promoted directly from eden into the old generation. Below troughput log:
+          ```
+          Desired survivor size 39059456 bytes, new threshold 1 (max 15)
+              [PSYoungGen: 657856K->35712K(660864K)]
+                 1659879K->1073807K(2059008K), 0.0950040 secs]
+              [Times: user=0.32 sys=0.00, real=0.09 secs]
+          ```
+          * desired size for a single survivor space here is 39 MB out of a young generation of 660 MB: the JVM has calculated that the two survivor spaces should take up about 11% of the young generation
+          * JVM has adjusted the tenuring threshold to 1 indicates that it has determined it is directly promoting most objects to the old generation anyway, so it has minimized the tenuring threshold
+          * below G1 or CMS log output:
+          ```
+          Desired survivor size 35782656 bytes, new threshold 2 (max 6)
+          - age 1: 33291392 bytes, 33291392 total
+          - age 2: 4098176 bytes, 37389568 total
+          ```
+          * if the objects would go away after just a few more GC cycles, then some performance can be gained by arranging for the survivor spaces to be more efficient
+        * A good process is to increase the heap size (or at least the young generation size) and to decrease the survivor ratio. That will increase the size of the survivor spaces more than it will increase the size of eden. The application should end up having roughly the same number of young collections as before. It should have fewer full GCs, though, since fewer objects will be promoted into the old generation (again, assuming that the objects will no longer be live after a few more GC cycles).
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
