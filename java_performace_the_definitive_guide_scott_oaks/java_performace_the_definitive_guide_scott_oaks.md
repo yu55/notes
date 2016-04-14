@@ -715,6 +715,19 @@ to the old generation, or by adding more heap space altogether).
               * be sure that increasing that number does not delay the next G1 concurrent cycle too long, or a concurrent mode failure may result
             * maximum desired length of a GC pause (i.e., the value specified by MaxGCPauseMillis)
               * The number of mixed cycles specified by the `G1MixedGCCountTarget` flag is an upper bound; if time is available within the pause target, G1 will collect more than one-eighth (or whatever value has been specified) of the marked old generation regions. Increasing the value of the MaxGCPauseMillis flag allows more old generation regions to be collected during each mixed GC, which in turn can allow G1 to begin the concurrent cycle sooner
+  * Advanced Tunings
+    * Tenuring and Survivor Spaces
+      * Survivor spaces are designed to allow objects (particularly justallocated objects) to remain in the young generation for a few GC cycles. This increases the probability the object will be freed before it is promoted to the old generation.
+      * If the survivor spaces are too small, objects will promoted directly into the old generation, which in turn causes more old GC cycles.
+      * The best way to handle that situation is to increase the size of the heap (or at least the young generation) and allow the JVM to handle the survivor spaces.
+      * In rare cases, adjusting the tenuring threshold or survivor space sizes can prevent promotion of objects into the old generation.
+        * initial survivor size: `-XX:InitialSurvivorRatio=N` (default 8 -> each survivor space will occupy 10% of the young generation: `survivor_space_size = new_size / (initial_survivor_ratio + 2)`)
+        * max survivor size: `-XX:MinSurvivorRatio=N` (default 3 -> each survivor space will occupy 20% of the young generation: `maximum_survivor_space_size = new_size / (min_survivor_ratio + 2)`)
+        * keep fixed survivors: set `SurvivorRatio` to desired value and disable `UseAdaptiveSizePolicy` (disabling adaptive sizing will apply to the old and new generations as well)
+        * change when JVM resizes survivor spaces: `-XX:TargetSurvivorRatio=N` (default if 50% full after full GC then resize)
+        * ping-ponging between survivor spaces starts at `-XX:InitialTenuringThreshold=N` (default 7 for throughput and G1, 6 for CMS) and constantly adapts between 1 and `-XX:MaxTenuringThreshold=N` (default 15 for throughput and G1, 6 for CMS)
+        * objects will always be promoted to the old generation rather than stored in a survivor space: `-XX:+AlwaysTenure` (by default false)
+        * behave as if the initial and max tenuring thresholds are infinity, and prevent the JVM from adjusting that threshold down; (as long as there is room in the survivor space, no object will ever be promoted to the old generation): `-XX:+NeverTenure` (by default false)
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
