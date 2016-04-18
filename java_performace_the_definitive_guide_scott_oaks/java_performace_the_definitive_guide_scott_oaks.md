@@ -746,6 +746,12 @@ to the old generation, or by adding more heap space altogether).
           ```
           * if the objects would go away after just a few more GC cycles, then some performance can be gained by arranging for the survivor spaces to be more efficient
         * A good process is to increase the heap size (or at least the young generation size) and to decrease the survivor ratio. That will increase the size of the survivor spaces more than it will increase the size of eden. The application should end up having roughly the same number of young collections as before. It should have fewer full GCs, though, since fewer objects will be promoted into the old generation (again, assuming that the objects will no longer be live after a few more GC cycles).
+    * Allocating Large Objects
+      * Applications that allocate a lot of large objects may need to tune the TLABs (though often using smaller objects in the application is a better approach).
+    * G1 region sizes
+      * G1 regions are sized in powers of 2, starting at 1 MB.
+      * Heaps that have a very different maximum size than initial size will have too many G1 regions; the G1 region size should be increased in that case.
+      * Applications that allocate objects larger than half the size of a G1 region should increase the G1 region size, so that the objects can fit within a G1 region. An application must allocate an object that is at least 512 KB for this to apply (since the smallest G1 region is 1 MB).
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
