@@ -752,6 +752,9 @@ to the old generation, or by adding more heap space altogether).
       * G1 regions are sized in powers of 2, starting at 1 MB.
       * Heaps that have a very different maximum size than initial size will have too many G1 regions; the G1 region size should be increased in that case.
       * Applications that allocate objects larger than half the size of a G1 region should increase the G1 region size, so that the objects can fit within a G1 region. An application must allocate an object that is at least 512 KB for this to apply (since the smallest G1 region is 1 MB).
+    * AggressiveHeap
+      * The `AggressiveHeap` flag is a legacy attempt to set a number of heap parameters to values that make sense for a single JVM running on a very large machine.
+      * Values set by this flag are not adjusted as JVM technology improves, so its usefulness in the long run is dubious (even though it still is often used).
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
