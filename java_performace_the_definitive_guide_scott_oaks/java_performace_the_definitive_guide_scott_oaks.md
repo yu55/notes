@@ -755,6 +755,23 @@ to the old generation, or by adding more heap space altogether).
     * AggressiveHeap
       * The `AggressiveHeap` flag is a legacy attempt to set a number of heap parameters to values that make sense for a single JVM running on a very large machine.
       * Values set by this flag are not adjusted as JVM technology improves, so its usefulness in the long run is dubious (even though it still is often used).
+    * Full Control Over Heap Size
+      * default sizes are based on the amount of memory on a machine: `-XX:MaxRAM=N` (normally calculated by JVM inspecting the amount of memory on machine); limits:
+        * 1 GB for the client compiler
+        * 4 GB for 32-bit server compilers
+        * 128 GB for 64-bit compilers
+      * `Default Xmx = MaxRAM / MaxRAMFraction` where `-XX:MaxRAMFraction=N` is 4 by defaut
+      * `-XX:ErgoHeapSizeLimit=N` by default 0; used when smaller than `MaxRAM / MaxRAMFraction`
+      * on a machine with a very small amount of physical memory, the JVM wants to be sure it leaves enough memory for the operating system
+        * `-XX:MinRAMFraction=N` which by default is 2 and is used in:
+        ```
+        if ((96 MB * MinRAMFraction) > Physical Memory) {
+            Default Xmx = Physical Memory / MinRAMFraction;
+        }
+        ```
+        * `Default Xms = MaxRAM / InitialRAMFraction`
+          * default `InitialRAMFraction` flag is 64
+            * if it's < 5 MB then sum of `-XX:OldSize=N` (which defaults to 4 MB) plus `-XX:NewSize=N` (which defaults to 1 MB) is used
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
