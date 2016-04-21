@@ -772,6 +772,25 @@ to the old generation, or by adding more heap space altogether).
         * `Default Xms = MaxRAM / InitialRAMFraction`
           * default `InitialRAMFraction` flag is 64
             * if it's < 5 MB then sum of `-XX:OldSize=N` (which defaults to 4 MB) plus `-XX:NewSize=N` (which defaults to 1 MB) is used
+  * Summary
+    * Can your application tolerate some full GC pauses?
+      * yes: use throughput collector
+      * no: for smaller heaps use CMS or G1, for bigger heaps use G1
+    * Are you getting the performance you need with the default settings?
+      * try default settings first
+      * if problems with performance make sure that GC is really the problem
+        * check GC logs for how long app is spending in GC
+        * for a busy application, if you're spending 3% or less time in GC, you’re not going to get a lot out of tuning
+      * Are the pause times that you have somewhat close to your goal?
+        * yes: adjust maximum pause time
+        * no: if throughput is OK then reduce size of young generation (and for full GC old generation as well)
+      * Is throughput lagging even though GC pause times are short?
+        * increase the size of the heap (or at least the young generation)
+      * Are you using a concurrent collector and seeing full GCs due to concurrent-mode failures?
+        * if available CPU, try increasing the number of concurrent GC threads or starting the background sweep sooner by adjusting the `InitiatingHeapOccupancyPercent`
+        * G1: the concurrent cycle won’t start if there are pending mixed GCs; try reducing the mixed GC count target
+      * Are you using a concurrent collector and seeing full GCs due to promotion failures?
+        * In CMS, a promotion failure indicates that the heap is fragmented: there is little to do about that. Use G1. Also increase the number of concurrent G1 threads (`InitiatingHeapOccupancyPercent` or reducing the mixed count target)
 
 ## 7 Heap Memory Best Practises
   * Heap analysis
