@@ -780,7 +780,7 @@ to the old generation, or by adding more heap space altogether).
       * try default settings first
       * if problems with performance make sure that GC is really the problem
         * check GC logs for how long app is spending in GC
-        * for a busy application, if you're spending 3% or less time in GC, you’re not going to get a lot out of tuning
+        * for a busy application, if you're spending 3% or less time in GC, you're not going to get a lot out of tuning
       * Are the pause times that you have somewhat close to your goal?
         * yes: adjust maximum pause time
         * no: if throughput is OK then reduce size of young generation (and for full GC old generation as well)
@@ -788,7 +788,7 @@ to the old generation, or by adding more heap space altogether).
         * increase the size of the heap (or at least the young generation)
       * Are you using a concurrent collector and seeing full GCs due to concurrent-mode failures?
         * if available CPU, try increasing the number of concurrent GC threads or starting the background sweep sooner by adjusting the `InitiatingHeapOccupancyPercent`
-        * G1: the concurrent cycle won’t start if there are pending mixed GCs; try reducing the mixed GC count target
+        * G1: the concurrent cycle won't start if there are pending mixed GCs; try reducing the mixed GC count target
       * Are you using a concurrent collector and seeing full GCs due to promotion failures?
         * In CMS, a promotion failure indicates that the heap is fragmented: there is little to do about that. Use G1. Also increase the number of concurrent G1 threads (`InitiatingHeapOccupancyPercent` or reducing the mixed count target)
 
@@ -818,7 +818,7 @@ to the old generation, or by adding more heap space altogether).
       * the app may need more heap or has a memory leak
       * auto heap dumps when out of memory occurs:
         * -XX:+HeapDumpOnOutOfMemoryError causes the JVM to create a heap dump whenever an out of memory error is thrown
-        * -XX:HeapDumpPath=<path> specifies the location where the heap dump will be written; the default is java_pid<pid>.hprof in the application’s current working directory. The path can specify either a directory (in which case the default file name is used), or the name of the actual file to produce
+        * -XX:HeapDumpPath=<path> specifies the location where the heap dump will be written; the default is java_pid<pid>.hprof in the application's current working directory. The path can specify either a directory (in which case the default file name is used), or the name of the actual file to produce
         * -XX:+HeapDumpAfterFullGC generates a heap dump after running a full GC
         * -XX:+HeapDumpBeforeFullGC generates a heap dump before running a full GC
     * The JVM is spending too much time performing GC
@@ -872,7 +872,7 @@ to the old generation, or by adding more heap space altogether).
         * StringBuilder helpers
           * the BigDecimal class reuses a StringBuilder object when calculating intermediate results
         * Random number generators
-          * instances of either the Random and—especially—SecureRandom classes are expensive to seed
+          * instances of either the Random and-especially-SecureRandom classes are expensive to seed
         * Names obtained from DNS lookups
           * network lookups are expensive
         * ZIP encoders and encoders
@@ -886,7 +886,7 @@ to the old generation, or by adding more heap space altogether).
       * If the referent of the weak reference is freed while the weak reference itself is still in the young generation, the weak reference will be freed quickly (at the next minor GC)
       * If the referent remains around long enough for the weak reference to be promoted into the old generation, then the weak reference will not be freed until the next concurrent or full GC cycle
       * Weak references should be used when the referent in question will be used by several threads simultaneously
-        * in addition to keeping a strong reference to the particular data in the first user’s HTTP session, it makes sense to keep a weak reference to that data in a global cache. Now the second user will be able to find the data—assuming that the first user has not logged out and cleared her session.
+        * in addition to keeping a strong reference to the particular data in the first user's HTTP session, it makes sense to keep a weak reference to that data in a global cache. Now the second user will be able to find the data-assuming that the first user has not logged out and cleared her session.
         * "Hey, as long as someone else is interested in this object, let me know where it is, but if they no longer need it, throw it away and I will re-create it myself."
     * Soft references hold onto objects for (possibly) long periods of time, providing a simple GC-friendly LRU cache
       * the referent must not be strongly referenced elsewhere. If the soft reference is the only remaining reference to its referent, the referent is freed during the next GC cycle only if the soft reference has not recently been accessed
@@ -917,7 +917,7 @@ to the old generation, or by adding more heap space altogether).
     * tuning GC is important, but to obtain maximum performance, memory must be utilized effectively within applications
     * normal time/space tradeoff of programming can swing to a time/space-and-time trade-off: using too much space in the heap can make things slower by requiring more GC
     * judicious use of object pools, thread-local variables, indefinite references can vastly improve the performance of an application, but overuse of them can just as easily degrade performance
-    * in limited quantities—when the number of objects in question is small and bounded—the use of these memory techniques can be quite effective
+    * in limited quantities-when the number of objects in question is small and bounded-the use of these memory techniques can be quite effective
 
 ## 8 Native Memory Best Practices
   * The total of native (nonheap) and heap memory used by the JVM yields the total footprint of an application
@@ -975,7 +975,7 @@ to the old generation, or by adding more heap space altogether).
       * As access to the resource becomes heavily contended, traditional synchronization will at some point become the more efficient choice. In practice, this occurs only on very large machines running a large number of threads
       * CAS-based protection is not subject to contention when values are read and not written.
     * Avoiding contention for synchronized objects is a useful way to mitigate their performance impact.
-    * Thread-local variables are never subject to contention; they are ideal for holding synchronized objects that don’t actually need to be shared between threads.
+    * Thread-local variables are never subject to contention; they are ideal for holding synchronized objects that don't actually need to be shared between threads.
     * CAS-based utilities are a way to avoid traditional synchronization for objects that do need to be shared.
   * False sharing
     * false sharing is when CPU loads nearby variables (e.g. class fields) into cache line and each time the app is updating them, other cores have to invalidate these variables and pull data again from main memory; if threads use these nearby variables (even each thread uses different one), because they all fit inside the same cache line all of these variables will be invalidated always on every CORE
@@ -1037,7 +1037,7 @@ to the old generation, or by adding more heap space altogether).
     * If a program needs to make one simple pass through the data, then simply using the fastest parser will suffice. Directly using a parser is also appropriate if the data is to be saved in a simple, application-defined structure.
     * Using a document model is more appropriate when the format of the data is important. If the format of the data must be preserved, then a document format is very easy: the data can be read into the document format, altered in some way, and then the document format can simply be written to a new data stream.
     * For ultimate flexibility, an object model provides Java-language level representation of the data. The data can be manipulated in the familiar terms of objects and their attributes. The added complexity in the marshalling is (mostly) transparent to the developer and may make that part of the application a little slower, but the productivity improvement in working with the code can offset that issue.
-    * There are many ways for Java EE applications to process programmatic data. As these techniques provide more functionality to developers, the cost of the data processing itself will increase. Don’t let that dissuade you from choosing the right paradigm for handling the data in your application.
+    * There are many ways for Java EE applications to process programmatic data. As these techniques provide more functionality to developers, the cost of the data processing itself will increase. Don't let that dissuade you from choosing the right paradigm for handling the data in your application.
     * Choosing a Parser
       * Choosing the right parser can have a big impact on the performance of an application.
       * Push parsers tend to be faster than pull parsers.
@@ -1078,8 +1078,8 @@ to the old generation, or by adding more heap space altogether).
       * Prepared statements must be pooled on a per-connection basis. Most JDBC drivers and Java EE frameworks can do this automatically.
       * Prepared statements can consume a significant amount of heap. The size of the statement pool must be carefully tuned to prevent GC issues from pooling too many very large objects.
     * JDBC connection pools
-      * Connections are expensive objects to initialize; they are routinely pooled in Java—either in the JDBC driver itself, or within Java EE and JPA frameworks.
-      * As with other object pools, it is important to tune the connection pool so it doesn’t adversely affect the garbage collector. In this case, it is also necessary to tune the connection pool so it doesn’t adversely affect the performance of the database itself.
+      * Connections are expensive objects to initialize; they are routinely pooled in Java-either in the JDBC driver itself, or within Java EE and JPA frameworks.
+      * As with other object pools, it is important to tune the connection pool so it doesn't adversely affect the garbage collector. In this case, it is also necessary to tune the connection pool so it doesn't adversely affect the performance of the database itself.
     * Transactions
       * Transactions affect the speed of applications in two ways: transactions are expensive to commit, and the locking associated with transactions can prevent database scaling.
       * Those two effects are antagonistic: waiting too long to commit a transaction increases the amount of time that locks associated with the transaction are held. Especially for transactions using stricter semantics, the balance should be toward committing more frequently rather than holding the locks longer.
@@ -1090,7 +1090,7 @@ to the old generation, or by adding more heap space altogether).
   * JPA
     * Transaction handling
       * Explicitly managing transaction boundaries with user-managed transactions can often improve the performance of an application.
-      * The default Java EE programming model—a servlet or web service accessing JPA entities via EJBs—supports that model easily.
+      * The default Java EE programming model-a servlet or web service accessing JPA entities via EJBs-supports that model easily.
       * As an alternative, consider splitting JPA logic into separate methods depending on the transactional needs of the application.
     * Optimizing JPA writes
       * JPA applications, like JDBC applications, can benefit from limiting the number of write calls to the database (with the potential trade-off of holding transaction locks).
@@ -1127,7 +1127,7 @@ to the old generation, or by adding more heap space altogether).
     * In complex applications (particularly application servers) with multiple classloaders, making those classloaders parallel-capable can solve issues where they are bottlenecked on the system or bootclass classloader.
     * Applications that do a lot of classloading through a single classloader in a single thread may benefit from disabling the parallelcapable feature of Java 7.
   * Random Numbers
-    * Java’s default Random class is expensive to initialize, but once initialized, it can be reused.
+    * Java's default Random class is expensive to initialize, but once initialized, it can be reused.
     * In multithreaded code, the ThreadLocalRandom class is preferred.
     * The SecureRandom class will show arbitrary, completely random performance. Performance tests on code using that class must be carefully planned.
   * JNI
