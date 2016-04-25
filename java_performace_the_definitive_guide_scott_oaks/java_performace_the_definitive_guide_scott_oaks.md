@@ -1118,9 +1118,9 @@ to the old generation, or by adding more heap space altogether).
   * Buffered I/O
     * For file-based I/O using binary data, always use a BufferedInputStream or BufferedOutputStream to wrap the underlying file stream.
     * For file-based I/O using character (string) data, always wrap the underlying stream with a BufferedReader or BufferedWriter.
-    * The streams returned from a socket (via the getInputStream() or getOutputStream() methods) operate in the same manner, and performing I/O a byte at a time over a socket is quite slow.
+    * The streams returned from a socket (via the `getInputStream()` or `getOutputStream()` methods) operate in the same manner, and performing I/O a byte at a time over a socket is quite slow.
     * ByteArrayInputStream and ByteArrayOutputStream doesn't need buffering as they are buffers themselves.
-    * example: ObjectOutputStream(ByteArrayOutputStream()) is slower than ObjectOutputStream(BufferedOutputStream(GZIPOutputStream(ByteArrayOutputStream()))).
+    * example: `ObjectOutputStream(ByteArrayOutputStream())` is slower than `ObjectOutputStream(BufferedOutputStream(GZIPOutputStream(ByteArrayOutputStream())))`.
     * I/O must be properly buffered also for internal operations like compression and string encoding.
   * Classloading
     * Java 7 introduced parallel-capable constructors.
@@ -1139,10 +1139,10 @@ to the old generation, or by adding more heap space altogether).
     * The deeper the stack, the more expensive to process exceptions.
     * The JVM will optimize away the stack penalty for frequently created system exceptions.
   * Strings
-    * one-line string concatenation has good performance (translated by javac into StringBuilder)
-    * for multiple concatenations use StringBuilder
-    * Strings are immutable so it's better to reuse String objects
-    * String encoding (Charset.encode()/decode()) should be done on larger bufferes
+    * one-line string concatenation has good performance (translated by javac into `StringBuilder`)
+    * for multiple concatenations use `StringBuilder`
+    * Strings are immutable so it's better to reuse `String` objects
+    * String encoding (`Charset.encode()`/`decode()`) should be done on larger bufferes
   * Logging
     * GC logging should always ON - overhead is very small but logged info may be precious
     * log info numerically - minimize any data conversion; logs can always be postprocessed to convert data
