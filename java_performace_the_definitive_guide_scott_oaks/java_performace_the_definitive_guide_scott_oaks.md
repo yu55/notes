@@ -1,3 +1,17 @@
+## Table of Contents
+* [1 Introduction](#1-introduction)
+* [2 An approach to performance testing](#2-an-approach-to-performance-testing)
+* [3 Toolbox](#3-toolbox)
+* [4 Working with JIT compiler](#4-working-with-jit-compiler)
+* [5 An Introduction to Garbage Collection](#5-an-introduction-to-garbage-collection)
+* [6 Garbage Collection Algorithms](#6-garbage-collection-algorithms)
+* [7 Heap Memory Best Practises](#7-heap-memory-best-practises)
+* [8 Native Memory Best Practices](#8-native-memory-best-practices)
+* [9 Threading and Synchronization Performance](#9-threading-and-synchronization-performance)
+* [10 Java Enterprise Edition Performance](#10-java-enterprise-edition-performance)
+* [11 Database Performance Best Practises](#11-database-performance-best-practises)
+* [12 JAVA SE API Tips](#12-java-se-api-tips)
+
 ## 1 Introduction
 * this material applies to Java 7 update 40 and Java 8 initial release
 * enable JVM flag: `-XX:+FlagName`
