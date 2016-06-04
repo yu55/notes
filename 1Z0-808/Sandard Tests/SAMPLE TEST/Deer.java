@@ -17,7 +17,7 @@ public class Deer {
 
  class Reindeer extends Deer {
   public Reindeer(int age) { System.out.print("Reindeer"); }
-  public boolean hasHorns() {return true; }
+  public boolean hasHorns() {return true; } // this is not overriding; this is redeclared private method
 }
 
 
