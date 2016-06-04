@@ -1,3 +1,8 @@
+* Overriding a method (nonprivate):
+  * The method in the child class must have the same signature as the method in the parent class.
+  * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
+  * The method in the child class may not throw a checked exception that is new or broader than the class of any exception thrown in the parent class method.
+  * If the method returns a value, it must be the same or a subclass of the method in the parent class, known as covariant return types.
 * Abstract Class Definition Rules:
   * cannot be instantiated directly
   * may be defined with any number, including zero, of abstract and non-abstract methods
