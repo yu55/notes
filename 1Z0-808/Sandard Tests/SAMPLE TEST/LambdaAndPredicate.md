@@ -4,6 +4,7 @@
 
 or more verbose:
 
+`(a) -> a.canHop()`
 `(Animal a) -> { return a.canHop(); }`
 
 for interface:
