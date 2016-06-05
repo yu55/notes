@@ -49,3 +49,17 @@ public class Kangaroo extends Marsupial {
   * may not be declared `private` or `final`
   * must not provide a method body/implementation in the abstract class for which is it declared
   * implementing an abstract method in a subclass follows the same rules for overriding a method
+* Defining an Interface
+  * Interfaces cannot be instantiated directly.
+  * An interface in not required to have any methods.
+  * An interface may not be marked as `final`.
+  * All top-level interfaces are assumed to have `public` or default access, and they must include the `abstract` modifier in their definition. Therefore, marking an interface as `private`, `protected`, or `final` will trigger a compiler error, since this is incompatible with these assumptions.
+  * All nondefault methods in an interface are assumed to have the modifiers `abstract` and `public` in their definition. Therefore, marking a method as `private`, `protected`, or `final` will trigger compiler errors as these are incompatible with the `abstract` and `public` keywords.
+* Interface Variables
+  * Interface variables are assumed to be `public`, `static`, and `final`. Therefore, marking a variable as `private` or `protected` will trigger a compiler error, as will marking any variable as `abstract`.
+  * The value of an interface variable must be set when it is declared since it is marked as `final`.
+* Default Interface Methods
+  * A default method may only be declared within an interface and not within a class or abstract class.
+  * A default method must be marked with the `default` keyword. If a method is marked as `default`, it must provide a method body.
+  * A default method is not assumed to be `static`, `final`, or `abstract`, as it may be used or overridden by a class that implements the interface.
+  * Like all methods in an interface, a default method is assumed to be `public` and will not compile if marked as `private` or `protected`.
