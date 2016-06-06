@@ -63,3 +63,20 @@ public class Kangaroo extends Marsupial {
   * A default method must be marked with the `default` keyword. If a method is marked as `default`, it must provide a method body.
   * A default method is not assumed to be `static`, `final`, or `abstract`, as it may be used or overridden by a class that implements the interface.
   * Like all methods in an interface, a default method is assumed to be `public` and will not compile if marked as `private` or `protected`.
+* Static Interface Methods
+  * Static method defined in an interface is not inherited in any classes that implement the interface.
+  * Like all methods in an interface, a static method is assumed to be `public` and will not compile if marked as `private` or `protected`.
+  * To reference the static method, a reference to the name of the interface must be used.
+```java
+public interface Hop {
+  static int getJumpHeight() {
+    return 8;
+  }
+}
+
+public class Bunny implements Hop {
+  public void printDetails() {
+    System.out.println(Hop.getJumpHeight()); // won't compile without using 'Hop.'
+  }
+}
+```
