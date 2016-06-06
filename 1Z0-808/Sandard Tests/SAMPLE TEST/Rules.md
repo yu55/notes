@@ -38,6 +38,52 @@ public class Kangaroo extends Marsupial {
 // Marsupial walks on two legs: false
 // Kangaroo hops on two legs: true
 ```
+* Inheriting Variables - not overriden, just hidden
+  * if referencing the variable from within the parent class, the variable from within the parent class is used
+  * if referencing the variable from within a child class, the variable defined in the child class is used
+  * likewise it is possible to reference the parent value with explicit use of the `super` keyword
+```java
+public class Rodent {
+  protected int tailLength = 4;
+  public void getRodentDetails() {
+    System.out.println("[parentTail="+tailLength+"]");
+  }
+}
+
+public class Mouse extends Rodent {
+  protected int tailLength = 8;
+  public void getMouseDetails() {
+    System.out.println("[tail="+tailLength +",parentTail="+super.tailLength+"]");
+  }
+
+  public static void main(String[] args) {
+    Mouse mouse = new Mouse();
+    mouse.getRodentDetails();
+    mouse.getMouseDetails();
+  }
+}
+
+// [parentTail=4]
+// [tail=8,parentTail=4]
+```
+```java
+public class Animal {
+  public int length = 2;
+}
+
+public class Jellyfish extends Animal {
+  public int length = 5;
+  public static void main(String[] args) {
+    Jellyfish jellyfish = new Jellyfish();
+    Animal animal = new Jellyfish();
+    System.out.println(jellyfish.length);
+    System.out.println(animal.length);
+  }
+}
+
+// 5
+// 2
+```
 * Abstract Class Definition Rules:
   * cannot be instantiated directly
   * may be defined with any number, including zero, of abstract and non-abstract methods
