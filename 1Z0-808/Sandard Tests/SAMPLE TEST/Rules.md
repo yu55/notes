@@ -1,14 +1,16 @@
-* Overriding a method (nonprivate):
+* Overriding a method:
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
   * The method in the child class may not throw a checked exception that is new or broader than the class of any exception thrown in the parent class method.
   * If the method returns a value, it must be the same or a subclass of the method in the parent class, known as covariant return types.
-* Hiding Static Methods
+  * Term overriding works only for nonprivate instance methods (private instance methods and static methods are referred as hidden in this situation)
+* Hiding Methods
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as accessible or more accessible than the method in the parent class.
   * The method in the child class may not throw a checked exception that is new or broader than the class of any exception thrown in the parent class method.
   * If the method returns a value, it must be the same or a subclass of the method in the parent class, known as covariant return types.
   * The method defined in the child class must be marked as `static` if it is marked as `static` in the parent class (method hiding). Likewise, the method must not be marked as `static` in the child class if it is not marked as `static` in the parent class (method overriding).
+  * `private` instance methods are also referred as hidden rather than overriden
 * Overriding vs. Hiding Methods
   * Unlike overriding a method, in which a child method replaces the parent method in calls defined in both the parent and child, hidden methods only replace parent methods in the calls defined in the child class
 ```java
