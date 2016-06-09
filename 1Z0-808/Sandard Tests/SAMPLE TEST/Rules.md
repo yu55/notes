@@ -1,7 +1,7 @@
 * Overriding a method:
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
-  * The method in the child class may not throw a checked exception that is new or broader than the class of any exception thrown in the parent class method.
+  * The method in the child class may not throw a checked exception that is new or broader than the class of any exception thrown in the parent class method (child method may NOT throw any exception at all).
   * If the method returns a value, it must be the same or a subclass of the method in the parent class, known as covariant return types.
   * Term overriding works only for nonprivate instance methods (private instance methods and static methods are referred as hidden in this situation)
 * Hiding Methods
