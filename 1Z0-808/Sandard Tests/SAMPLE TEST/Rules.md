@@ -1,3 +1,16 @@
+* Order of operator precedence
+  * post-unary operators; `expression++; expression--`
+  * pre-unary operators; `++expression; --expression`
+  * other unary operatos; `+,-,!`
+  * multiplication/division/modulus; `*,/,%`
+  * addition/substraction; `+,-`
+  * shift operators; `<<,>>,>>>`
+  * relational operators; `<,>,<=,>=,instanceof`
+  * equal to/not equal to; `==,!=`
+  * logical operators; `&,^,|`
+  * short-circuit logical operators; `&&, ||`
+  * ternary operators; `boolean expression ? expression1 : expression2`
+  * assignment operators; `=, +=, -=, /=,%=,%=,&=,^=,!=,<<=,>>=,>>>=`
 * Numeric Promotion Rules
   * If two values have different data tyupes, Java will automatically promote one of the values to the larger of the two data types.
   * If one of the values is integral and other is floating-point, Java will automatically promote the integral value to the floating-point value's data type.
