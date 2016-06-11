@@ -9,6 +9,15 @@ double + float = double
 short/short = int
 short * float / double = double
 ```
+* Data types allowed in `switch`
+  * `int` and `Integer`
+  * `byte` and `Byte`
+  * `short` and `Short`
+  * `char` and `Character`
+  * `int` and `Integer`
+  * `String`
+  * `enum` values
+  * compile-time constants: literals, `enum` constants or `final` constant variables (but NOT `final` methods arguments)
 * Overriding a method:
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
