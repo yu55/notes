@@ -1,3 +1,7 @@
+* Identifiers
+  * The name must begin with a letter or the symbol `$` or `_`.
+  * Subsequent characters may also be numbers.
+  * You cannot use the same name as a Java reserved word (Java is case sensitive so e.g. `Public` is OK).
 * Order of operator precedence
   * post-unary operators; `expression++; expression--`
   * pre-unary operators; `++expression; --expression`
