@@ -35,6 +35,13 @@ short * float / double = double
   * `String`
   * `enum` values
   * compile-time constants: literals, `enum` constants or `final` constant variables (but NOT `final` methods arguments)
+* Six facts on Strings (JLS 3.10.5):
+1. Literal strings within the same class in the same package represent references to the same String object.
+2. Literal strings within different classes in the same package represent references to the same String object.
+3. Literal strings within different classes in different packages likewise represent references to the same String object.
+4. Strings computed by constant expressions are computed at compile time and then treated as if they were literals.
+5. Strings computed at run time are newly created and therefore are distinct.
+6. The result of explicitly interning a computed string is the same string as any pre-existing literal string with the same contents.
 * Overriding a method:
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
