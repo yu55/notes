@@ -35,6 +35,11 @@ short * float / double = double
   * `String`
   * `enum` values
   * compile-time constants: literals, `enum` constants or `final` constant variables (but NOT `final` methods arguments)
+* A narrowing primitive conversion may be used if all of the following conditions are satisfied:
+  * The expression is a constant expression of type `int`.
+  * The type of the variable is `byte`, `short`, or `char`.
+  * The value of the expression (which is known at compile time, because it is a constant expression) is representable in the type of the variable.
+  * narrowing conversion does not apply to `long` or `double` so, `char ch = 30L;` will fail although `30` is representable by a `char`
 * Six facts on Strings (JLS 3.10.5):
   1. Literal strings within the same class in the same package represent references to the same String object.
   2. Literal strings within different classes in the same package represent references to the same String object.
