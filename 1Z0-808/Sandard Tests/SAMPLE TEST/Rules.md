@@ -26,15 +26,6 @@ double + float = double
 short/short = int
 short * float / double = double
 ```
-* Data types allowed in `switch`
-  * `int` and `Integer`
-  * `byte` and `Byte`
-  * `short` and `Short`
-  * `char` and `Character`
-  * `int` and `Integer`
-  * `String`
-  * `enum` values
-  * compile-time constants: literals, `enum` constants or `final` constant variables (but NOT `final` methods arguments)
 * A narrowing primitive conversion may be used if all of the following conditions are satisfied:
   * The expression is a constant expression of type `int`.
   * The type of the variable is `byte`, `short`, or `char`.
@@ -47,6 +38,15 @@ short * float / double = double
   4. Strings computed by constant expressions are computed at compile time and then treated as if they were literals.
   5. Strings computed at run time are newly created and therefore are distinct.
   6. The result of explicitly interning a computed string is the same string as any pre-existing literal string with the same contents.
+* Data types allowed in `switch`
+  * `int` and `Integer`
+  * `byte` and `Byte`
+  * `short` and `Short`
+  * `char` and `Character`
+  * `int` and `Integer`
+  * `String`
+  * `enum` values
+  * compile-time constants: literals, `enum` constants or `final` constant variables (but NOT `final` methods arguments)
 * Overriding a method:
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
