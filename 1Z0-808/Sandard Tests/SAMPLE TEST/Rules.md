@@ -34,6 +34,8 @@ short * float / double = double
   4. All case labels should be COMPILE TIME CONSTANTS.
   5. No two of the case constant expressions associated with a switch statement may have the same value.
   6. At most one default label may be associated with the same switch statement.
+* `for` loop
+  * third part (i.e. the update part) of the `for` loop does not allow every kind of statement. It allows only the following statements here:  Assignment, PreIncrementExpression, PreDecrementExpression, PostIncrementExpression, PostDecrementExpression, MethodInvocation, and ClassInstanceCreationExpression.
 * Six facts on Strings (JLS 3.10.5):
   1. Literal strings within the same class in the same package represent references to the same String object.
   2. Literal strings within different classes in the same package represent references to the same String object.
