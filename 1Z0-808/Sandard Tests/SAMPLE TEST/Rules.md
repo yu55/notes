@@ -49,6 +49,16 @@ short * float / double = double
   5. No two of the case constant expressions associated with a switch statement may have the same value.
   6. At most one default label may be associated with the same switch statement.
   7. It's legal to use constant in switch: `switch (1) { default : break; }`
+```java
+    public void switchTest(byte x){
+        switch(x){
+            case 'b':   // OK (98 - in byte's range)
+            default :   // OK
+            case -2:    // OK
+            case 128:   // Won't compile (byte range is from -128 to 127)
+        }
+    }
+```
 * `for` loop
   * third part (i.e. the update part) of the `for` loop does not allow every kind of statement. It allows only the following statements here:  Assignment, PreIncrementExpression, PreDecrementExpression, PostIncrementExpression, PostDecrementExpression, MethodInvocation, and ClassInstanceCreationExpression.
 * `try-catch-finally` and `return`:
