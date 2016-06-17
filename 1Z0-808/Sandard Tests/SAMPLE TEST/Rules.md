@@ -27,6 +27,13 @@ short/short = int
 short * float / double = double
 ```
 * `+` is overloaded such that if any one of its two operands is a `String` then it will convert the other operand to a `String` and create a new string by concatenating the two. Therefore, in `63+"a"` and `"a"+63`, 63 is converted to "63" and `'b' +"a"` and `"a"+'b'`, `'b'` is converted to `"b"`. Note that in 'b'+ 63 , 'b' is promoted to an int i.e. 98 giving 161.
+* Breaking from `if` statement is possible only when using labels (when not inside a loop):
+```java
+    label: if(true) {
+        System.out.println("break label");
+        break label; //this is valid
+    }
+```
 * Rules for a `switch` statement:
   1. Only `String`, `byte`, `char`, `short`, `int`, (and their wrapper classes `Byte`, `Character`, `Short`, and `Integer`), and enums can be used as types of a switch variable. (`String` is allowed only since Java 7). 
   2. The case constants must be assignable to the switch variable. For example, if your switch variable is of class `String`, your case labels must use Strings as well.
