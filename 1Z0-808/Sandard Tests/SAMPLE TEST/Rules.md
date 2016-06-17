@@ -51,6 +51,16 @@ short * float / double = double
   7. It's legal to use constant in switch: `switch (1) { default : break; }`
 * `for` loop
   * third part (i.e. the update part) of the `for` loop does not allow every kind of statement. It allows only the following statements here:  Assignment, PreIncrementExpression, PreDecrementExpression, PostIncrementExpression, PostDecrementExpression, MethodInvocation, and ClassInstanceCreationExpression.
+* `try-catch-finally` and `return`:
+```java
+    try {
+        throw new Exception();
+    } catch(Exception e) {
+        return 0; // 0 is NOT returned
+    } finally {
+        return 1; // 1 is returned; this is directly before exiting method and it supersedes 0
+    }
+```
 * Overriding a method:
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
