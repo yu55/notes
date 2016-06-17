@@ -156,6 +156,28 @@ public class Jellyfish extends Animal {
   * A default method must be marked with the `default` keyword. If a method is marked as `default`, it must provide a method body.
   * A default method is not assumed to be `static`, `final`, or `abstract`, as it may be used or overridden by a class that implements the interface.
   * Like all methods in an interface, a default method is assumed to be `public` and will not compile if marked as `private` or `protected`.
+  * Invoking default super methods:
+```java
+    interface A {
+        default void hello() {
+        }
+    }
+
+    interface B extends A {
+        default void hello() {
+            super.hello();    //This is NOT valid.
+            A.super.hello();    //This is valid.
+        }
+    }
+
+    public class TestClass implements B {
+        public void hello() {
+            super.hello();    //This is NOT valid.
+            A.super.hello();  //This is NOT valid because TestClass does not implement A directly.
+            B.super.hello();  //This is valid.
+        }
+    }
+```
 * Static Interface Methods
   * Static method defined in an interface is not inherited in any classes that implement the interface.
   * Like all methods in an interface, a static method is assumed to be `public` and will not compile if marked as `private` or `protected`.
