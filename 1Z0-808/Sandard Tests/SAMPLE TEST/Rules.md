@@ -27,13 +27,14 @@ short/short = int
 short * float / double = double
 ```
 * `+` is overloaded such that if any one of its two operands is a `String` then it will convert the other operand to a `String` and create a new string by concatenating the two. Therefore, in `63+"a"` and `"a"+63`, 63 is converted to "63" and `'b' +"a"` and `"a"+'b'`, `'b'` is converted to `"b"`. Note that in 'b'+ 63 , 'b' is promoted to an int i.e. 98 giving 161.
-* Rules for a switch statement:
+* Rules for a `switch` statement:
   1. Only `String`, `byte`, `char`, `short`, `int`, (and their wrapper classes `Byte`, `Character`, `Short`, and `Integer`), and enums can be used as types of a switch variable. (`String` is allowed only since Java 7). 
   2. The case constants must be assignable to the switch variable. For example, if your switch variable is of class `String`, your case labels must use Strings as well.
   3. The switch variable must be big enough to hold all the case constants. For example, if the switch variable is of type `char`, then none of the case constants can be greater than `65535` because a char's range is from `0` to `65535`.
   4. All case labels should be COMPILE TIME CONSTANTS.
   5. No two of the case constant expressions associated with a switch statement may have the same value.
   6. At most one default label may be associated with the same switch statement.
+  7. It's legal to use constant in switch: `switch (1) { default : break; }`
 * `for` loop
   * third part (i.e. the update part) of the `for` loop does not allow every kind of statement. It allows only the following statements here:  Assignment, PreIncrementExpression, PreDecrementExpression, PostIncrementExpression, PostDecrementExpression, MethodInvocation, and ClassInstanceCreationExpression.
 * Six facts on Strings (JLS 3.10.5):
