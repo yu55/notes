@@ -32,6 +32,12 @@ short * float / double = double
     * `Byte` and the value of the constant expression is representable in the type `byte`.
     * `Short` and the value of the constant expression is representable in the type `short`.
     * `Character` and the value of the constant expression is representable in the type `char`.
+* Method invocation conversions allowed:
+  * an identity conversion (JLS 5.1.1)
+  * a widening primitive conversion (JLS 5.1.2)
+  * a widening reference conversion (JLS 5.1.5)
+  * a boxing conversion (JLS 5.1.7) optionally followed by widening reference conversion
+  * an unboxing conversion (JLS 5.1.8) optionally followed by a widening primitive conversion.
 * `+` is overloaded such that if any one of its two operands is a `String` then it will convert the other operand to a `String` and create a new string by concatenating the two. Therefore, in `63+"a"` and `"a"+63`, 63 is converted to "63" and `'b' +"a"` and `"a"+'b'`, `'b'` is converted to `"b"`. Note that in 'b'+ 63 , 'b' is promoted to an int i.e. 98 giving 161.
 * Breaking from `if` statement is possible only when using labels (when not inside a loop):
 ```java
