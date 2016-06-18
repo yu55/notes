@@ -87,6 +87,27 @@ short * float / double = double
         return 1; // 1 is returned; this is directly before exiting method and it supersedes 0
     }
 ```
+* A class or interface type T will be initialized immediately before the first occurrence of any one of the following:
+  * T is a class and an instance of T is created.
+  * T is a class and a static method declared by T is invoked.
+  * A static field declared by T is assigned.
+  * A static field declared by T is used and the field is not a constant variable (§4.12.4).
+  * T is a top level class (§7.6), and an assert statement (§14.10) lexically nested within T (§8.1.3) is executed.
+  * A reference to a static field (§8.3.1.1) causes initialization of only the class or interface that actually declares it, even though it might be referred to through the name of a subclass, a subinterface, or a class that implements an interface.
+  * Invocation of certain reflective methods in class Class and in package java.lang.reflect also causes class or interface initialization.
+  * A class or interface will not be initialized under any other circumstance.
+```java
+class Super { static String ID = "QBANK"; }
+
+class Sub extends Super{
+   static { System.out.print("In Sub"); } // This won't execute
+}
+public class Test{
+   public static void main(String[] args){
+      System.out.println(Sub.ID); // Only "QBANK" will be printed
+   }
+}
+```
 * Overriding a method:
   * The method in the child class must have the same signature (mthd name + parameters) as the method in the parent class.
   * The method in the child class must be at least as acessible or more accessible than the method in the parent class.
