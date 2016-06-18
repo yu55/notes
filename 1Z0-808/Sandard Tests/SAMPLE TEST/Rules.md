@@ -26,6 +26,12 @@ double + float = double
 short/short = int
 short * float / double = double
 ```
+* Assignment conversion if the expression is a constant expression of type `byte`, `short`, `char`, or `int` (JSL 5.2)
+  * A narrowing primitive conversion may be used if the type of the variable is `byte`, `short`, or `char`, and the value of the constant expression is representable in the type of the variable. `byte theAnswer = 42;`
+  * A narrowing primitive conversion followed by a boxing conversion may be used if the type of the variable is:
+    * `Byte` and the value of the constant expression is representable in the type `byte`.
+    * `Short` and the value of the constant expression is representable in the type `short`.
+    * `Character` and the value of the constant expression is representable in the type `char`.
 * `+` is overloaded such that if any one of its two operands is a `String` then it will convert the other operand to a `String` and create a new string by concatenating the two. Therefore, in `63+"a"` and `"a"+63`, 63 is converted to "63" and `'b' +"a"` and `"a"+'b'`, `'b'` is converted to `"b"`. Note that in 'b'+ 63 , 'b' is promoted to an int i.e. 98 giving 161.
 * Breaking from `if` statement is possible only when using labels (when not inside a loop):
 ```java
