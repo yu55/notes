@@ -42,7 +42,9 @@ short * float / double = double
 * Equality operator `==` produces compile error in situation other than:
   * comparing numeric primitive types (if different types promotion works)
   * comparing `boolean` values (if one of the operands is of type `Boolean`, it is subjected to unboxing conversion)
-  * comparing objects including `null` and `String`; objects have to have a IS-A relationship among themeselves.
+  * comparing objects including `null` and `String`
+    * objects have to have a IS-A relationship among themeselves
+    * narrowing promotion may occure (`Integer == int` -> `Integer.intValue == int`)
 * `+` is overloaded such that if any one of its two operands is a `String` then it will convert the other operand to a `String` and create a new string by concatenating the two. Therefore, in `63+"a"` and `"a"+63`, 63 is converted to "63" and `'b' +"a"` and `"a"+'b'`, `'b'` is converted to `"b"`. Note that in 'b'+ 63 , 'b' is promoted to an int i.e. 98 giving 161.
 * Breaking from `if` statement is possible only when using labels (when not inside a loop):
 ```java
