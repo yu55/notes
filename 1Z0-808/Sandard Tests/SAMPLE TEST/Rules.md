@@ -39,6 +39,9 @@ short * float / double = double
   * a widening reference conversion (JLS 5.1.5)
   * a boxing conversion (JLS 5.1.7) optionally followed by widening reference conversion
   * an unboxing conversion (JLS 5.1.8) optionally followed by a widening primitive conversion.
+* Method invocation with `null` arguments
+  * when candidate methods have arguments types from the same hierarchy the most specific is chosen
+  * compilation error occurs when candidate methods arguments aren't from same hierarchy
 * Equality operator `==` produces compile error in situation other than:
   * comparing numeric primitive types (if different types promotion works)
   * comparing `boolean` values (if one of the operands is of type `Boolean`, it is subjected to unboxing conversion)
