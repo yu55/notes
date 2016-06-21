@@ -19,7 +19,7 @@
   * If two values have different data types, Java will automatically promote one of the values to the larger of the two data types.
   * If one of the values is integral and other is floating-point, Java will automatically promote the integral value to the floating-point value's data type.
   * Smaller data types, namely `byte`, `short`, and `char`, are first promoted to `int` any time they're used with a Java binary arithmetic operator, even if neither of the operands is `int`.
-    * Compound assignment operators ( +=, -= etc): if `E1 op= E2` then `E1 = (T)((E1) op (E2))`, where `T` is type of `E1`, except that E1 is evaluated only once.
+    * Compound assignment operators (`+=`, `-=` etc.): if `E1 op= E2` then `E1 = (T)((E1) op (E2))`, where `T` is type of `E1`, except that E1 is evaluated only once.
   * After all promotion has occurred and the operands have the same data type, the resulting value will have the same data type as its promoted operands.
 ```java
 int * long = long
