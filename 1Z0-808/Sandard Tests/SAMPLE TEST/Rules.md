@@ -108,6 +108,13 @@ short * float / double = double
 ```
 * `for` loop
   * third part (i.e. the update part) of the `for` loop does not allow every kind of statement. It allows only the following statements here:  Assignment, PreIncrementExpression, PreDecrementExpression, PostIncrementExpression, PostDecrementExpression, MethodInvocation, and ClassInstanceCreationExpression.
+* `for-each` loop
+  * cannot use existing/predefined variable in the declaration part; only `final` is OK here
+```java
+Object o = null;
+Collection c = //proper collection declaration
+for (o : c) {} // won't compile
+```
 * `try-catch-finally` and `return`:
 ```java
     try {
