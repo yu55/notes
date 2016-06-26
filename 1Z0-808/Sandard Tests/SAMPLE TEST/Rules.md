@@ -76,6 +76,17 @@ m = new Integer(a) + new Integer(b); //4
   * a widening reference conversion (JLS 5.1.5)
   * a boxing conversion (JLS 5.1.7) optionally followed by widening reference conversion
   * an unboxing conversion (JLS 5.1.8) optionally followed by a widening primitive conversion.
+```java
+new Byte(2);
+
+// TestClass.java:38: error: no suitable constructor found for Byte(int)
+//        i = new Integer(1) + new Byte(2);
+//                             ^
+//    constructor Byte.Byte(byte) is not applicable
+//      (argument mismatch; possible lossy conversion from int to byte)
+//    constructor Byte.Byte(String) is not applicable
+//      (argument mismatch; int cannot be converted to String)
+```
 * Method invocation with `null` arguments
   * when candidate methods have arguments types from the same hierarchy the most specific is chosen
   * compilation error occurs when candidate methods arguments aren't from same hierarchy
