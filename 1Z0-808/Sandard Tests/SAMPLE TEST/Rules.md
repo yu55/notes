@@ -15,6 +15,31 @@
   * short-circuit logical operators; `&&, ||`
   * ternary operators; `boolean expression ? expression1 : expression2`
   * assignment operators; `=, +=, -=, /=,%=,%=,&=,^=,!=,<<=,>>=,>>>=`
+```java
+int s = 5;
+s += s + mx(s) + ++s;
+
+// s += (expression) will be converted to s =  s + expression
+// s = s + s + method(s) + ++s;
+// s = 5 + 5 + method(5) + 6;
+// s = 5 + 5 + 8 + 6;
+// s = 24;
+
+int s = 5;
+s += s + ++s;
+// s = 5 + 5 + 6
+// s = 16
+
+int s = 5;
+s += ++s + s;
+// s = 5 + 6 + 6
+// s = 17
+
+int x = 2;
+x += x++ * x++ * x++;
+
+// 2 + (2 * 3 * 4)
+```
 * Numeric Promotion Rules
   * If two values have different data types, Java will automatically promote one of the values to the larger of the two data types.
   * If one of the values is integral and other is floating-point, Java will automatically promote the integral value to the floating-point value's data type.
