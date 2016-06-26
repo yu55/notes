@@ -52,6 +52,18 @@ double + float = double
 short/short = int
 short * float / double = double
 ```
+* Autoboxing
+```java
+int a = 5, b = 7, k = 0;
+Integer m = null;
+
+k = new Integer(a) + new Integer(b);  //1
+k = new Integer(a) + b; //2
+k = a + new Integer(b); //3
+m = new Integer(a) + new Integer(b); //4
+
+// all lines will return 12 due to unboxing of integers
+```
 * Assignment conversion if the expression is a constant expression of type `byte`, `short`, `char`, or `int` (JSL 5.2)
   * A narrowing primitive conversion may be used if the type of the variable is `byte`, `short`, or `char`, and the value of the constant expression is representable in the type of the variable. `byte theAnswer = 42;`
   * A narrowing primitive conversion followed by a boxing conversion may be used if the type of the variable is:
