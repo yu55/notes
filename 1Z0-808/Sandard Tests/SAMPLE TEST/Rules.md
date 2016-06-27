@@ -74,7 +74,7 @@ m = new Integer(a) + new Integer(b); //4
   * an identity conversion (JLS 5.1.1)
   * a widening primitive conversion (JLS 5.1.2)
   * a widening reference conversion (JLS 5.1.5)
-  * a boxing conversion (JLS 5.1.7) optionally followed by widening reference conversion
+  * a boxing conversion (JLS 5.1.7) optionally followed by widening reference conversion (a widening reference conversion exists from any reference type S to any reference type T, provided S is a subtype (§4.10) of T)
   * an unboxing conversion (JLS 5.1.8) optionally followed by a widening primitive conversion.
 ```java
 new Byte(2);
