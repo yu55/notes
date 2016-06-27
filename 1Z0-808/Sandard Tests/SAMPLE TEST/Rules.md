@@ -363,3 +363,7 @@ class B extends A{
         * `int indexOf(Object o)`
         * `boolean contains(Object o)`
         * `int size()` instead of `.length`
+  * `final java.lang.StringBuilder` (not synchronized)
+    * `StringBuilder delete(int start, int end)` (not clear/empty/removeAll/deleteAll)
+    * `void ensureCapacity(int minimumCapacity)`
+    * `int capacity()`
