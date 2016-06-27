@@ -340,3 +340,16 @@ class B extends A{
 ```
 * Checked exceptions are meant for
   * exceptional conditions external to an application that a well written application should anticipate and from which it can recover (if a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception)
+* `java.lang.Object`
+  * `final java.lang.Number`
+    * `java.lang.Long`
+      * `Long(long value)`/`Long(String s)`
+      * `long longValue()`
+      * `long parseLong(String s)`/`parseLong(String s, int radix)`
+      * `static Long valueOf(long l)`/`valueOf(String s)`/`valueOf(String s, int radix)`
+  * `java.util.AbstractCollection<E>`
+    * `java.util.AbstractList<E>`
+      * `java.util.ArrayList`
+        * `int indexOf(Object o)`
+        * `boolean contains(Object o)`
+        * `int size()` instead of `.length`
