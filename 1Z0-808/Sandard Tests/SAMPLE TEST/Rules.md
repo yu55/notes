@@ -71,6 +71,15 @@ m = new Integer(a) + new Integer(b); //4
     * `Byte` and the value of the constant expression is representable in the type `byte`.
     * `Short` and the value of the constant expression is representable in the type `short`.
     * `Character` and the value of the constant expression is representable in the type `char`.
+```java
+Object object = 1;            // OK
+Object[] objArr = {1};        // OK
+// objArr = {123};            // illegal (invalid curly braces)
+// objArr = new int[10];      // invalid (invalid types)
+objArr = new Integer[10];     // OK
+Byte[] byteArr1 = { 127 };    // OK
+// Byte[] byteArr2 = { 128 }; // illegal (128 > byte)
+```
 * Method invocation conversions allowed:
   * an identity conversion (JLS 5.1.1)
   * a widening primitive conversion (JLS 5.1.2)
