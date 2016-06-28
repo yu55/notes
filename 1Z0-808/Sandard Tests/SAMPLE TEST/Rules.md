@@ -7,6 +7,17 @@
   * Subsequent characters may also be numbers.
   * You cannot use the same name as a Java reserved word (Java is case sensitive so e.g. `Public` is OK).
     * but following is OK: `String String = "String"; String.substring(3, 6);`
+```java
+String : for(int i = 0; i< 10; i++) //This is valid too!
+{
+   for (int j = 0; j< 10; j++) {
+      if ( i+ j > 10 )  break String;
+   }
+   System.out.println( "hello");
+}
+
+for : for(;;) {...} // This is NOT valid
+```
 * Order of operator precedence
   * post-unary operators; `expression++; expression--`
   * pre-unary operators; `++expression; --expression`
