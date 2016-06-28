@@ -359,6 +359,11 @@ class B extends A{
 }
 // prints 0 (i is not initialized yet when A()->B.view() is executing
 ```
+* Encapsulation
+  * It helps make sure that clients have no accidental dependence on the choice of representation.
+  * It helps avoiding name clashes as internal variables are not visible outside.
+* Dynamic binding
+  * makes sure that messages are sent to the right object at run time.
 * Checked exceptions are meant for
   * exceptional conditions external to an application that a well written application should anticipate and from which it can recover (if a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception)
 * `java.lang.Object`
