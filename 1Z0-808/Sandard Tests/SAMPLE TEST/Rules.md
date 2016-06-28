@@ -41,6 +41,7 @@ x += x++ * x++ * x++;
 
 // 2 + (2 * 3 * 4)
 ```
+* Chaining to use a value of a variable at the time of declaration is not allowed: `int a=b=c=100;`. Had `b` and `c` been already declared, it would have been valid. For example, the following is valid: `int  b = 0, c = 0;    int a = b = c = 100;`. Even the following is valid: `int  b , c;  //Not initializing b and c here.   int a = b = c = 100; //declaring a and initializing c, b, and a at the same time`. Notice the order of initialization of the variables - `c` is initialized first, `b` is initialized next by assigning to it the value of `c`. Finally, `a` is initialized.
 * Numeric Promotion Rules
   * If two values have different data types, Java will automatically promote one of the values to the larger of the two data types.
   * If one of the values is integral and other is floating-point, Java will automatically promote the integral value to the floating-point value's data type.
