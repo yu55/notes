@@ -1,3 +1,7 @@
+* Main and multiple classes in file
+  * multiple classes in file
+    * one of these classes must be called same like file and it MAY be `public`
+  * `public static void main(String[] args)` may be `final`
 * Identifiers
   * The name must begin with a letter or the symbol `$` or `_`.
   * Subsequent characters may also be numbers.
