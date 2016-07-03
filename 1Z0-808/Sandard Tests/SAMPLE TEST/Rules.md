@@ -2,6 +2,8 @@
   * multiple classes in file
     * one of these classes must be called same like file and it MAY be `public`
   * `public static void main(String[] args)` may be `final`
+* Numbers
+  * Underscore `_` may occure only between digits/letters or digit/letter and other underscore
 * Identifiers
   * The name must begin with a letter or the symbol `$` or `_`.
   * Subsequent characters may also be numbers.
