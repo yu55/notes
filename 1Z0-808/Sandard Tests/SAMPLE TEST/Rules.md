@@ -122,6 +122,10 @@ new Byte(2);
   * comparing objects including `null` and `String`
     * objects have to have a IS-A relationship among themeselves
     * narrowing promotion may occure (`Integer == int` -> `Integer.intValue == int`)
+```java
+Short k = 9; Integer i = 9; System.out.println(k == i); // WON'T compile because no IS-A relation between objects
+short s = 1; Integer i = 1; System.out.println("s==i: " + (s == i)); // compiles and prints: 's==i: true'
+```
 * `+` is overloaded such that if any one of its two operands is a `String` then it will convert the other operand to a `String` and create a new string by concatenating the two. Therefore, in `63+"a"` and `"a"+63`, 63 is converted to "63" and `'b' +"a"` and `"a"+'b'`, `'b'` is converted to `"b"`. Note that in 'b'+ 63 , 'b' is promoted to an int i.e. 98 giving 161.
 ```java
 System.out.println(null + true);    // won't compile
