@@ -174,6 +174,43 @@ Object o = null;
 Collection c = //proper collection declaration
 for (o : c) {} // won't compile
 ```
+* when `false` introduces compilation errors in statements
+```java
+        boolean flag = false;
+        if (flag) System.out.println("1");
+
+        if (false) System.out.println("2");
+
+        while(flag) {
+            System.out.println("3");
+            break;
+        }
+
+//        while(false) { // error: unreachable statement
+//            System.out.println("4");
+//            break;
+//        }
+
+        do {
+            System.out.println("5");
+        } while(flag);
+
+        do {
+            System.out.println("6");
+        } while(false);
+
+        for (int i=10; i<0; --i) {
+            System.out.println("7");
+        }
+
+        for (;flag;) {
+            System.out.println("8");
+        }
+
+//        for (;false;) { // error: unreachable statement
+//            System.out.println("9");
+//        }
+```
 * `try-catch-finally` and `return`:
 ```java
     try {
