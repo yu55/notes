@@ -391,6 +391,7 @@ class B extends A{
   * `java.util.AbstractCollection<E>`
     * `java.util.AbstractList<E>`
       * `java.util.ArrayList`
+        * `boolean add(E e)`, `void add(int index, E e)`
         * `int indexOf(Object o)`
         * `boolean contains(Object o)`
         * `int size()` instead of `.length`
@@ -398,3 +399,7 @@ class B extends A{
     * `StringBuilder delete(int start, int end)` (not clear/empty/removeAll/deleteAll)
     * `void ensureCapacity(int minimumCapacity)`
     * `int capacity()`
+    * `void setLength(int newLength)` - if the `newLength` argument is less than the current length of the string buffer, the string buffer is truncated to contain exactly the number of characters given by the newLength argument. If the newLength argument is greater than or equal to the current length, sufficient null characters ('\u0000') are appended to the string buffer so that length becomes the newLength argument.
+  * `final java.lang.String`
+    * `String replace(char oldChar, char newChar)`/`String replace(CharSequence target, CharSequence replacement)` - returns the same string when parameters are the same
+    * `void trimToSize()`, not `trim()` which is part on String class
