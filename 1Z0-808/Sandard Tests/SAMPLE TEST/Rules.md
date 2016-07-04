@@ -442,3 +442,15 @@ class B extends A{
   * `final java.lang.String`
     * `String replace(char oldChar, char newChar)`/`String replace(CharSequence target, CharSequence replacement)` - returns the same string when parameters are the same
     * `void trimToSize()`, not `trim()` which is part on String class
+* Other
+  * `Period` doesn't mess with the time component of the date while `Duration` may changed the time component if the date is close to the DST boundary.
+```java
+LocalDateTime ld = LocalDateTime.of(2015, Month.OCTOBER, 31, 10, 0);
+ZonedDateTime date = ZonedDateTime.of(ld, ZoneId.of("US/Eastern"));
+date = date.plus(Duration.ofDays(1));
+System.out.println(date); // ouputs 2015-11-01T09:00-05:00[US/Eastern]
+
+date = ZonedDateTime.of(ld, ZoneId.of("US/Eastern"));
+date = date.plus(Period.ofDays(1));
+System.out.println(date); // outputs 2015-11-01T10:00-05:00[US/Eastern]
+```
