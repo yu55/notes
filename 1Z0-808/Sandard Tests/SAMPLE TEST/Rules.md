@@ -435,10 +435,13 @@ class B extends A{
         * `boolean contains(Object o)`
         * `int size()` instead of `.length`
   * `final java.lang.StringBuilder` (not synchronized)
-    * `StringBuilder delete(int start, int end)` (not clear/empty/removeAll/deleteAll)
+    * `StringBuilder delete(int start, int end)` (NOT clear/empty/removeAll/deleteAll)
     * `void ensureCapacity(int minimumCapacity)`
     * `int capacity()`
     * `void setLength(int newLength)` - if the `newLength` argument is less than the current length of the string buffer, the string buffer is truncated to contain exactly the number of characters given by the newLength argument. If the newLength argument is greater than or equal to the current length, sufficient null characters ('\u0000') are appended to the string buffer so that length becomes the newLength argument.
+    * `String substring(int start)`, `String substring(int start, int end)`
+    * `StringBuilder replace(int start, int end, String str)`
+    * `insert(int dstOffset, CharSequence s, int start, int end)` and millions of other inserts
   * `final java.lang.String`
     * `String replace(char oldChar, char newChar)`/`String replace(CharSequence target, CharSequence replacement)` - returns the same string when parameters are the same
     * `void trimToSize()`, not `trim()` which is part on String class
