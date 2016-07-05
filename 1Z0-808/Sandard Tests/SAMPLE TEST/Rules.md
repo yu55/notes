@@ -495,6 +495,12 @@ class B extends A{
   * `final java.lang.String`
     * `String replace(char oldChar, char newChar)`/`String replace(CharSequence target, CharSequence replacement)` - returns the same string when parameters are the same
     * `void trimToSize()`, not `trim()` which is part on String class
+  * `java.lang.Throwable`
+    * `java.lang.Exception`
+      * `java.lang.IOException` and many other checked exceptions (CloneNotSupported)
+      * `java.lang.RuntimeException`
+        * NullPointer... IllegalArgument.. IndexOutOfBounds... UnsupportedOperation... SystemException
+    * `java.lang.Error`
 * Other
   * None of the new date related classes have public constructors.
   * `Period` doesn't mess with the time component of the date while `Duration` may changed the time component if the date is close to the DST boundary.
