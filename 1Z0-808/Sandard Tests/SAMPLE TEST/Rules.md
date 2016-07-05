@@ -434,6 +434,7 @@ class B extends A{
   * makes sure that messages are sent to the right object at run time.
 * Checked exceptions are meant for
   * exceptional conditions external to an application that a well written application should anticipate and from which it can recover (if a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception)
+* `throw null` will produce `NullPointerException`, NOT `RuntimeException` or other "system exception"
 * `java.lang.Object`
   * `final java.lang.Number`
     * `java.lang.Long`
