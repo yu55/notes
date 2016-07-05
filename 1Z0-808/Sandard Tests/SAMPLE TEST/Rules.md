@@ -472,4 +472,4 @@ date = ZonedDateTime.of(ld, ZoneId.of("US/Eastern"));
 date = date.plus(Period.ofDays(1));
 System.out.println(date); // outputs 2015-11-01T10:00-05:00[US/Eastern]
 ```
-  * `LocalDateTime` can be formatted with `DateTimeFormatter.ISO_DATE` but `LocalDate` CANNOT by formatted with `ISO_DATE_TIME`.
+  * `LocalDateTime` can be formatted with `DateTimeFormatter.ISO_DATE` but `LocalDate` CANNOT by formatted with `ISO_DATE_TIME` or `ISO_ZONED_DATE_TIME` (`ZonedDateTime`) .
