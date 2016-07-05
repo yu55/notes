@@ -251,6 +251,20 @@ public class Test{
   * If the method returns a value, it must be the same or a subclass of the method in the parent class, known as covariant return types. For primitives return types must be exactly the same.
   * Overriding method may be `abstract` (class must be `abstract` too)
   * Term overriding works only for nonprivate instance methods (private instance methods and static methods are referred as hidden in this situation)
+```java
+class A{
+   public void m1() {   }
+}
+class B extends A{
+   public void m1() {   }
+}
+class C extends B{
+   public void m1(){
+     // You cannot access class A's m1() from class C for the same object ( i.e. this). super.super is invalid construct
+     // You can access class B's m1() using super.m1() from class C.
+   }
+}
+```
 * Hiding Methods
   * The method in the child class must have the same signature as the method in the parent class.
   * The method in the child class must be at least as accessible or more accessible than the method in the parent class.
