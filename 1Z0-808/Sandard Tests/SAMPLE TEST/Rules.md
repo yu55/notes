@@ -496,6 +496,7 @@ class B extends A{
     * `String replace(char oldChar, char newChar)`/`String replace(CharSequence target, CharSequence replacement)` - returns the same string when parameters are the same
     * `void trimToSize()`, not `trim()` which is part on String class
 * Other
+  * None of the new date related classes have public constructors.
   * `Period` doesn't mess with the time component of the date while `Duration` may changed the time component if the date is close to the DST boundary.
 ```java
 LocalDateTime ld = LocalDateTime.of(2015, Month.OCTOBER, 31, 10, 0);
