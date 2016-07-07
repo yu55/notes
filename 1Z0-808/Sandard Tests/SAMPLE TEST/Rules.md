@@ -499,7 +499,7 @@ class B extends A{
     * `java.lang.Exception`
       * `java.lang.IOException` and many other checked exceptions (CloneNotSupported)
       * `java.lang.RuntimeException`
-        * NullPointer... IllegalArgument.. IndexOutOfBounds... UnsupportedOperation... SystemException
+        * Security... ClassCast... NullPointer... IllegalArgument.. IndexOutOfBounds... UnsupportedOperation... SystemException
     * `java.lang.Error`
 * Other
   * None of the new date related classes have public constructors.
