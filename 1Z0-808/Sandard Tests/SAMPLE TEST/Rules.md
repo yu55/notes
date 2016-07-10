@@ -471,11 +471,11 @@ class B extends A{
   * exceptional conditions external to an application that a well written application should anticipate and from which it can recover (if a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception)
 * `throw null` will produce `NullPointerException`, NOT `RuntimeException` or other "system exception"
 * `java.lang.Object`
-  * `final java.lang.Number`
+  * `abstract java.lang.Number`
     * `java.lang.Long`
       * `Long(long value)`/`Long(String s)`
       * `long longValue()`
-      * `long parseLong(String s)`/`parseLong(String s, int radix)`
+      * `static long parseLong(String s)`/`parseLong(String s, int radix)`
       * `static Long valueOf(long l)`/`valueOf(String s)`/`valueOf(String s, int radix)`
   * `java.util.AbstractCollection<E>`
     * `java.util.AbstractList<E>`
@@ -485,16 +485,17 @@ class B extends A{
         * `boolean contains(Object o)`
         * `int size()` instead of `.length`
   * `final java.lang.StringBuilder` (not synchronized)
+    * `StringBuilder()`/`StringBuilder(CharSequence seq)`/`StringBuilder(int capacity)`/`StringBuilder(String str)`
     * `StringBuilder delete(int start, int end)` (NOT clear/empty/removeAll/deleteAll)
     * `void ensureCapacity(int minimumCapacity)`
     * `int capacity()`
     * `void setLength(int newLength)` - if the `newLength` argument is less than the current length of the string buffer, the string buffer is truncated to contain exactly the number of characters given by the newLength argument. If the newLength argument is greater than or equal to the current length, sufficient null characters ('\u0000') are appended to the string buffer so that length becomes the newLength argument.
     * `String substring(int start)`, `String substring(int start, int end)`
     * `StringBuilder replace(int start, int end, String str)`
-    * `insert(int dstOffset, CharSequence s, int start, int end)` and millions of other inserts
+    * `StringBuilder insert(int dstOffset, CharSequence s, int start, int end)` and millions of other inserts
+    * `void trimToSize()`, not `trim()` which is part on String class
   * `final java.lang.String`
     * `String replace(char oldChar, char newChar)`/`String replace(CharSequence target, CharSequence replacement)` - returns the same string when parameters are the same
-    * `void trimToSize()`, not `trim()` which is part on String class
   * `java.lang.Throwable`
     * `java.lang.Exception`
       * `java.lang.IOException` and many other checked exceptions (CloneNotSupported)
