@@ -470,6 +470,10 @@ class B extends A{
 * Checked exceptions are meant for
   * exceptional conditions external to an application that a well written application should anticipate and from which it can recover (if a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception)
 * `throw null` will produce `NullPointerException`, NOT `RuntimeException` or other "system exception"
+* String, StringBuilder, and StringBuffer - all are final classes.
+  * Remember that wrapper classes (java.lang.Boolean, java.lang.Integer, java.lang.Long, java.lang.Short etc.) are also final and so they cannot be extended. 
+  * java.lang.Number, however, is not final. Integer, Long, Double etc. extend Number.
+  * java.lang.System is final as well.
 * `java.lang.Object`
   * `abstract java.lang.Number`
     * `java.lang.Long`
