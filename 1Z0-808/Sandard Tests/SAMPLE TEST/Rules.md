@@ -4,6 +4,15 @@
   * `public static void main(String[] args)` may be `final`
 * Numbers
   * Underscore `_` may occure only between digits/letters or digit/letter and other underscore
+  * The floating point suffices `f`, `F`, `d`, `D` can be used only when using decimal system
+```java
+double a = 0xb10_000; // OK
+float b = 0b10_000;   // OK
+long c = 0b10000L;   // OK
+
+float d = 0b10_000f;  // invalid; it even can't be written in octal 010_000f;
+double e = 0b10_000D; // invalid
+```
 * Identifiers
   * The name must begin with a letter or the symbol `$` or `_`.
   * Subsequent characters may also be numbers.
