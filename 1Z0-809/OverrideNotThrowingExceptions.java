@@ -14,7 +14,7 @@ class B extends A
     }
 }
 
-class OverridenNotThrowingExceptions {
+class OverrideNotThrowingExceptions {
     public static void main(String[] args) {
         System.out.println("I did compiled!");
     }
