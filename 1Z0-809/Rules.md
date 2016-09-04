@@ -6,6 +6,7 @@
   * you cannot qualify default methods as `synchronized` or `final`
   * The Diamond Problem
     * if two super interfaces define (default) method with the same signature, implementing class must override this method (and invoke one of super methods: `Interface1.super.method()`)
+    * if two super interfaces have the same method name and one has default implementation, the compiler will issue and error
     * if base class and base interface define method with the same signature then "the class wins"
   * functional interface (SAM - Single Abstract Method)
     * interface must contain exactly one abstrat method with signature different than methods in `Object` class
