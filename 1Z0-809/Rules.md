@@ -1,4 +1,5 @@
 * Enums
+  * can be definied in top-level class only or within interface; never locally in method 
   * are always `public static final`
   * comparing can be done via `==`
   * constructor must be always `private`
