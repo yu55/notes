@@ -13,11 +13,11 @@
     * interface must contain exactly one abstrat method with signature different than methods in `Object` class
     * interface may contain other methods: default, static od abstract from `Object` class
     * above rules works also for derived interfaces
-```
+```java
 @FunctionalInterface
 public interface Comparator<T> {
   int compare(T o1, T o2);
   boolean equals(Object obj);
   // other methods are default methods or static methods and are elided
 }
-```java
+```
