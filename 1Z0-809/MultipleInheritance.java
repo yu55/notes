@@ -18,6 +18,7 @@ class MultipleInheritance implements Interface1, Interface2 {
     new MultipleInheritance().method();      // prints "Instance"
 
     _34.test();
+    _6.test();
   }
 
 }
@@ -51,3 +52,20 @@ interface Interface5 {
   //default void method() {}                 // WON'T work: error: method method() is already defined in interface Interface5
 }
 
+//-----------------------------------------------------------------------------
+
+interface Interface6 {
+  int VALUE = 0;
+  int OTHER = 1;
+}
+
+class _6 implements Interface6 {
+  static int OTHER = 2;
+  static void test() {
+    System.out.println("VALUE=" + VALUE);                       // prints 0
+    System.out.println("_6.VALUE=" + _6.VALUE);                 // prints 0
+    System.out.println("OTHER=" + OTHER);                       // prints 2
+    System.out.println("Interface6.OTHER=" + Interface6.OTHER); // prints 1
+    System.out.println("_6.OTHER=" + _6.OTHER);                 // prints 2
+  }
+}
