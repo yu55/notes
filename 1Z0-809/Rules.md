@@ -27,3 +27,28 @@ public interface Comparator<T> {
   // other methods are default methods or static methods and are elided
 }
 ```
+* Generics
+  * subtyping doesn't work for generic types - use wildcards instead
+```java
+List<Number> listOfInts = new ArrayList<Integer>(); // incompatible types - won't compile
+
+List<?> wildcardList = new ArrayList<Integer>();    // compiles OK
+
+// when using wildcard parameters it's not possible to modify the object
+wildcardList.add(new Integer(10)); // cannot find symbol method add
+
+// other limitations of generics
+T field = new T()       // compiler error
+
+T[] field = new T[100]; // compiler error
+
+class X<T> {
+  T instanceField;      // OK
+  static T staticField  // compiler error
+
+}
+
+class SomeException<T> extends Throwable {} // compiler error
+
+List<int> // generics doesn't work with primitive types
+```
