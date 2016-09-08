@@ -54,4 +54,6 @@ List<int> // generics doesn't work with primitive types
 ```
 * Collections
   * `next()` must be called before each `remove{}` in `Iterator` (`IllegalStateException` otherwise)
-  * `java.util.Arrays.asList()` returns fixed size list: unable to add or remove, but able to modify existing elements 
+  * `java.util.Arrays.asList()` returns fixed size list: unable to add or remove, but able to modify existing elements
+* `java.util.Comparable` - use for natural ordering
+* `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present
