@@ -28,7 +28,11 @@ public interface Comparator<T> {
 }
 ```
 * Generics
-  * subtyping doesn't work for generic types - use wildcards instead
+  * subtyping doesn't work for generic types - use wildcards instead; generics are not covariant
+  * wildcards
+    * `List<? super Number>` - a list containing instances of Number of its super classes. It allows to `list.add(new Integer(1));`. It doesn't allow to retrive anything other than Object: `Object o = list.get(0);` (because the compiler doesn't know the exact class of objects contained by list)
+    * `List<?>` is the same as `List<? extends Object>` - a list containing instances of some class that extends Object. It won't let add anything. It will only let retrive Object: `Object o = list.get(i);`
+    * `List<? extends Number>` - a list containing instances of Number class or its subclasses. It won't allow to add any object to list because the compiler doesn't know the exact class of objects contained by the list so it cannot check whether whatever you are adding is eligible to be added to the list or not. It allows to retrive `Number` objects.
 ```java
 List<Number> listOfInts = new ArrayList<Integer>(); // incompatible types - won't compile
 
@@ -36,6 +40,11 @@ List<?> wildcardList = new ArrayList<Integer>();    // compiles OK
 
 // when using wildcard parameters it's not possible to modify the object
 wildcardList.add(new Integer(10)); // cannot find symbol method add
+
+// what types are compatible with below method
+ArrayList<String> in;
+List result; // not even List<Object>!!!
+public static <E extends CharSequence> List<? super E> doIt(List<E> nums)
 
 // other limitations of generics
 T field = new T()       // compiler error
