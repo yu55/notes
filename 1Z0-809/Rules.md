@@ -42,6 +42,7 @@ public interface Comparator<T> {
     * `List<? extends Number>` - a list containing instances of Number class or its subclasses. It won't allow to add any object to list because the compiler doesn't know the exact class of objects contained by the list so it cannot check whether whatever you are adding is eligible to be added to the list or not. It allows to retrive `Number` objects.
 ```java
 List<Number> listOfInts = new ArrayList<Integer>(); // incompatible types - won't compile
+List<Object> listOfObjs = new ArrayList<Integer>(); // incompatible types - won't compile
 
 List<?> wildcardList = new ArrayList<Integer>();    // compiles OK
 
