@@ -27,6 +27,13 @@ public interface Comparator<T> {
   // other methods are default methods or static methods and are elided
 }
 ```
+* Method reference
+  * use when lambda is doing nothing else but calling other method
+  * types:
+    * reference to a static method; `ContainingClass::staticMethodName`
+    * reference to an instance method of particular object; `containingObject::instanceMethodName` like `new MySorter()::compare`
+    * reference to an instance method of arbitraty object of a particular type; `ContainingType::methodName` like `String[] array = ...; Arrays.sort(array, String::compareToIgnoreCase)` is equivalent to `(String a, String b) -> a.compareToIgnoreCase(b)`
+    * reference to a constructor; `ClassName::new`
 * Generics
   * subtyping doesn't work for generic types - use wildcards instead; generics are not covariant
   * wildcards
