@@ -59,13 +59,23 @@ interface Interface6 {
   int OTHER = 1;
 }
 
-class _6 implements Interface6 {
-  static int OTHER = 2;
+class _6_1 {
+  static int VALUE = 2;
+  static int UNKNOWN = 3;
+}
+
+class _6 extends _6_1 implements Interface6 {
+  static int OTHER = 4;
   static void test() {
-    System.out.println("VALUE=" + VALUE);                       // prints 0
-    System.out.println("_6.VALUE=" + _6.VALUE);                 // prints 0
-    System.out.println("OTHER=" + OTHER);                       // prints 2
+    //System.out.println("VALUE=" + VALUE);                       // error: reference to VALUE is ambiguous
+    //System.out.println("_6.VALUE=" + _6.VALUE);                 // error: reference to VALUE is ambiguous
+    System.out.println("_6_1.VALUE=" + _6_1.VALUE);             // prints 2
+    System.out.println("Interface6.VALUE=" + Interface6.VALUE); // prints 0
+    System.out.println("OTHER=" + OTHER);                       // prints 4
     System.out.println("Interface6.OTHER=" + Interface6.OTHER); // prints 1
-    System.out.println("_6.OTHER=" + _6.OTHER);                 // prints 2
+    System.out.println("_6.OTHER=" + _6.OTHER);                 // prints 4
+    System.out.println("UNKNOWN=" + UNKNOWN);                   // prints 3
+    System.out.println("_6_1.UNKNOWN=" + _6_1.UNKNOWN);         // prints 3
+    System.out.println("_6.UNKNOWN=" + _6.UNKNOWN);             // prints 3
   }
 }
