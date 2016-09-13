@@ -17,7 +17,7 @@
     * if base class and base interface define method with the same signature then "the class wins"
   * functional interface (SAM - Single Abstract Method)
     * interface must contain exactly one abstrat method with signature different than methods in `Object` class
-    * interface may contain other methods: default, static od abstract from `Object` class
+    * interface may contain other methods: default, static or abstract from `Object` class
     * above rules works also for derived interfaces
 ```java
 @FunctionalInterface
