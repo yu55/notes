@@ -125,5 +125,10 @@ List<int> // generics doesn't work with primitive types
 * Collections
   * `next()` must be called before each `remove{}` in `Iterator` (`IllegalStateException` otherwise)
   * `java.util.Arrays.asList()` returns fixed size list: unable to add or remove, but able to modify existing elements
-* `java.util.Comparable` - use for natural ordering
-* `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present
+  * `java.util.Comparable` - use for natural ordering
+  * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present
+* Functional interfaces (https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)
+  * `Predicate<T>`: `boolean test(T t)`, `default Predicate<T> and(Predicate<? super T> other)`, `default Predicate<T> or(Predicate<? super T> other)`, `default Predicate<T> negate()`
+    * used by: `default boolean Collection.removeIf(Predicate<? super E> filter)`
+    * primitive: `[Int|Long|Double]Predicate` method: `boolean test([int|long|double])`
+    * bi: `BiPredicate<T,U>`, method: `boolean test(T t, U u)`; example: `BiPredicate<List<String>,String> bpr = List::contains; List<String> l=...; bpr.test(l,"123");`
