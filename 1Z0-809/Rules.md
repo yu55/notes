@@ -34,6 +34,59 @@ public interface Comparator<T> {
     * reference to an instance method of particular object; `containingObject::instanceMethodName` like `new MySorter()::compare`
     * reference to an instance method of arbitraty object of a particular type; `ContainingType::methodName` like `String[] array = ...; Arrays.sort(array, String::compareToIgnoreCase)` is equivalent to `(String a, String b) -> a.compareToIgnoreCase(b)`
     * reference to a constructor; `ClassName::new`
+```java
+interface SAM {
+    default int guns(List<String> targets) {
+        System.out.println("Guns");
+        return targets.size();
+    }
+
+    int missiles(List<String> targets);
+}
+
+class Stinger implements SAM {
+    public int missiles(List<String> targets) {
+        System.out.println("Missiles " + targets);
+        return targets.size();
+    }
+}
+
+public abstract class LambdasAndRefsTests {
+
+    public static int size(List<String> names) {
+        System.out.println("Size");
+        return names.size() * 2;
+    }
+
+    public static void process(List<String> names, SAM c) {
+        c.missiles(names);
+    }
+
+    public static void main(String[] args) {
+        List<String> targets = Arrays.asList("a", "b", "c");
+        Stinger s = new Stinger();
+
+        process(targets, s);                         // "Missiles [a, b, c]"
+        process(targets, trgts -> s.missiles(trgts));// "Missiles [a, b, c]"
+        process(targets, s::missiles);               // "Missiles [a, b, c]"
+        process(targets, new Stinger()::missiles);   // "Missiles [a, b, c]"
+        process(targets, s::guns);                   // "Guns"
+        process(targets, LambdasAndRefsTests::size); // "Size"
+        //process(targets, SAM::guns);     // guns can be invoked on object and not on interface; arguments are OK tough
+
+        // Stinger::missiles is a valid method reference that can mean to refer either to a static method missiles of Stinger class or
+        // to an instance method of any arbitrary instance of Stinger class. Which meaning is implied depends on the
+        // context in which it is used. Here, the context does not supply any instance of Stinger class.
+        // Therefore, Stinger::missiles will refer to a static method missiles. But there is no such static method in Stinger class.
+        // Therefore, it is invalid in this context. To use Stinger::missiles, you need a reference to a Stinger instance, which
+        // is not available here.
+        //process(missiles, Stinger::missiles);
+
+        process(targets, List::size);
+        process(targets, l -> l.size());
+    }
+}
+```
 * Generics
   * subtyping doesn't work for generic types - use wildcards instead; generics are not covariant
   * wildcards
