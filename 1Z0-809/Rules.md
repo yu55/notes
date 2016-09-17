@@ -143,6 +143,10 @@ List<int> // generics doesn't work with primitive types
       * `To[Int|Long|Double]Function<T>`, method: `int applyAs[Int|Long|Double](T value)`
       * `[Int|Long|Double]To[Int|Long|Double]`, method: `[int|long|double] applyAs[Int|Long|Double]([Int|Long|Double] value)`
     * binary versions: `BiFunction<T, U, R> R apply(T t, U u)`
+  * `UnaryOperator<T> extends Function<T,T>`
+    * used by: `default void List<E>.replaceAll(UnaryOperator<E> operator)`
+    * primitive: `[Int|Long|Double]UnaryOperator`
   * `Supplier<T>`: `T get()`
     * used by: `static <T> Stream<T> generate(Supplier<T> s)`
     * primitive: `[Boolean|Int|Long|Double]Supplier [boolean|int|long|double] getAs[Boolean|Int|Long|Double]()`
+
