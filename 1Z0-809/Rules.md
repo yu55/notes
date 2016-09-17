@@ -32,7 +32,7 @@ public interface Comparator<T> {
   * types:
     * reference to a static method; `ContainingClass::staticMethodName`
     * reference to an instance method of particular object; `containingObject::instanceMethodName` like `new MySorter()::compare`
-    * reference to an instance method of arbitrary object of a particular type; `ContainingType::methodName` like `String[] array = ...; Arrays.sort(array, String::compareToIgnoreCase)` is equivalent to `(String a, String b) -> a.compareToIgnoreCase(b)`
+    * reference to an instance method of arbitrary object of a particular type; `ContainingType::methodName` like `String[] array = ...; Arrays.sort(array, String::compareToIgnoreCase)` is equivalent to `(String a, String b) -> a.compareToIgnoreCase(b)` (http://moandjiezana.com/blog/2014/understanding-method-references/)
     * reference to a constructor; `ClassName::new`
 ```java
 interface SAM {
@@ -132,3 +132,7 @@ List<int> // generics doesn't work with primitive types
     * used by: `default boolean Collection.removeIf(Predicate<? super E> filter)`
     * primitive: `[Int|Long|Double]Predicate` method: `boolean test([int|long|double])`
     * bi: `BiPredicate<T,U>`, method: `boolean test(T t, U u)`; example: `BiPredicate<List<String>,String> bpr = List::contains; List<String> l=...; bpr.test(l,"123");`
+  * `Consumer<T>`: `void accept(T t)`, `default Consumer<T> andThen(Consumer<? super T> after)`
+    * used by: `forEach(Consumer<? super T> action)`
+    * primitive: `[Int|Long|Double]Consumer` method `void accept(int|long|double value)`, `Obj[Int|Long|Double]Consumer<T>` method `void accept(T t, [int|long|double] value)`
+    * bi: `BiConsumer<T,U>`, method: `void accept(T t, U u)`
