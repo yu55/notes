@@ -129,10 +129,17 @@ List<int> // generics doesn't work with primitive types
   * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present
 * Functional interfaces (https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)
   * `Predicate<T>`: `boolean test(T t)`, `default Predicate<T> and(Predicate<? super T> other)`, `default Predicate<T> or(Predicate<? super T> other)`, `default Predicate<T> negate()`
-    * used by: `default boolean Collection.removeIf(Predicate<? super E> filter)`
+    * used by: `default boolean Collection.removeIf(Predicate<? super E> filter)`, `Stream<T> filter(Predicate<? super T> predicate)`
     * primitive: `[Int|Long|Double]Predicate` method: `boolean test([int|long|double])`
-    * bi: `BiPredicate<T,U>`, method: `boolean test(T t, U u)`; example: `BiPredicate<List<String>,String> bpr = List::contains; List<String> l=...; bpr.test(l,"123");`
+    * binary versions: `BiPredicate<T,U>`, method: `boolean test(T t, U u)`; example: `BiPredicate<List<String>,String> bpr = List::contains; List<String> l=...; bpr.test(l,"123");`
   * `Consumer<T>`: `void accept(T t)`, `default Consumer<T> andThen(Consumer<? super T> after)`
-    * used by: `forEach(Consumer<? super T> action)`
+    * used by: `void Stream.forEach(Consumer<? super T> action)`
     * primitive: `[Int|Long|Double]Consumer` method `void accept(int|long|double value)`, `Obj[Int|Long|Double]Consumer<T>` method `void accept(T t, [int|long|double] value)`
-    * bi: `BiConsumer<T,U>`, method: `void accept(T t, U u)`
+    * binary versions: `BiConsumer<T,U>`, method: `void accept(T t, U u)`
+  * `Function<T,U>`: `R apply(T t)`, `default <V> Function<T,V> andThen(Function<? super R,? extends V> after)`, `default <V> Function<V,R> compose(Function<? super V,? extends T> before)`, `static <T> Function<T,T> identity()`
+    * used by: `<R> Stream<R> 	map(Function<? super T,? extends R> mapper)`
+    * primitive versions:
+      * `[Int|Long|Double]Function<R>`, method: `R apply([int|long|double] value)`
+      * `To[Int|Long|Double]Function<T>`, method: `int applyAs[Int|Long|Double](T value)`
+      * `[Int|Long|Double]To[Int|Long|Double]`, method: `[int|long|double] applyAs[Int|Long|Double]([Int|Long|Double] value)`
+    * binary versions: `BiFunction<T, U, R> R apply(T t, U u)`
