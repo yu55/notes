@@ -32,7 +32,7 @@ public interface Comparator<T> {
   * types:
     * reference to a static method; `ContainingClass::staticMethodName`
     * reference to an instance method of particular object; `containingObject::instanceMethodName` like `new MySorter()::compare`
-    * reference to an instance method of arbitraty object of a particular type; `ContainingType::methodName` like `String[] array = ...; Arrays.sort(array, String::compareToIgnoreCase)` is equivalent to `(String a, String b) -> a.compareToIgnoreCase(b)`
+    * reference to an instance method of arbitrary object of a particular type; `ContainingType::methodName` like `String[] array = ...; Arrays.sort(array, String::compareToIgnoreCase)` is equivalent to `(String a, String b) -> a.compareToIgnoreCase(b)`
     * reference to a constructor; `ClassName::new`
 ```java
 interface SAM {
