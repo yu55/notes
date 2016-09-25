@@ -149,4 +149,5 @@ List<int> // generics doesn't work with primitive types
   * `Supplier<T>`: `T get()`
     * used by: `static <T> Stream<T> generate(Supplier<T> s)`
     * primitive: `[Boolean|Int|Long|Double]Supplier [boolean|int|long|double] getAs[Boolean|Int|Long|Double]()`
-
+* Stream API
+  * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
