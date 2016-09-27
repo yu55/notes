@@ -152,3 +152,25 @@ List<int> // generics doesn't work with primitive types
 * Stream API
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
   * `List.forEach(Consumer<? super T> action)` (defined in `Iterable`) and `List.stream().forEach(Consumer<? super T> action)`
+* Exceptions and assertions
+  * In a multi-catch block, you cannot combine catch handlers for two exceptions that share a base- and derived-class relationship.
+  * The resource class must implement `java.lang.AutoCloseable` interface. Many standard JDK classes such as `BufferedReader`, `BufferedWriter`) implement `java.io.Closeable` interface, which extends `java.lang.AutoCloseable`. 
+  * Resources are closed at the end of the try block and before any catch or finally block.
+  * Resources are not even accessible in the catch or finally block.
+  * Resources are closed in the reverse order of their creation.
+  * Resources are closed even if the code in the try block throws an exception.
+  * java.lang.AutoCloseable`'s `close() throws Exception` but `java.io.Closeable`'s `close() throws IOException`.
+  * If code in try block throws exception and an exception also thrown while closing is resource, the exception thrown while closing the resource is suppressed. The caller gets the exception thrown in the try block
+  * static initialization blocks CAN NOT throw checked exceptions
+  * non-static initialization blocks CAN throw checked exceptions, but these exceptions have to be declared in `throws` in all constructors
+  * if a method is declared in more than two interfaces with different `throws` the implementing version of this method must include all exceptions in `throws`
+  * `Throwable.initCause(Throwable cause)` - may be called at most once (zero when constructor with cause was used)
+  * `ClassNotFoundException` and `NoSuchFieldException` are both CHECKED exceptions
+  * controlling asserts:
+    * `-ea` / `-enableasserts` Enables assertions by default (except system classes).
+    * `-ea:<class name>` Enables assertions for the given class name.
+    * `-ea:<package name>...` Enables assertions in all the members of the given package <package name>.
+    * `-ea:...` Enable assertions in the given unnamed package.
+    * `-esa` Short for `-enablesystemsassertions;` enables assertions in system classes. This option is rarely used.
+    * analogous for disabling asserts: `-da`/`-dsa`/`-disablesystemassertions`
+  * Assertions the old way: method `assert` and `javac -source 1.3` (can't use `assert` keyword tough)
