@@ -159,7 +159,7 @@ List<int> // generics doesn't work with primitive types
   * Resources are not even accessible in the catch or finally block.
   * Resources are closed in the reverse order of their creation.
   * Resources are closed even if the code in the try block throws an exception.
-  * java.lang.AutoCloseable`'s `close() throws Exception` but `java.io.Closeable`'s `close() throws IOException`.
+  * `java.lang.AutoCloseable`'s `close() throws Exception` but `java.io.Closeable`'s `close() throws IOException`.
   * If code in try block throws exception and an exception also thrown while closing is resource, the exception thrown while closing the resource is suppressed. The caller gets the exception thrown in the try block
   * static initialization blocks CAN NOT throw checked exceptions
   * non-static initialization blocks CAN throw checked exceptions, but these exceptions have to be declared in `throws` in all constructors
