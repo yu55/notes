@@ -174,3 +174,5 @@ List<int> // generics doesn't work with primitive types
     * `-esa` Short for `-enablesystemsassertions;` enables assertions in system classes. This option is rarely used.
     * analogous for disabling asserts: `-da`/`-dsa`/`-disablesystemassertions`
   * Assertions the old way: method `assert` and `javac -source 1.3` (can't use `assert` keyword tough)
+* Java date/time API
+  * `java.time` classes are immutable -> thread-safe
