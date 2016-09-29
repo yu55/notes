@@ -176,3 +176,11 @@ List<int> // generics doesn't work with primitive types
   * Assertions the old way: method `assert` and `javac -source 1.3` (can't use `assert` keyword tough)
 * Java date/time API
   * `java.time` classes are immutable -> thread-safe
+* I/O fundamentals
+  * `java.io.Console console = System.console();`
+  * `java.io.Console` methods:
+    * `char[] readPassword()`/`char[] readPassword(String fmt, Object... args)` (formatted prompt + password read without echoing)
+    * `java.io.Reader reader()`
+    * `java.io.PrintWriter writer()`
+    * `String readLine()`/`String readLine(String fmt, Object... args)` (formatted prompt + read line)
+    * `Console format(String fmt, Object... args)`
