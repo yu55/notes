@@ -186,7 +186,7 @@ List<int> // generics doesn't work with primitive types
     * `Console format(String fmt, Object... args)`
     * `Console printf(String format, Object... args)`
   * Character streams
-    * `java.io.Reader`
+    * `java.io.Reader extends Object`
       * `BufferedReader` - adds buffer to underlying character stream: `new BufferedReader(new FileReader(file))`
         * `LineNumberReader` - buffered stream that keeps track of line numbers
       * `FilterReader`
@@ -195,7 +195,7 @@ List<int> // generics doesn't work with primitive types
       * `InputStreamReader` - bridge from byte to character streams (bytes into characters in specified charset)
         * `FileReader` - reading character files
       * `StringReader` - source is `String`
-    * `java.io.Writer`
+    * `java.io.Writer extends Object`
       * `BufferedWriter`
       * `PrintWriter` - supports formatted printing characters to the output character stream
       * `PipedWriter`
@@ -205,3 +205,31 @@ List<int> // generics doesn't work with primitive types
       * `StringWriter` - collects characters into string buffer -> `String`
     * `java.util.Scanner` - text scanner which can parse primitive types and strings using regular expressions
       * `s = new Scanner(new FileReader(fileName)); s.useDelimiter("\\W");`
+  * Byte streams
+    * `java.io.OutputStream extends Object`
+      * `ByteArrayOutputStream`
+      * `FileOutputStream`
+      * `FilterOutputStream`
+        * `PrintStream`
+        * `DataOutputStream extends DataOutputStream`
+        * `BufferedOutputStream`
+      * `ObjectOutputStream`
+      * `PipedOutputStream`
+    * `DataOutput` (interface)
+      * `ObjectOutput` (interface)
+        * ObjectOutputStream`
+    * `java.io.InputStream extends Object`
+      * `ByteArrayInputStream`
+      * `FileInputStream`
+      * `FilterInputStream`
+        * `LineNumberInputStream`
+        * `DataInputStream` used to read java primitive types
+        * `PushbackInputStream`
+        * `BufferedInputStream`
+      * `ObjectInputStream`
+      * `PipedInputStream` with output stream creates a communication channel
+      * `SequenceInputStream`
+      * `StringBufferInputStream`
+    * `DataInput`
+      * `ObjectInput`
+        * `ObjectInputStream`
