@@ -184,3 +184,24 @@ List<int> // generics doesn't work with primitive types
     * `java.io.PrintWriter writer()`
     * `String readLine()`/`String readLine(String fmt, Object... args)` (formatted prompt + read line)
     * `Console format(String fmt, Object... args)`
+    * `Console printf(String format, Object... args)`
+  * Character streams
+    * `java.io.Reader`
+      * `BufferedReader` - adds buffer to underlying character stream: `new BufferedReader(new FileReader(file))`
+        * `LineNumberReader` - buffered stream that keeps track of line numbers
+      * `FilterReader`
+        * `PushbackReader`
+      * `PipedReader` - "piped" reading
+      * `InputStreamReader` - bridge from byte to character streams (bytes into characters in specified charset)
+        * `FileReader` - reading character files
+      * `StringReader` - source is `String`
+    * `java.io.Writer`
+      * `BufferedWriter`
+      * `PrintWriter` - supports formatted printing characters to the output character stream
+      * `PipedWriter`
+      * `OutputStreamWriter`
+        * `FileWriter`
+      * `FilterWriter`
+      * `StringWriter` - collects characters into string buffer -> `String`
+    * `java.util.Scanner` - text scanner which can parse primitive types and strings using regular expressions
+      * `s = new Scanner(new FileReader(fileName)); s.useDelimiter("\\W");`
