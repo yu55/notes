@@ -217,7 +217,7 @@ List<int> // generics doesn't work with primitive types
       * `PipedOutputStream`
     * `DataOutput` (interface)
       * `ObjectOutput` (interface)
-        * ObjectOutputStream`
+        * `ObjectOutputStream`
     * `java.io.InputStream extends Object`
       * `ByteArrayInputStream`
       * `FileInputStream`
