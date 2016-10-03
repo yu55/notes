@@ -193,7 +193,7 @@ List<int> // generics doesn't work with primitive types
         * `PushbackReader`
       * `PipedReader` - "piped" reading
       * `InputStreamReader` - bridge from byte to character streams (bytes into characters in specified charset)
-        * `FileReader` - reading character files
+        * `FileReader` - reading character files; doesn't have read line method (`BufferedReader` has it)
       * `StringReader` - source is `String`
     * `java.io.Writer extends Object`
       * `BufferedWriter`
