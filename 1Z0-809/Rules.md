@@ -201,7 +201,7 @@ List<int> // generics doesn't work with primitive types
       * `PipedWriter`
       * `OutputStreamWriter`
         * `FileWriter`
-      * `FilterWriter`
+      * `FilterWriter` - creates/overrides file unless constructor with `boolean append`
       * `StringWriter` - collects characters into string buffer -> `String`
     * `java.util.Scanner` - text scanner which can parse primitive types and strings using regular expressions
       * `s = new Scanner(new FileReader(fileName)); s.useDelimiter("\\W");`
