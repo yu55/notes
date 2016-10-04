@@ -197,7 +197,7 @@ List<int> // generics doesn't work with primitive types
       * `StringReader` - source is `String`
     * `java.io.Writer extends Object`
       * `BufferedWriter`
-      * `PrintWriter` - supports formatted printing characters to the output character stream
+      * `PrintWriter` - supports formatted printing characters to the output character stream (`print`, `println`, `write`); methods never throw I/O exceptions (besides some constructors)
       * `PipedWriter`
       * `OutputStreamWriter`
         * `FileWriter`
