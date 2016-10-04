@@ -233,3 +233,5 @@ List<int> // generics doesn't work with primitive types
     * `DataInput`
       * `ObjectInput`
         * `ObjectInputStream`
+  * Serialization/deserialization
+    * If an object is being deserialized, that means the class of that object implements Serializable. Therefore, its constructor will never be called. However, constructor for the super class may be invoked if the super class does not implement serializable interface.
