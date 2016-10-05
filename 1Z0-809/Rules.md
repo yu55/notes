@@ -235,3 +235,10 @@ List<int> // generics doesn't work with primitive types
         * `ObjectInputStream`
   * Serialization/deserialization
     * If an object is being deserialized, that means the class of that object implements Serializable. Therefore, its constructor will never be called. However, constructor for the super class may be invoked if the super class does not implement serializable interface.
+* NIO2
+  * `Path.subpath(int beginIndex, int endIndex)`
+    * Indexing starts from 0
+    * Root (i.e. `c:\`) is not considered as the beginning.
+    * name at `beginIndex` is included but name at `endIndex` is not.
+    * paths do not start or end with `\`.
+    * if something is wrong with indexes `IllegalArgumentException` is thrown
