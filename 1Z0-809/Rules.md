@@ -242,3 +242,7 @@ List<int> // generics doesn't work with primitive types
     * name at `beginIndex` is included but name at `endIndex` is not.
     * paths do not start or end with `\`.
     * if something is wrong with indexes `IllegalArgumentException` is thrown
+  * `Files`
+    * `static Stream<Path> find(Path start, int maxDepth, BiPredicate<Path,BasicFileAttributes> matcher, FileVisitOption... options)` - Return a Stream that is lazily populated with Path by searching for files in a file tree rooted at a given starting file.
+    * `static Stream<Path> list(Path dir)` - Return a lazily populated Stream, the elements of which are the entries in the directory.
+    * `static Stream<Path> walk(Path start, [int maxDepth,] FileVisitOption... options)` - Return a Stream that is lazily populated with Path by walking the file tree rooted at a given starting file.
