@@ -273,3 +273,9 @@ List<int> // generics doesn't work with primitive types
       * Where both paths have a root component then it is implementation dependent if a relative path can be constructed.
       * If this path and the given path are equal then an empty path is returned.
     * `Path resolveSibling(Path other)` - Resolves the given path against this path's parent path. This is useful where a file name needs to be replaced with another file name. For example, suppose that the name separator is "/" and a path represents "dir1/dir2/foo", then invoking this method with the Path "bar" will result in the Path "dir1/dir2/bar". If this path does not have a parent path, or other is absolute, then this method returns other. If other is an empty path then this method returns this path's parent, or where this path doesn't have a parent, the empty path.
+* JDBC
+  * `ResultSet` types
+    * `TYPE_FORWARD_ONLY` default; go through data in order
+    * `TYPE_SCROLL_INSENSITIVE` you can go through the data in any order, but you won’t see changes made in the database while you are scrolling    * `TYPE_SCROLL_SENSITIVE` you can go through the data in any order, and you will see changes made in the database
+    * `CONCUR_READ_ONLY` default; means that you can read the `ResultSet` but not write to it
+    * `CONCUR_UPDATABLE` means that you can both read and write to it
