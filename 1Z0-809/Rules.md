@@ -246,3 +246,30 @@ List<int> // generics doesn't work with primitive types
     * `static Stream<Path> find(Path start, int maxDepth, BiPredicate<Path,BasicFileAttributes> matcher, FileVisitOption... options)` - Return a Stream that is lazily populated with Path by searching for files in a file tree rooted at a given starting file.
     * `static Stream<Path> list(Path dir)` - Return a lazily populated Stream, the elements of which are the entries in the directory.
     * `static Stream<Path> walk(Path start, [int maxDepth,] FileVisitOption... options)` - Return a Stream that is lazily populated with Path by walking the file tree rooted at a given starting file.
+    * `delete(Path path) throws IOException`
+      * If the file is a symbolic link then the symbolic link itself, not the final target of the link, is deleted.
+      * If the file is a directory then the directory must be empty.
+      * `NoSuchFileException` - if the file does not exist (optional specific exception)
+      * `DirectoryNotEmptyException` - if the file is a directory and could not otherwise be deleted because the directory is not empty (optional specific exception)
+      * `IOException` - if an I/O error occurs
+      * `SecurityException` - In the case of the default provider, and a security manager is installed, the `SecurityManager.checkDelete(String)` method is invoked to check delete access to the file
+    * `Stream<String> lines(Path path[, Charset cs]) throws IOException`
+    * `List<String> readAllLines(Path path, Charset cs) throws IOException`
+  * `Path`
+    * `Path resolve(Path other)`
+      * If the other parameter is an absolute path then this method trivially returns other.
+      * If other is an empty path then this method trivially returns this path.
+      * Otherwise this method considers this path to be a directory and resolves the given path against this path.
+        * In the simplest case, the given path does not have a root component, in which case this method joins the given path to this path and returns a resulting path that ends with the given path.
+        * Where the given path has a root component then resolution is highly implementation dependent and therefore unspecified.
+        * e.g. "foo/bar".resolve("gus") -> "foo/bar/gus"
+    * `Path relativize(Path other)`
+      * "c:\\personal\\.\\photos\\..\\readme.txt".relativize("c:\\personal\\index.html") -> "..\..\..\..\index.html"
+      * "a/c" relativize "a/b"  is "../b"
+      * Reverse operation to `resolution`: `p.relativize(p.resolve(q)).equals(q)`
+      * Constructs a relative path between this path and a given path. If this path is "/a/b" and the given path is "/a/b/c/d" then the resulting relative path would be "c/d".
+      * Where this path and the given path do not have a root component, then a relative path can be constructed. A relative path cannot be constructed if only one of the paths have a root component.
+        * `IllegalArgumentException` - if other is not a `Path` that can be relativized against this path
+      * Where both paths have a root component then it is implementation dependent if a relative path can be constructed.
+      * If this path and the given path are equal then an empty path is returned.
+    * `Path resolveSibling(Path other)` - Resolves the given path against this path's parent path. This is useful where a file name needs to be replaced with another file name. For example, suppose that the name separator is "/" and a path represents "dir1/dir2/foo", then invoking this method with the Path "bar" will result in the Path "dir1/dir2/bar". If this path does not have a parent path, or other is absolute, then this method returns other. If other is an empty path then this method returns this path's parent, or where this path doesn't have a parent, the empty path.
