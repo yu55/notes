@@ -276,6 +276,7 @@ List<int> // generics doesn't work with primitive types
 * JDBC
   * `ResultSet` types
     * `TYPE_FORWARD_ONLY` default; go through data in order
-    * `TYPE_SCROLL_INSENSITIVE` you can go through the data in any order, but you won’t see changes made in the database while you are scrolling    * `TYPE_SCROLL_SENSITIVE` you can go through the data in any order, and you will see changes made in the database
+    * `TYPE_SCROLL_INSENSITIVE` you can go through the data in any order, but you won’t see changes made in the database while you are scrolling
+    * `TYPE_SCROLL_SENSITIVE` you can go through the data in any order, and you will see changes made in the database
     * `CONCUR_READ_ONLY` default; means that you can read the `ResultSet` but not write to it
     * `CONCUR_UPDATABLE` means that you can both read and write to it
