@@ -296,6 +296,14 @@ List<int> // generics doesn't work with primitive types
     System.out.print("Finished work");
   }
 ```
+  * Atomic classes common methods
+    * `get()` retrieve the current value
+    * `set()` set the given value, equivalent to the assignment `=` operator
+    * `getAndSet()` atomically sets the new value and returns the old value
+    * `incrementAndGet()` for numeric classes, atomic pre-increment operation equivalent to `++value`
+    * `getAndIncrement()` for numeric classes, atomic post-increment operation equivalent to `value++`
+    * `decrementAndGet()` for numeric classes, atomic pre-decrement operation equivalent to `--value`
+    * `getAndDecrement()` for numeric classes, atomic post-decrement operation equivalent to `value--`
   * Allow multiple concurrent reads but exclusive write: task for `ReadWriteLock`
     * If one thread is reading, other threads can read, but no thread can write.
     * If one thread is writing, no other thread can read or write.
