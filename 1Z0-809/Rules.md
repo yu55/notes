@@ -304,6 +304,32 @@ List<int> // generics doesn't work with primitive types
     * `getAndIncrement()` for numeric classes, atomic post-increment operation equivalent to `value++`
     * `decrementAndGet()` for numeric classes, atomic pre-decrement operation equivalent to `--value`
     * `getAndDecrement()` for numeric classes, atomic post-decrement operation equivalent to `value--`
+  * Concurrent collections
+    * `ConcurrentLinkedDeque implements Deque`
+    * `ConcurrentLinkedQueue implements Queue`
+    * `ConcurrentSkipListMap implements ConcurrentMap, SortedMap, NavigableMap`
+    * `ConcurrentSkipListSet implements SortedSet, NavigableSet`
+    * `CopyOnWriteArrayList implements List`
+    * `CopyOnWriteArraySet implements Set`
+    * `LinkedBlockingDeque implements BlockingQueue, BlockingDeque`
+    * `LinkedBlockingQueue implements BlockingQueue`
+    * `ConcurrentHashMap implements ConcurrentMap`
+      * `public V putIfAbsent(K key, V value)` atomic equivalent of
+```java
+ if (!map.containsKey(key))
+   return map.put(key, value);
+ else
+   return map.get(key);
+```
+  * Obtaining synchronized collections when given aren't synchronized: `Collections.`:
+    * `synchronizedCollection(Collection<T> c)`
+    * `synchronizedList(List<T> list)`
+    * `synchronizedMap(Map<K,V> m)`
+    * `synchronizedNavigableMap(NavigableMap<K,V> m)`
+    * `synchronizedNavigableSet(NavigableSet<T> s)`
+    * `synchronizedSet(Set<T> s)`
+    * `synchronizedSortedMap(SortedMap<K,V> m)`
+    * `synchronizedSortedSet(SortedSet<T> s)`
   * Allow multiple concurrent reads but exclusive write: task for `ReadWriteLock`
     * If one thread is reading, other threads can read, but no thread can write.
     * If one thread is writing, no other thread can read or write.
