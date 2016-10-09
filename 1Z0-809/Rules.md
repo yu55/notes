@@ -296,3 +296,36 @@ List<int> // generics doesn't work with primitive types
     System.out.print("Finished work");
   }
 ```
+  * Allow multiple concurrent reads but exclusive write: task for `ReadWriteLock`
+    * If one thread is reading, other threads can read, but no thread can write.
+    * If one thread is writing, no other thread can read or write.
+```java
+public class MultipleReadersSingleWriter {
+
+    private final ArrayList<String> theList = new ArrayList<String>();
+    private final ReadWriteLock rwl = new ReentrantReadWriteLock();
+    private final Lock r = rwl.readLock();
+    private final Lock w = rwl.writeLock();
+
+    public String read() {
+        r.lock();
+        try {
+            System.out.println("reading");
+            if (theList.isEmpty()) return null;
+            else return theList.get(0);
+        } finally {
+            r.unlock();
+        }
+    }
+
+    public void write(String data) {
+        w.lock();
+        try {
+            System.out.println("Written " + data);
+            theList.add(data);
+        } finally {
+            w.unlock();
+        }
+    }
+}
+```
