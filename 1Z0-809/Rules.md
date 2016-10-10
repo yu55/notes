@@ -363,3 +363,7 @@ public class MultipleReadersSingleWriter {
     }
 }
 ```
+* Fork/Join
+  * The worker threads in the ForkJoinPool extend java.lang.Thread and are created by a factory.
+  * One worker thread may steal work from another worker thread.
+  * `ForkJoinPool implements Executor` and not the threads in the pool.
