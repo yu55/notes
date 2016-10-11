@@ -369,7 +369,7 @@ public class MultipleReadersSingleWriter {
       * `AbstractExecutorService` (abstract class)
         * `ForkJoinPool`
         * `ThreadPoolExecutor`
-          * `ScheduledThreadPoolExecutor`
+          * `ScheduledThreadPoolExecutor`; `ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit)`
 ```java
   // Factorial implements Callable so that it can be passed to a ExecutorService
   // and get executed as a task.
@@ -415,6 +415,8 @@ public class MultipleReadersSingleWriter {
     V call() throws Exception;
   }
 ```
+* Parallel stream
+  * `Stream.parallel()` or `Collection.parallelStream()`; by default amount of threads in stream is related to amount of CPUs
 * Fork/Join
   * The worker threads in the ForkJoinPool extend java.lang.Thread and are created by a factory.
   * One worker thread may steal work from another worker thread.
