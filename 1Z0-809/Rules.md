@@ -146,12 +146,18 @@ List<int> // generics doesn't work with primitive types
   * `UnaryOperator<T> extends Function<T,T>`
     * used by: `default void List<E>.replaceAll(UnaryOperator<E> operator)`
     * primitive: `[Int|Long|Double]UnaryOperator`
+  * `BinaryOperator<T> extends BiFunction<T,T,T>`
   * `Supplier<T>`: `T get()`
     * used by: `static <T> Stream<T> generate(Supplier<T> s)`
     * primitive: `[Boolean|Int|Long|Double]Supplier [boolean|int|long|double] getAs[Boolean|Int|Long|Double]()`
 * Stream API
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
   * `List.forEach(Consumer<? super T> action)` (defined in `Iterable`) and `List.stream().forEach(Consumer<? super T> action)`
+  * reduce
+    * `T reduce(T identity, BinaryOperator<T> accumulator)`
+    * `Optional<T> reduce(BinaryOperator<T> accumulator)`
+    * `<U> U reduce(U identity, BiFunction<U,? super T,U> accumulator, BinaryOperator<U> combiner)`
+
 * Exceptions and assertions
   * In a multi-catch block, you cannot combine catch handlers for two exceptions that share a base- and derived-class relationship.
   * The resource class must implement `java.lang.AutoCloseable` interface. Many standard JDK classes such as `BufferedReader`, `BufferedWriter`) implement `java.io.Closeable` interface, which extends `java.lang.AutoCloseable`. 
