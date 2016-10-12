@@ -157,7 +157,94 @@ List<int> // generics doesn't work with primitive types
     * `T reduce(T identity, BinaryOperator<T> accumulator)`
     * `Optional<T> reduce(BinaryOperator<T> accumulator)`
     * `<U> U reduce(U identity, BiFunction<U,? super T,U> accumulator, BinaryOperator<U> combiner)`
+  * collect
+```java
+  <R> R collect(Supplier<R> supplier, BiConsumer<R,? super T> accumulator, BiConsumer<R,R> combiner)
 
+  // R result = supplier.get();
+  // for (T element : this stream)
+  //   accumulator.accept(result, element);
+  // return result;
+
+  // The following will accumulate strings into an ArrayList:
+  List<String> asList = stringStream.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+  // The following will take a stream of strings and concatenates them into a single string:
+  String concat = stringStream.collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
+ 
+```
+```java
+  <R,A> R collect(Collector<? super T,A,R> collector)
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  String result = ohMy.collect(Collectors.joining(", "));
+  System.out.println(result); // lions, tigers, bears
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Double result = ohMy.collect(Collectors.averagingInt(String::length));
+  System.out.println(result); // 5.333333333333333
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  TreeSet<String> result = ohMy.filter(s -> s.startsWith("t")
+    .collect(Collectors.toCollection(TreeSet::new));
+  System.out.println(result); // [tigers]
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<String, Integer> map = ohMy.collect(
+  Collectors.toMap(s -> s, String::length));
+  System.out.println(map); // {lions=5, bears=5, tigers=6}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Integer, List<String>> map = ohMy.collect(
+  Collectors.groupingBy(String::length));
+  System.out.println(map); // {5=[lions, bears], 6=[tigers]}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Integer, Set<String>> map = ohMy.collect(
+  Collectors.groupingBy(String::length, Collectors.toSet()));
+  System.out.println(map); // {5=[lions, bears], 6=[tigers]}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  TreeMap<Integer, Set<String>> map = ohMy.collect(
+  Collectors.groupingBy(String::length, TreeMap::new, Collectors.toSet()));
+  System.out.println(map); // {5=[lions, bears], 6=[tigers]}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  TreeMap<Integer, List<String>> map = ohMy.collect(
+  Collectors.groupingBy(String::length, TreeMap::new, Collectors.toList()));
+  System.out.println(map);
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Boolean, List<String>> map = ohMy.collect(
+  Collectors.partitioningBy(s -> s.length() <= 5));
+  System.out.println(map); // {false=[tigers], true=[lions, bears]}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Boolean, Set<String>> map = ohMy.collect(
+  Collectors.partitioningBy(s -> s.length() <= 7, Collectors.toSet()));
+  System.out.println(map);// {false=[], true=[lions, tigers, bears]}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Integer, Long> map = ohMy.collect(Collectors.groupingBy(
+  String::length, Collectors.counting()));
+  System.out.println(map); // {5=2, 6=1}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Integer, Optional<Character>> map = ohMy.collect(
+    Collectors.groupingBy(
+      String::length,
+      Collectors.mapping(s -> s.charAt(0),
+        Collectors.minBy(Comparator.naturalOrder()))));
+  System.out.println(map); // {5=Optional[b], 6=Optional[t]}
+
+  Stream<String> ohMy = Stream.of("lions", "tigers", "bears");
+  Map<Integer, Optional<Character>> map = ohMy.collect(
+    groupingBy(
+      String::length,
+      mapping(s -> s.charAt(0),
+        minBy(Comparator.naturalOrder()))));
+  System.out.println(map); // {5=Optional[b], 6=Optional[t]}
+```
 * Exceptions and assertions
   * In a multi-catch block, you cannot combine catch handlers for two exceptions that share a base- and derived-class relationship.
   * The resource class must implement `java.lang.AutoCloseable` interface. Many standard JDK classes such as `BufferedReader`, `BufferedWriter`) implement `java.io.Closeable` interface, which extends `java.lang.AutoCloseable`. 
