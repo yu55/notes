@@ -458,7 +458,7 @@ public class MultipleReadersSingleWriter {
 ```
 * Executors
   * `Executor` (Interface); `void execute(Runnable command)`
-    * `ExecutorService` (Interface); `<T> Future<T> submit(Callable<T> task)`
+    * `ExecutorService` (Interface); `<T> Future<T> submit(Callable<T> task)`, `Future<?> submit(Runnable task)`, program won't shut down unless `shutdown()` is called
       * `AbstractExecutorService` (abstract class)
         * `ForkJoinPool`
         * `ThreadPoolExecutor`
