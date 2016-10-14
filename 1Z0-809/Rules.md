@@ -158,9 +158,34 @@ List<int> // generics doesn't work with primitive types
     * `IntStream.iterate(3, i -> ++i)` 3 4 5 6 7 ...
   * `List.forEach(Consumer<? super T> action)` (defined in `Iterable`) and `List.stream().forEach(Consumer<? super T> action)`
   * reduce
-    * `T reduce(T identity, BinaryOperator<T> accumulator)`
-    * `Optional<T> reduce(BinaryOperator<T> accumulator)`
-    * `<U> U reduce(U identity, BiFunction<U,? super T,U> accumulator, BinaryOperator<U> combiner)`
+    * Not constrained to execute sequentially.
+    * The `identity` value must be an identity for the `combiner` function. This means that for all `u`, `combiner(identity, u)` is equal to `u`.
+    * The `combiner` function must be compatible with the `accumulator` function; for all `u` and `t`, the following must hold: `combiner.apply(u, accumulator.apply(identity, t)) == accumulator.apply(u, t)`
+```java
+  Optional<T> reduce(BinaryOperator<T> accumulator)
+
+  // boolean foundAny = false;
+  // T result = null;
+  // for (T element : this stream) {
+  //  if (!foundAny) {
+  //    foundAny = true;
+  //    result = element;
+  //  }
+  //  else
+  //    result = accumulator.apply(result, element);
+  // }
+  // return foundAny ? Optional.of(result) : Optional.empty();
+
+  //------------------------------------------------------------
+
+  T reduce(T identity, BinaryOperator<T> accumulator)
+  <U> U reduce(U identity, BiFunction<U,? super T,U> accumulator, BinaryOperator<U> combiner)
+
+  // T result = identity;
+  // for (T element : this stream)
+  //   result = accumulator.apply(result, element)
+  // return result;
+```
   * collect
 ```java
   <R> R collect(Supplier<R> supplier, BiConsumer<R,? super T> accumulator, BiConsumer<R,R> combiner)
