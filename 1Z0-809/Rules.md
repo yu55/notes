@@ -152,10 +152,25 @@ List<int> // generics doesn't work with primitive types
     * primitive: `[Boolean|Int|Long|Double]Supplier [boolean|int|long|double] getAs[Boolean|Int|Long|Double]()`
 * Stream API
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
-  * `IntStream.iterate`
-    * `IntStream.iterate(1, i -> 2)` 1 2 2 2 2...
-    * `IntStream.iterate(2, i -> i)` 2 2 2 2 2...
-    * `IntStream.iterate(3, i -> ++i)` 3 4 5 6 7 ...
+  * `IntStream`
+    * `int sum()` for empty stream returns 0
+    * `OptionalDouble average()`
+    * `OptionalInt findAny()`
+    * `OptionalInt findFirst()`
+    * `IntStream.iterate`
+      * `IntStream.iterate(1, i -> 2)` 1 2 2 2 2...
+      * `IntStream.iterate(2, i -> i)` 2 2 2 2 2...
+      * `IntStream.iterate(3, i -> ++i)` 3 4 5 6 7 ...
+    * map
+      * `IntStream map(IntUnaryOperator mapper)`
+      * `DoubleStream mapToDouble(IntToDoubleFunction mapper)`
+      * `LongStream mapToLong(IntToLongFunction mapper)`
+      * `<U> Stream<U> mapToObj(IntFunction<? extends U> mapper)`
+```java
+  IntStream.iterate(1, x->x++).limit(1).mapToObj(i -> String.valueOf(i)).count();          // OK
+  Stream.iterate(1, x -> x++).limit(1).map(integer -> String.valueOf(integer)).count();    // OK
+  IntStream.iterate(1, x -> x++).limit(1).map(integer -> String.valueOf(integer)).count(); // won't compile: incompatible types: bad return type in lambda expression java.lang.String cannot be converted to int
+```
   * `List.forEach(Consumer<? super T> action)` (defined in `Iterable`) and `List.stream().forEach(Consumer<? super T> action)`
   * reduce
     * Not constrained to execute sequentially.
