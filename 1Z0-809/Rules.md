@@ -127,6 +127,7 @@ List<int> // generics doesn't work with primitive types
   * `java.util.Arrays.asList()` returns fixed size list: unable to add or remove, but able to modify existing elements
   * `java.util.Comparable` - use for natural ordering
   * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present
+  * `HashSet`, `HashMap`, `ArrayList`, `CopyOnWriteArrayList` permits `null` storage but `ConcurrentHashMap` prevents `null` keys or values
 * Functional interfaces (https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)
   * `Predicate<T>`: `boolean test(T t)`, `default Predicate<T> and(Predicate<? super T> other)`, `default Predicate<T> or(Predicate<? super T> other)`, `default Predicate<T> negate()`
     * used by: `default boolean Collection.removeIf(Predicate<? super E> filter)`, `Stream<T> filter(Predicate<? super T> predicate)`
