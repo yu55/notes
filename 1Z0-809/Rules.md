@@ -141,7 +141,7 @@ List<int> // generics doesn't work with primitive types
     * used by: `<R> Stream<R> 	map(Function<? super T,? extends R> mapper)`
     * primitive versions:
       * `[Int|Long|Double]Function<R>`, method: `R apply([int|long|double] value)`
-      * `To[Int|Long|Double]Function<T>`, method: `int applyAs[Int|Long|Double](T value)`
+      * `To[Int|Long|Double]Function<T>`, method: `[int|long|double] applyAs[Int|Long|Double](T value)`
       * `[Int|Long|Double]To[Int|Long|Double]`, method: `[int|long|double] applyAs[Int|Long|Double]([Int|Long|Double] value)`
     * binary versions: `BiFunction<T, U, R> R apply(T t, U u)`
   * `UnaryOperator<T> extends Function<T,T>`
@@ -155,6 +155,7 @@ List<int> // generics doesn't work with primitive types
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
   * `Stream`
     * `sorted()`, `sorted(Comparator<? super T> comparator)`
+    * `Optional<T> max(Comparator<? super T> comparator)`
   * `IntStream`
     * `int sum()` for empty stream returns 0
     * `OptionalDouble average()`
@@ -316,6 +317,12 @@ List<int> // generics doesn't work with primitive types
   * Assertions the old way: method `assert` and `javac -source 1.3` (can't use `assert` keyword tough)
 * Java date/time API
   * `java.time` classes are immutable -> thread-safe
+```java
+  Period p = Period.between(LocalDate.of(2015, Month.SEPTEMBER, 2), LocalDate.of(2015, Month.SEPTEMBER, 1));
+  System.out.println(p); // P-1D
+  Duration d = Duration.between(LocalDateTime.of(2015, Month.SEPTEMBER, 2, 1, 0), LocalDateTime.of(2015, Month.SEPTEMBER, 2, 10, 10));
+  System.out.println(d); // PT9H10M
+```
 * I/O fundamentals
   * `java.io.Console console = System.console();`
   * `java.io.Console` methods:
