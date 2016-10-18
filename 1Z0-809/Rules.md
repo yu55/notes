@@ -125,8 +125,8 @@ List<int> // generics doesn't work with primitive types
 * Collections
   * `next()` must be called before each `remove{}` in `Iterator` (`IllegalStateException` otherwise)
   * `java.util.Arrays.asList()` returns fixed size list: unable to add or remove, but able to modify existing elements
-  * `java.util.Comparable` - use for natural ordering
-  * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present
+  * `java.util.Comparable` - use for natural ordering; `int compareTo(T o)`
+  * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present; `int compare(T o1, T o2)`, `Comparator comparing(...)`, e.g. `Comparator<Person> byLastName = Comparator.comparing(Person::getLastName);`
   * `HashSet`, `HashMap`, `ArrayList`, `CopyOnWriteArrayList` permits `null` storage but `ConcurrentHashMap` prevents `null` keys or values
 * Functional interfaces (https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)
   * `Predicate<T>`: `boolean test(T t)`, `default Predicate<T> and(Predicate<? super T> other)`, `default Predicate<T> or(Predicate<? super T> other)`, `default Predicate<T> negate()`
@@ -153,6 +153,8 @@ List<int> // generics doesn't work with primitive types
     * primitive: `[Boolean|Int|Long|Double]Supplier [boolean|int|long|double] getAs[Boolean|Int|Long|Double]()`
 * Stream API
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
+  * `Stream`
+    * `sorted()`, `sorted(Comparator<? super T> comparator)`
   * `IntStream`
     * `int sum()` for empty stream returns 0
     * `OptionalDouble average()`
