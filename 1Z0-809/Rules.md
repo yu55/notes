@@ -457,7 +457,7 @@ List<int> // generics doesn't work with primitive types
     * `ConcurrentLinkedQueue implements Queue`
     * `ConcurrentSkipListMap implements ConcurrentMap, SortedMap, NavigableMap`
     * `ConcurrentSkipListSet implements SortedSet, NavigableSet`
-    * `CopyOnWriteArrayList implements List`
+    * `CopyOnWriteArrayList implements List`; `Iterator` will never throw `ConcurrentModificationException`, trying do modify list via iterator will throw `UnsupportedOperationException`
     * `CopyOnWriteArraySet implements Set`
     * `LinkedBlockingDeque implements BlockingQueue, BlockingDeque`
     * `LinkedBlockingQueue implements BlockingQueue`
