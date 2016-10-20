@@ -12,7 +12,7 @@ class OuterClass {
       outerInstanceField = 2;              // full access
       outerStaticField = 3;                // full access
       
-      System.out.println("i=" + i);                                 // prints 55 (or 77 if "private int i = 77" doesn't exists
+      System.out.println("i=" + i);                                 // prints 55 (or 77 if inner "private int i = 55" doesn't exists)
       System.out.println("this.i=" + this.i);                       // prints 55
       System.out.println("OuterClass.this.i" + OuterClass.this.i);  // prints 77
     }
