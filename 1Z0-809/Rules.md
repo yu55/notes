@@ -411,13 +411,14 @@ List<int> // generics doesn't work with primitive types
         * In the simplest case, the given path does not have a root component, in which case this method joins the given path to this path and returns a resulting path that ends with the given path.
         * Where the given path has a root component then resolution is highly implementation dependent and therefore unspecified.
         * e.g. "foo/bar".resolve("gus") -> "foo/bar/gus"
+        * e.g. `Paths.get("c:\\temp\\test.txt").resolve(Paths.get("report.pdf"))` returns "c:\temp\test.txt\report.pdf" (If the argument is a relative path (i.e. if it doesn't start with a root), the argument is simply appended to the path to produce the result.)
     * `Path relativize(Path other)`
       * "c:\\personal\\.\\photos\\..\\readme.txt".relativize("c:\\personal\\index.html") -> "..\..\..\..\index.html"
       * "a/c" relativize "a/b"  is "../b"
       * Reverse operation to `resolution`: `p.relativize(p.resolve(q)).equals(q)`
       * Constructs a relative path between this path and a given path. If this path is "/a/b" and the given path is "/a/b/c/d" then the resulting relative path would be "c/d".
       * Where this path and the given path do not have a root component, then a relative path can be constructed. A relative path cannot be constructed if only one of the paths have a root component.
-        * `IllegalArgumentException` - if other is not a `Path` that can be relativized against this path
+        * `IllegalArgumentException` - if other is not a `Path` that can be relativized against this path: `Paths.get("photos\\goa").relativize(Paths.get("\\index.html"));`
       * Where both paths have a root component then it is implementation dependent if a relative path can be constructed.
       * If this path and the given path are equal then an empty path is returned.
     * `Path resolveSibling(Path other)` - Resolves the given path against this path's parent path. This is useful where a file name needs to be replaced with another file name. For example, suppose that the name separator is "/" and a path represents "dir1/dir2/foo", then invoking this method with the Path "bar" will result in the Path "dir1/dir2/bar". If this path does not have a parent path, or other is absolute, then this method returns other. If other is an empty path then this method returns this path's parent, or where this path doesn't have a parent, the empty path.
