@@ -155,13 +155,15 @@ List<int> // generics doesn't work with primitive types
 * Stream API
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
   * `Stream`
-    * `sorted()`, `sorted(Comparator<? super T> comparator)`
+    * sorting
+      * `sorted()` - elements in stream must implement `Comparable` or else will throw `ClassCastException`
+      * `sorted(Comparator<? super T> comparator)`
     * `Optional<T> max(Comparator<? super T> comparator)`
   * `IntStream`
     * `int sum()` for empty stream returns 0
     * `OptionalDouble average()`
       * when `OptionalDouble.empty` is returned then `.getAsDouble()` will throw `java.util.NoSuchElementException`; to avoid use `.orElse(0.0)`
-    * `OptionalInt findAny()`
+    * `OptionalInt findAny()` - for sequential stream it's non-deterministic too and can return any element, not only first element
     * `OptionalInt findFirst()`
     * `IntStream.iterate`
       * `IntStream.iterate(1, i -> 2)` 1 2 2 2 2...
