@@ -573,6 +573,13 @@ Arrays.asList("a", "b").parallelStream().reduce("_", (a, b)->a.concat(b));
 // will produce "_ab" or "_a_b", but NOT "_ba" or "_b_a"
 ```
 * Fork/Join
+  * General logic for fork/join:
+    * First check whether the task is small enough to be performed directly without forking. If so, perform it without forking.
+      * `RecursiveAction`: just process directly, don't return anything
+      * `RecursiveTask`: process and return the result
+    * If no, then split the task into multiple small tasks (at least 2) and:
+      * `RecursiveAction`: submit the subtasks back to the pool using `invokeAll(list of tasks)`
+      * `RecursiveTask`: split into 2 tasks, fork other: `other.fork()`, compute this, wait for forked (`otherResult=other.join()`), join results and return.
   * The worker threads in the ForkJoinPool extend java.lang.Thread and are created by a factory.
   * One worker thread may steal work from another worker thread.
   * `ForkJoinPool implements Executor` and not the threads in the pool.
