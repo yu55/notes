@@ -566,6 +566,11 @@ public class MultipleReadersSingleWriter {
 ```
 * Parallel stream
   * `Stream.parallel()` or `Collection.parallelStream()`; by default amount of threads in stream is related to amount of CPUs
+  * parallel reduce will join individual reduction results in original order (when functions without depending on global state)
+```java
+Arrays.asList("a", "b").parallelStream().reduce("_", (a, b)->a.concat(b));
+// will produce "_ab" or "_a_b", but NOT "_ba" or "_b_a"
+```
 * Fork/Join
   * The worker threads in the ForkJoinPool extend java.lang.Thread and are created by a factory.
   * One worker thread may steal work from another worker thread.
