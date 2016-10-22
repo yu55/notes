@@ -462,7 +462,7 @@ List<int> // generics doesn't work with primitive types
     * `ConcurrentLinkedQueue implements Queue`
     * `ConcurrentSkipListMap implements ConcurrentMap, SortedMap, NavigableMap`
     * `ConcurrentSkipListSet implements SortedSet, NavigableSet`
-    * `CopyOnWriteArrayList implements List`; `Iterator` will never throw `ConcurrentModificationException`, trying do modify list via iterator will throw `UnsupportedOperationException`
+    * `CopyOnWriteArrayList implements List`; A thread-safe variant of ArrayList in which all mutative operations (add, set, and so on) are implemented by making a fresh copy of the underlying array. `Iterator` will never throw `ConcurrentModificationException`, trying to modify list via iterator will throw `UnsupportedOperationException`
     * `CopyOnWriteArraySet implements Set`
     * `LinkedBlockingDeque implements BlockingQueue, BlockingDeque`
     * `LinkedBlockingQueue implements BlockingQueue`
