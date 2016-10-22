@@ -160,6 +160,7 @@ List<int> // generics doesn't work with primitive types
   * `IntStream`
     * `int sum()` for empty stream returns 0
     * `OptionalDouble average()`
+      * when `OptionalDouble.empty` is returned then `.getAsDouble()` will throw `java.util.NoSuchElementException`; to avoid use `.orElse(0.0)`
     * `OptionalInt findAny()`
     * `OptionalInt findFirst()`
     * `IntStream.iterate`
