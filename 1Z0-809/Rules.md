@@ -463,7 +463,7 @@ List<int> // generics doesn't work with primitive types
     * `LinkedBlockingDeque implements BlockingQueue, BlockingDeque`
     * `LinkedBlockingQueue implements BlockingQueue`
     * `ConcurrentHashMap implements ConcurrentMap`
-      * `public V putIfAbsent(K key, V value)` atomic equivalent of
+      * provides atomic versions of `putIfAbsent`, `remove`, `replace`
 ```java
  if (!map.containsKey(key))
    return map.put(key, value);
