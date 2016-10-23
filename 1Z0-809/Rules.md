@@ -348,7 +348,7 @@ List<int> // generics doesn't work with primitive types
       * `StringReader` - source is `String`
     * `java.io.Writer extends Object`
       * `BufferedWriter`
-      * `PrintWriter` - supports formatted printing characters to the output character stream (`print`, `println`, `write`); methods never throw I/O exceptions (besides some constructors)
+      * `PrintWriter` - supports formatted printing characters to the output character stream (`print(int)`-writes `String.valueOf(int)`, `println`, `write(int)`-amount of written chars depends on encoding); methods never throw I/O exceptions (besides some constructors)
       * `PipedWriter`
       * `OutputStreamWriter`
         * `FileWriter`
@@ -359,10 +359,10 @@ List<int> // generics doesn't work with primitive types
   * Byte streams
     * `java.io.OutputStream extends Object`
       * `ByteArrayOutputStream`
-      * `FileOutputStream`
+      * `FileOutputStream`: `write(int)` writes only first byte
       * `FilterOutputStream`
         * `PrintStream`
-        * `DataOutputStream extends DataOutputStream`
+        * `DataOutputStream` introduces `writeByte(int)`, `writeBoolean(boolean)`, `writeChar(int)`, `writeInt(int)`...
         * `BufferedOutputStream`
       * `ObjectOutputStream`
       * `PipedOutputStream`
