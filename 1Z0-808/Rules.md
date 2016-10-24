@@ -523,9 +523,9 @@ class B extends A{
   * `java.lang.Throwable`
     * `java.lang.Exception`
       * `java.lang.IOException` and many other checked exceptions (CloneNotSupported)
-      * `java.lang.RuntimeException`
+      * `java.lang.RuntimeException` - can be thrown without having to declare it in the throws clause
         * Security... ClassCast... NullPointer... IllegalArgument.. IndexOutOfBounds... UnsupportedOperation... SystemException
-    * `java.lang.Error`
+    * `java.lang.Error` - can be thrown without having to declare it in the throws clause
 * Other
   * None of the new date related classes have public constructors.
   * `Period` doesn't mess with the time component of the date while `Duration` may changed the time component if the date is close to the DST boundary.
