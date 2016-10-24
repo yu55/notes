@@ -351,7 +351,7 @@ List<int> // generics doesn't work with primitive types
       * `PrintWriter` - supports formatted printing characters to the output character stream (`print(int)`-writes `String.valueOf(int)`, `println`, `write(int)`-amount of written chars depends on encoding); methods never throw I/O exceptions (besides some constructors)
       * `PipedWriter`
       * `OutputStreamWriter`
-        * `FileWriter`
+        * `FileWriter`; `new FileWriter("test.txt");` will create empty file (even if `write()` wasn't invoked)
       * `FilterWriter` - creates/overrides file unless constructor with `boolean append`
       * `StringWriter` - collects characters into string buffer -> `String`
     * `java.util.Scanner` - text scanner which can parse primitive types and strings using regular expressions
