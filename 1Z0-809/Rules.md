@@ -433,6 +433,9 @@ List<int> // generics doesn't work with primitive types
     * `TYPE_SCROLL_SENSITIVE` you can go through the data in any order, and you will see changes made in the database
     * `CONCUR_READ_ONLY` default; means that you can read the `ResultSet` but not write to it
     * `CONCUR_UPDATABLE` means that you can both read and write to it
+  * Connection
+    * `rollback()`-undoes all changes made in the current transaction and releases any database locks currently held by this Connection object.
+    * `rollback(Savepoint)`-undoes all changes made after the given Savepoint object was set.
 * Concurrency
   * A memory consistency error occurs when two threads have inconsistent views of what should be the same data.
   * The intrinsic lock is released when the method ends. Irrespective of how it ends.
