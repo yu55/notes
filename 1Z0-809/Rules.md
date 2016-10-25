@@ -176,7 +176,7 @@ List<int> // generics doesn't work with primitive types
 * Stream API
   * https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
   * `Stream`
-    * There is NO `toMap()` method, instead there is `Collectors.toMap`
+    * There is NO `toMap()` method in strewam, instead there is `Collectors.toMap`, which will throw `IllegalStateException` when collected map already contains given key; if duplicates are expected use another version of this method: `Collectors.toMap(b->b.getTitle(), b->b.getPrice(), (v1, v2)->v1+v2`
     * sorting
       * `sorted()` - elements in stream must implement `Comparable` or else will throw `ClassCastException`
       * `sorted(Comparator<? super T> comparator)`
