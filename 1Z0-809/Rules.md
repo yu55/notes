@@ -341,6 +341,14 @@ List<int> // generics doesn't work with primitive types
     * `-esa` Short for `-enablesystemsassertions;` enables assertions in system classes. This option is rarely used.
     * analogous for disabling asserts: `-da`/`-dsa`/`-disablesystemassertions`
   * Assertions the old way: method `assert` and `javac -source 1.3` (can't use `assert` keyword tough)
+  * When it's OK to use assertions:
+    * input parameters of private methods
+    * facts that are almost certainly true `if(x==1) {...} else if(x==2) {...} else {assert false: "x cannot be different than 1 or 2"`
+    * after business logic execution
+  * When is BAD to use assertions:
+    * input parameters of public methods
+    * validating constrains or user inputs
+    * generating side effects: `assert method()`
 * Java date/time API
   * `java.time` classes are immutable -> thread-safe
 ```java
