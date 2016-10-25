@@ -130,6 +130,26 @@ List<int> // generics doesn't work with primitive types
   * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present; `int compare(T o1, T o2)`, `Comparator comparing(...)`, e.g. `Comparator<Person> byLastName = Comparator.comparing(Person::getLastName);`
   * `Collections.sort(List<T extends Comparable>)`, `Collections.sort(List, Comparator)`
   * `HashSet`, `HashMap`, `ArrayList`, `CopyOnWriteArrayList` permits `null` storage but `ConcurrentHashMap` prevents `null` keys or values
+```java
+  // TreeMap: keys must be mutually comparable or else runtime exception when putting
+  NavigableMap<String, String> map = new TreeMap<String, String>();
+  map.put("a", "apple");
+  map.put("b", "boy");
+  map.put("c", "cat");
+  map.put("aa", "apple1");
+  map.put("bb", "boy1");
+  map.put("cc", "cat1");
+
+  map.pollLastEntry(); // removes cc-cat1
+  map.pollFirstEntry(); // removes a-apple
+
+  // tailMap will contain c-cat (if true it would contain bb-boy1 also)
+  // tailMap is backed by map (its the tail view)
+  NavigableMap<String, String> tailMap = map.tailMap("bb", false);
+
+  System.out.println(tailMap.pollFirstEntry()); //removes c-cat
+  System.out.println(map.size()); // returns 3
+```
 * Functional interfaces (https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)
   * `Predicate<T>`: `boolean test(T t)`, `default Predicate<T> and(Predicate<? super T> other)`, `default Predicate<T> or(Predicate<? super T> other)`, `default Predicate<T> negate()`
     * used by: `default boolean Collection.removeIf(Predicate<? super E> filter)`, `Stream<T> filter(Predicate<? super T> predicate)`
