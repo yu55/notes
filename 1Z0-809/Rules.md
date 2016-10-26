@@ -130,6 +130,7 @@ List<int> // generics doesn't work with primitive types
   * `java.util.Comparator` - use when comparing objects differently than natural, or no natural ordering is present; `int compare(T o1, T o2)`, `Comparator comparing(...)`, e.g. `Comparator<Person> byLastName = Comparator.comparing(Person::getLastName);`
   * `Collections.sort(List<T extends Comparable>)`, `Collections.sort(List, Comparator)`
   * `HashSet`, `HashMap`, `ArrayList`, `CopyOnWriteArrayList` permits `null` storage but `ConcurrentHashMap` prevents `null` keys or values
+  * `SortedSet` keeps unique elements in their natural order`; `NavigableSet extends SortedSet` provides methods: `lower`, `floor`, `ceiling`, `higher`. There are NO: OrderedList or OrderedSet.
 ```java
   // TreeMap: keys must be mutually comparable or else runtime exception when putting
   NavigableMap<String, String> map = new TreeMap<String, String>();
