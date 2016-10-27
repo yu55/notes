@@ -429,15 +429,15 @@ List<int> // generics doesn't work with primitive types
     * `static Stream<Path> find(Path start, int maxDepth, BiPredicate<Path,BasicFileAttributes> matcher, FileVisitOption... options)` - Return a Stream that is lazily populated with Path by searching for files in a file tree rooted at a given starting file.
     * `static Stream<Path> list(Path dir)` - Return a lazily populated Stream, the elements of which are the entries in the directory.
     * `static Stream<Path> walk(Path start, [int maxDepth,] FileVisitOption... options)` - Return a Stream that is lazily populated with Path by walking the file tree rooted at a given starting file.
-    * `delete(Path path) throws IOException`
+    * `static delete(Path path) throws IOException`
       * If the file is a symbolic link then the symbolic link itself, not the final target of the link, is deleted.
       * If the file is a directory then the directory must be empty.
       * `NoSuchFileException` - if the file does not exist (optional specific exception)
       * `DirectoryNotEmptyException` - if the file is a directory and could not otherwise be deleted because the directory is not empty (optional specific exception)
       * `IOException` - if an I/O error occurs
       * `SecurityException` - In the case of the default provider, and a security manager is installed, the `SecurityManager.checkDelete(String)` method is invoked to check delete access to the file
-    * `Stream<String> lines(Path path[, Charset cs]) throws IOException`
-    * `List<String> readAllLines(Path path, Charset cs) throws IOException`
+    * `static Stream<String> lines(Path path[, Charset cs]) throws IOException`
+    * `static List<String> readAllLines(Path path[, Charset cs]) throws IOException`
   * `Path`
     * `Path resolve(Path other)`
       * If the other parameter is an absolute path then this method trivially returns other.
