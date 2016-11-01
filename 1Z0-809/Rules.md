@@ -1,11 +1,11 @@
 * Access modifiers
 
-| Modifier  | Class | Package | Subclass | World |
-|-----------|-------|---------|----------|-------|
-|`public`   | y     | y       | y        | y     |
-|`protected`| y     | y       | y        | n     |
-| default   | y     | y       | n        | n     |
-|`private`  | y     | n       | n        | n     |
+| Modifier  | Class | Package |  Subclass  | World |
+|-----------|-------|---------|------------|-------|
+|`public`   | y     | y       | y          | y     |
+|`protected`| y     | y       | y          | n     |
+| default   | y     | y       | y in pkg/n | n     |
+|`private`  | y     | n       | n          | n     |
 
 * Enums
   * can be definied in top-level class only or within interface; never locally in method 
