@@ -10,7 +10,8 @@
 * Enums
   * can be definied in top-level class only or within interface; never locally in method 
   * comparing can be done via `==`
-  * Enum constructor is always private. You cannot make it public or protected. If an enum type has no constructor declarations, then a private constructor that takes no parameters is automatically provided. 
+  * Enum constructor is always private. You cannot make it public or protected. If an enum type has no constructor declarations, then a private constructor that takes no parameters is automatically provided.
+  * Constructor cannot access non-final static field.
   * An enum is implicitly final, which means you cannot extend it. 
   * You cannot extend an enum from another enum or class because an enum implicitly extends java.lang.Enum. But an enum can implement interfaces. 
   * Since enum maintains exactly one instance of its constants, you cannot clone it. You cannot even override the clone method in an enum because java.lang.Enum makes it final. 
