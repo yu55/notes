@@ -369,7 +369,7 @@ List<int> // generics doesn't work with primitive types
   System.out.println(d); // PT9H10M
 ```
 * I/O fundamentals
-  * `java.io.Console console = System.console();`
+  * `java.io.Console console = System.console();`-return `null` when no console is available; methods aren't throwing checked exceptions
   * `java.io.Console` methods:
     * `char[] readPassword()`/`char[] readPassword(String fmt, Object... args)` (formatted prompt + password read without echoing)
     * `java.io.Reader reader()`
