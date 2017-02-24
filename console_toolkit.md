@@ -6,3 +6,4 @@
   * `:%s/\./_/g`- replace dot '.' with underscore ; dot must be escaped
 * commands
   * `find . -type d -empty -delete` - delete empty directories in this tree
+  * `sed 'N;s/\n//'` delete every second newline
