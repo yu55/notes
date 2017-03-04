@@ -333,6 +333,8 @@ List<int> // generics doesn't work with primitive types
 ```
 * Exceptions and assertions
   * In a multi-catch block, you cannot combine catch handlers for two exceptions that share a base- and derived-class relationship.
+  * when non related exceptions combined in catch only most common methods can be invoked on these exceptions
+  * reassign of exception variable in catch only when single catch and same type (or subtype)
   * The resource class must implement `java.lang.AutoCloseable` interface. Many standard JDK classes such as `BufferedReader`, `BufferedWriter`) implement `java.io.Closeable` interface, which extends `java.lang.AutoCloseable`. 
   * Resources are closed at the end of the try block and before any catch or finally block.
   * Resources are not even accessible in the catch or finally block.
